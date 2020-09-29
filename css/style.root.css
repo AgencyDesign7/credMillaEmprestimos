@@ -17,6 +17,7 @@
     --color-box-line: rgba(0, 0, 0, 0.2);
     --color-box-button: rgba(0, 102, 212, 1);
     --color-send-job-from: rgba(134, 151, 156, 1);
+    --color-icons-background: rgba(207, 207, 207, 1);
 }
 
 *{
@@ -39,11 +40,13 @@ ul{
     justify-content: center;
     align-items: center;
     margin: 27px 0 0 0 ;
+    
 }
 li a{
     padding: 20px;
     text-decoration: none;
     color: var(--color-navbar-menus);
+    font-size: 14px;
 }
 
 .logo-main{
@@ -60,9 +63,72 @@ li a{
     max-height: auto;
 }
 
+/* Mobile navbar */
+.navbar-content{
+    overflow: hidden;
+}
+
+.mobile-navbar{
+    height: 0px;
+    overflow: hidden;
+    transition: height 0.5s ease-in-out;
+}
+.menu-btn-mobile::after{
+    display: inline-block;
+    content: " ";
+    background-image: url('../resource/img/icons/menu\ phone.png');
+    background-size: 35px 20px;
+    background-repeat: no-repeat;
+    min-width: 40px;
+    min-height: 40px;
+    margin-top: 15px;
+}
+.menu-btn-mobile{
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-navbar-container);
+    transition: height 0.6s ease-in-out;
+    height: 55px;
+}
+.open-menu{
+    height: 0;
+    transition: height 0.6s ease-in-out;
+    
+}
+
+.mobile-active{
+    transition: height 1s ease-in-out;
+    height: 310px;
+}
+.mobile-navbar ul{
+    all: unset;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 20px;
+}
+
+.mobile-navbar li{
+    text-align: center;
+    padding: 15px;
+    border-bottom: 1px solid var(--color-box-line);
+    width: 100%;
+}
+.mobile-navbar span::after{
+    content: "X";
+    font-size: 25px;
+    width: 40px;
+    height: 40px;
+    color: var(--color-navbar-menus);
+}
+
 /* -- MAIN --- */
 .hero{
-    min-height: 100vh;
+    
     position: relative;
     display: flex;
     flex-direction: column;
@@ -78,12 +144,23 @@ li a{
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     width: 545px;
     height: 211px;
     background-color: var(--color-welcome);
     text-align: center;
     align-self: center;
-    margin-top: 20%;
+    margin-top: 5vw;
+    
+}
+.welcome-container p{
+    color: black !important;
+    font-size: 40px;
+}
+
+.emp-text1{
+    width: 100%;
+    align-self: center;
 }
 
 .hero p{
@@ -91,7 +168,7 @@ li a{
     text-align: center;
     font-family: 'Fjalla One', sans-serif;
     color: var(--color-texts-type1);
-    margin-top: 30px;
+    /*margin-top: 30px;*/
 }
 
 .hero span{
@@ -105,6 +182,7 @@ li a{
     max-width: 900px;
     font-size: 20px;
     color: var(--color-texts-type2);
+    text-align: justify;
 }
 
 .main-contents{
@@ -137,6 +215,7 @@ li a{
     margin-top: 30px;
     font-size: 20px;
     text-align: center;
+    max-width: 380px;
 }
 
 /* Form */
@@ -151,7 +230,7 @@ form{
     flex-direction: column;
     align-items: center;
     width: 1000px;
-    height: 246px;
+    min-height: 246px;
     background-color: var(--color-from);
     border-radius: 26px;
     padding: 20px;
@@ -170,24 +249,120 @@ form > p:first-child{
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    border: none;
 }
-.inputs input, select{
-    margin: 5px 5px 17px 20px;
-    padding: 5px;
+.inputs input, select, button{
+    margin: 5px 5px 17px 40px;
+    padding: 6px 6px 6px 10px;
     min-width: 200px;
-
+    height: 30px;
+    box-shadow: none;
+    border: none;
 }
+.inputs input::placeholder, select, input[type="date"]{
+    color: var(--color-placeholder-form);
+    font-size: 12px;
+}
+
 
 #nameInput, #emailInput{
     min-width: 391px;
 }
-
-.inputs > span{
-    content: " ";
-    background-color: black;
-    min-width: 38px;
-    min-height: 38px;
+.inputs > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }
+
+.inputs > div > span, button > span{
+    content: " ";
+    left: 15px;
+    top: 5px;
+    position: absolute;
+    background-color: black;
+    /*min-width: 30.1px;
+    min-height: 30.1px;*/
+    width: 30.1px;
+    height: 30.1px;
+
+}
+.inputs > div:nth-child(7){
+    width: 100%;
+}
+
+button{
+    position: relative;
+}
+button > span{
+    top: 0;
+    left: 35px !important;
+}
+button{
+    background-color: var(--color-send-button-form);
+    height: 40px;
+    border-radius: 8px;
+    font-size: 20px;
+    color: white;
+    font-weight: 700;
+}
+
+
+#userId{
+    background-image: url('../resource/img/icons/user-icon.png');
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-color: var(--color-icons-background);
+    background-position: center;
+}
+#cpfId{
+    background-image: url('../resource/img/icons/password-icon.png');
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-color: var(--color-icons-background);
+    background-position: center;
+}
+#perfilId{
+    background-image: url('../resource/img/icons/perfil-icon.png');
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-color: var(--color-icons-background);
+    background-position: center;
+}
+#emailId{
+    background-image: url('../resource/img/icons/email-icon.png');
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-color: var(--color-icons-background);
+    background-position: center;
+}
+#telId{
+    background-image: url('../resource/img/icons/fone-icon.png');
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-color: var(--color-icons-background);
+    background-position: center;
+}
+#dateId{
+    background-image: url('../resource/img/icons/calendar-icon.png');
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-color: var(--color-icons-background);
+    background-position: center;
+}
+
+#sendBtn{
+    left: 30%;
+    background-image: url('../resource/img/icons/send-icon.png');
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-position: center;
+    background-position-y: 6px;
+}
+
+
+
 
 .footer{
     display: flex;
