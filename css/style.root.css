@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap');
+
+:root{
+    --color-logo: rgba(5, 26, 48, 1);
+    --color-welcome: rgba(217, 229, 232, 0.78);
+    --color-texts-type1: rgba(134, 151, 156, 1);
+    --color-texts-type2: rgba(134, 151, 156, 1);
+    --color-from: rgba(217, 229, 232, 1);
+    --color-placeholder-form: rgba(191, 191, 191, 1);
+    --color-send-button-form: rgba(0, 180, 18, 1);
+    --color-footer: rgba(232, 232, 232, 1);
+    --color-text-footer: rgba(134, 151, 156, 1);
+    --color-navbar-container: rgba(237, 237, 237, 1);
+    --color-navbar-menus: rgba(120, 120, 120, 1);
+    --color-box: rgba(14, 63, 116, 1);
+    --color-box-line: rgba(0, 0, 0, 0.2);
+    --color-box-button: rgba(0, 102, 212, 1);
+    --color-send-job-from: rgba(134, 151, 156, 1);
+}
+
+*{
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* --- NAV BAR --- */
+nav{
+    width: 100%;
+    background-color: var(--color-navbar-container);
+}
+
+ul{
+    list-style: none;
+    display: flex;
+    height: 47px;
+    justify-content: center;
+    align-items: center;
+    margin: 27px 0 0 0 ;
+}
+li a{
+    padding: 20px;
+    text-decoration: none;
+    color: var(--color-navbar-menus);
+}
+
+.logo-main{
+    display: flex;
+    max-height: 156px;
+    background-color: var(--color-logo);
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-main img{
+    width: 100%;
+    max-width: 313px;
+    max-height: auto;
+}
+
+/* -- MAIN --- */
+.hero{
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+.hero img{
+    width: 100%;
+    height: auto;
+}
+
+.welcome-container{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 545px;
+    height: 211px;
+    background-color: var(--color-welcome);
+    text-align: center;
+    align-self: center;
+    margin-top: 20%;
+}
+
+.hero p{
+    font-size: 50px;
+    text-align: center;
+    font-family: 'Fjalla One', sans-serif;
+    color: var(--color-texts-type1);
+    margin-top: 30px;
+}
+
+.hero span{
+    width: 103px;
+    height: 3px;
+    background-color: var(--color-texts-type1);
+    align-self: center;
+    margin-top: 40px;
+}
+#text-description{
+    max-width: 900px;
+    font-size: 20px;
+    color: var(--color-texts-type2);
+}
+
+.main-contents{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.imgs-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.imgs-text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px;
+}
+.imgs-text img{
+    width: 344px;
+    height: auto;
+    border-radius: 50%;
+}
+
+.imgs-text p{
+    margin-top: 30px;
+    font-size: 20px;
+    text-align: center;
+}
+
+/* Form */
+.form{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 37px 0 80px 0;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 1000px;
+    height: 246px;
+    background-color: var(--color-from);
+    border-radius: 26px;
+    padding: 20px;
+}
+form > :nth-child(2){
+    font-size: 15px;
+    margin-bottom: 20px;
+    font-weight: normal ;
+}
+form > p:first-child{
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-weight: normal;
+}
+.inputs{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.inputs input, select{
+    margin: 5px 5px 17px 20px;
+    padding: 5px;
+    min-width: 200px;
+
+}
+
+#nameInput, #emailInput{
+    min-width: 391px;
+}
+
+.inputs > span{
+    content: " ";
+    background-color: black;
+    min-width: 38px;
+    min-height: 38px;
+}
+
+.footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+    min-height: 44px;
+    background-color: var(--color-footer);
+    color: var(--color-text-footer);
+    font-size: 16px;
+}
