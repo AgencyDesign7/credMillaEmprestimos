@@ -31,6 +31,20 @@
 }()
 
 function includNavbar() {
+    if (window.location.pathname === "/contato.html") {
+        var buttonCadastro = document.querySelector('#cadastro-trabalho')
+        if (buttonCadastro !== null) {
+            buttonCadastro.addEventListener('click', function () {
+                window.location.href = "./cadastro.html"
+            })
+        }
+    }
+    //Control imgs 'nossa-historia' images resposive
+    var divHistoriaDesk = document.querySelector('.div-historia')
+    var divHistoriaMob = document.querySelector('.mob-h')
+
+
+    //include bar
     var xhr = new XMLHttpRequest();
     var divNavbar = document.querySelector('.navbar-content')
     var mediaMatch = window.matchMedia("(max-width: 700px)")
@@ -53,6 +67,11 @@ function includNavbar() {
                 btnMenu.classList.remove('open-menu')
             })
         }
+        if (divHistoriaDesk !== null && divHistoriaMob !== null) {
+
+            divHistoriaDesk.classList.add('display-none-content')
+            divHistoriaMob.classList.remove('display-none-content')
+        }
 
 
     } else {
@@ -61,7 +80,14 @@ function includNavbar() {
         xhr.onload = function () {
             divNavbar.innerHTML = this.responseText
         }
+        if (divHistoriaDesk !== null && divHistoriaMob !== null) {
+
+            divHistoriaDesk.classList.remove('display-none-content')
+            divHistoriaMob.classList.add('display-none-content')
+        }
+
     }
 }
 
 window.addEventListener('resize', includNavbar)
+

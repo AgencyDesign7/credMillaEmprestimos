@@ -28,7 +28,32 @@
 }
 
 @media only screen and (max-width: 700px){
-   
+   .social{
+       position: fixed;
+       padding: 0 10px 0 10px;
+       bottom: 40px;
+       
+   }
+   .social img{
+       width: 70px;
+   }
+   .form{
+       margin-bottom: 80px;
+   }
+   .par-div-text p{
+       font-size: 25px;
+   }
+   .form-contato{
+    padding: 10px;
+   }
+   .contato-trb{
+    padding: 0px;
+    justify-content: center;
+    align-items: center;
+    }
+    .parceiros{
+        flex-direction: column;
+    }
 }
 
 @media only screen and (max-width: 500px){
@@ -57,4 +82,25 @@
         font-size: 12px;
         text-align: center;
     }
+    .form-contato form p{
+        font-size: 40px;
+        
+    }
+    .form-contato form > p:nth-child(2){
+        font-size: 20px;
+    }
+    .certificao-select{
+        justify-content: center;
+        align-items: center;
+    }
+    .certificao-select .inputs-radio{
+        margin-left: 0;
+        justify-content: center;
+    }
+    .curriculo-anexo{
+        justify-content: center;
+        align-items: center;
+    }
+    
+    
 }
