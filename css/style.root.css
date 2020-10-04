@@ -68,6 +68,10 @@ li a{
 }
 
 /* Mobile navbar */
+.navbar-mobile{
+    display: none;
+}
+
 .navbar-content{
     overflow: hidden;
 }
@@ -83,6 +87,7 @@ li a{
     background-image: url('../resource/img/icons/menu\ phone.png');
     background-size: 35px 20px;
     background-repeat: no-repeat;
+    background-position-x: center;
     min-width: 40px;
     min-height: 40px;
     margin-top: 15px;
@@ -165,6 +170,7 @@ li a{
 .emp-text1{
     width: 100%;
     align-self: center;
+    margin-top: 20px;
 }
 
 .hero p{
@@ -433,6 +439,13 @@ button{
     font-weight: 600;
     color: white;
 }
+
+.div-historia{
+    display: block;
+}
+.mob-h{
+    display: none;
+}
 /* contato */
 
 .form-contato{
@@ -493,7 +506,7 @@ button{
 .contato-trb{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     padding: 20px;
@@ -506,7 +519,7 @@ button{
     min-width: 350px;
     max-width: 400px;
     height: 150px;
-    margin-top: 20px;
+    margin: 20px;
     background-color: var(--color-box);
     color: white;
 }
@@ -571,18 +584,18 @@ label{
 input[type="file"]{
     color: var(--color-navbar-menus);
     font-size: 15px;
-    width: 200px !important;
+    width: max-content !important;
 }
 .certificao-select > div{
     margin: 10px 0 0 50px;
     width: 100%;
     
 }
-input[type="radio"]{
+/* input[type="radio"]{
     
     width: 5px !important;
     
-}
+} */
 .certificao-select .inputs-radio{
     width: fit-content;
     display: flex;
@@ -647,3 +660,4 @@ input[type="radio"]{
 .display-none-content{
     display: none !important;
 }
+

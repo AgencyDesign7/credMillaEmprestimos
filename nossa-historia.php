@@ -13,14 +13,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nossos parceiros - CredMilla</title>
-
+    <link rel="stylesheet" href="./css/style.root.css">
+    <link rel="stylesheet" href="./css/style.responsive.css">
 </head>
 
 <body>
     <div class="logo-main">
         <img src="./resource/img/logo-main.png" alt="">
     </div>
-    <div class="navbar-content"></div>
+
+     <!-- navbar -->
+     <div class="navbar-desktop">
+        <?php require('./src/templates/template.desktopNavbar.html') ?>
+    </div>
+    <div class="navbar-mobile">
+        <?php require('./src/templates/template.mobileNavbar.html') ?>
+    </div>
+
     <div class="hero">
         <div class="par-div-text">
             <p>Nossa história</p>
@@ -65,8 +74,11 @@
 
     </div>
 
-    <div class="contents-footer"></div>
-    <script src="./scripts/script.include.resouce.js"></script>
+     <!-- footer -->
+     <div class="contents-footer">
+        <?php require('./src/templates/template.footer.html') ?>
+    </div>
+    <script src="./scripts/script.app.main.js"></script>
 </body>
 
 </html>
