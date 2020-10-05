@@ -59,6 +59,7 @@ li a{
     background-color: var(--color-logo);
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 .logo-main img{

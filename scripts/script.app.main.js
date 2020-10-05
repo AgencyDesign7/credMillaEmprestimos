@@ -1,10 +1,10 @@
-!function navbarControls(){
+!function navbarControls() {
     var navbarMenus = document.querySelector('.mobile-navbar');
     var btnMenu = document.querySelector('.menu-btn-mobile');
     var btnClose = document.querySelector('.close-btn');
     var buttonCadastro = document.querySelector('#cadastro-trabalho')
 
-    if(!navbarMenus || !btnClose || !btnMenu){
+    if (!navbarMenus || !btnClose || !btnMenu) {
         window.location.href = "navbarError"
     }
 
@@ -17,17 +17,17 @@
         btnMenu.classList.remove('open-menu')
     });
 
-    
+
     if (window.location.pathname === "/contato.php") {
-        if(buttonCadastro !== null){
+        if (buttonCadastro !== null) {
 
             buttonCadastro.addEventListener('click', function () {
                 window.location.href = "./cadastro.php"
             })
-        }else{
+        } else {
             alert("Erro reference btnCadastro")
         }
-    }else{
-        console.log(window.location.pathname)
+    } else {
+
     }
 }()

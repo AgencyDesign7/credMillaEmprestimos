@@ -1,31 +1,30 @@
 <?php
 
-$name = $_POST['clientName'];
-echo 'From php '.$name . 'Session '. session_id();
+namespace chatC;
 
-
-class Person{
+class Person
+{
 
     private $id;
     private $idSession;
     private $name;
-    function __construct($id, $idSession, $name){
+    function __construct($id, $idSession, $name)
+    {
         $this->id = $id;
         $this->idSession = $idSession;
         $this->name = $name;
     }
-    
-    function __destruct(){
 
+    function __destruct()
+    {
+        $this->FinishChat();
     }
 
-    function SendMensage($name, $mensage){
-
+    function SendMensage($name, $mensage)
+    {
     }
 
-    function FinishChat(){
-
+    function FinishChat()
+    {
     }
-
-
 }

@@ -1,9 +1,12 @@
 <?php
-require('./Person.php')
 
-class Client extends Person{
+namespace chatC;
 
-    function __construct($id, $idSession, $name){
+class Client extends Person
+{
+
+    function __construct($id, $idSession, $name)
+    {
         parent::__construct($id, $idSession, $name);
     }
 }
