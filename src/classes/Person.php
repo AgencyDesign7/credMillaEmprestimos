@@ -1,7 +1,7 @@
 <?php
 
 $name = $_POST['clientName'];
-echo 'From php '.$name . 'Session '. $_SESSION[];
+echo 'From php '.$name . 'Session '. session_id();
 
 
 class Person{
