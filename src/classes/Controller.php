@@ -1,23 +1,9 @@
 <?php
 
-session_start();
-
 namespace chatC;
+session_start();
+include_once('./Classes.php');
 
-include 'Person.php';
-include 'Client.php';
-include 'Controller.php';
-include 'DataBase.php';
-include 'Support.php';
-
-use chatC\Person;
-
-
-
-$name = $_POST['clientName'];
-//echo 'From php ' . $name . 'Session ' . session_id();
-
-$person = new Person(15, session_id(), $_POST["clientName"]);
 
 
 class Controller
@@ -34,10 +20,9 @@ class Controller
     {
     }
 
-    function ConnectChat()
+    function ConnectChat($id, $session_id, $name)
     {
-        $id = ($this->CountQueue() + 1);
-        array_push($this->queueChats, new Person($id, session_id(), $_POST['name']));
+        return new Person($id, $session_id, $name);
     }
 
     function CountQueue()

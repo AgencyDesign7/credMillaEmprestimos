@@ -6,8 +6,8 @@ class Person
 {
 
     private $id;
-    private $idSession;
-    private $name;
+    public $idSession;
+    public $name;
     function __construct($id, $idSession, $name)
     {
         $this->id = $id;

@@ -1,15 +1,17 @@
 <?php
 session_start();
+include_once('./Classes.php');
 
-include 'Person.php';
-include 'Client.php';
-include 'Controller.php';
-include 'DataBase.php';
-include 'Support.php';
+use chatC\{Person, Client, Controller, DataBase, Support};
 
 
-use chatC\Person;
-use chatC\Client;
-use chatC\Controller;
-use chatC\DataBase;
-use chatC\Support;
+$name = $_POST['clientName'];
+//echo 'From php ' . $name . 'Session ' . session_id();
+
+//$person = new Person(15, session_id(), $_POST["clientName"]);
+//echo ((object)$person)->idSession;
+
+
+$controller = new Controller();
+$personData = $controller->ConnectChat(1, session_id(), $name);
+var_dump($personData);
