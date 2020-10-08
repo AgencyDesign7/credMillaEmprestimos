@@ -9,7 +9,9 @@ if (submit) {
         hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
         hrx.onload = function () {
-            console.log(hrx.responseText)
+
+            console.log(this.responseText)
+            //console.log(JSON.parse(this.responseText))
         }
         hrx.send('clientName=' + param)
 

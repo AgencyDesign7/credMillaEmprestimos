@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php 
+    if(!isset($_SESSION)){session_start();}
+    $_SESSION['admin'] = 'Adenilton';
+    if(isset($_SESSION['admin'])){echo "you are Admin!";} 
+    
+?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

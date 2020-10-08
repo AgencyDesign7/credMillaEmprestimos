@@ -22,6 +22,8 @@ class Person
 
     function SendMensage($name, $mensage)
     {
+        $db = new DataBase();
+        $db->Connect();
     }
 
     function FinishChat()
