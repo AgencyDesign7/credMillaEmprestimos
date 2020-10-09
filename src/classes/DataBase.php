@@ -15,7 +15,8 @@ class DataBase
     private $hostname = 'localhost';
     private $user = 'root';
     private $password = '';
-    private $dbname = 'db_credmilla';
+    private $dbname = 'credmilla_db';
+
 
 
     private $dsn;
