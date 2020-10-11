@@ -8,6 +8,9 @@ namespace chatC;
 
 use \PDO;
 use PDOException;
+use \DateTime;
+use \DateTimeZone;
+use Exception;
 
 class DataBase
 {
@@ -37,10 +40,10 @@ class DataBase
 
             $this->pdo = new PDO($dsn, $this->user, $this->password);
             $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         } catch (PDOException $th) {
-            echo $th->getMessage();
-            die();
+            throw new Exception( $th->getMessage());
         }
     }
 
@@ -72,4 +75,38 @@ class DataBase
             //throw $th;
         }
     }
+
+    public function initSession($nameUser)
+    {
+        $timeZone = new DateTimeZone('Brazil/East');
+        $dateTime = new DateTime();
+        $dateTime->setTimezone($timeZone);
+        try {
+            $stmt = $this->pdo->prepare("INSERT INTO `queue_users` (`name`, `session`, `date_time`) VALUES (?,?,?)");
+            // $stmt->bindParam(1, $nameUser);
+            // $stmt->bindParam(2,session_id());
+            // $stmt->bindParam(3, $dateTime->format('Y-m-d H:i:s'));
+            $stmt->execute(['marcos', '15123151', '2020-10-10 22:22:45']);
+            //return $stmt->fetch;
+        } catch (\Exception $th) {
+            $_SESSION['ERROR-DB'] = $th->getMessage();
+        }
+    }
+    public function insetData($sql, $param = []){
+        try {
+            $stmt = $this->pdo->prepare($sql);
+            // $stmt->bindParam(1, $nameUser);
+            // $stmt->bindParam(2,session_id());
+            // $stmt->bindParam(3, $dateTime->format('Y-m-d H:i:s'));
+            $stmt->execute($param);
+            //return $stmt->fetch;
+        } catch (PDOException $th) {
+            throw new Exception($th->getMessage());
+        }
+    }
+
+    public function deleteDate($sql, $param = []){
+        $this->insetData($sql, $param);
+    }
+
 }
