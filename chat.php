@@ -11,6 +11,7 @@
     $db = new DataBase();
     $person = new Person(1, session_id(), "marcos");
     
+    /*
     $host    = "127.0.0.1";
     $port    = 25003;
     $message = "Hello Server";
@@ -26,7 +27,7 @@
     echo "Reply From Server  :".$result;
     // close socket
     socket_close($socket);
-   
+   */
 ?>
 <head>
     <meta charset="UTF-8">

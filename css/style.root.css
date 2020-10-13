@@ -791,6 +791,9 @@ input[type="file"]{
     margin: 5px 0 5px 0;
     direction: ltr !important;
 }
+.message-block > span{
+    display: none;
+}
 
 .chat-container-form .messages-send .client{
     float: right;

@@ -36,6 +36,8 @@ if (isset($_POST['request'])) {
                     if ($ResultLogin === 0 && $ResultPassword === true) {
                         echo json_encode(array('auth' => true));
                         $_SESSION['mode'] = 1;
+                        $_SESSION['name'] = $post->name;
+                        $_SESSION['email'] = $post ->email;
                     } else {
                         echo json_encode(array('auth' => false));
                     }
@@ -49,21 +51,32 @@ if (isset($_POST['request'])) {
 
 
     if ($_POST['request'] === 'enterChatClient') {
-        $_SESSION['clientName'] = $_POST['clientName'];
-        $_SESSION['emailClient'] = $_POST['email'];
-        $infosClient = array('name' => $_POST['clientName'], 'email' => $_POST['email'], 'mode' => $_SESSION['mode'] = 0);
-        echo json_encode($infosClient, JSON_FORCE_OBJECT);
+        $_SESSION['name'] = $_POST['clientName'];
+        $_SESSION['email'] = $_POST['email'];
+        $infosUser = array('name' =>  $_SESSION['name'], 'email' =>  $_SESSION['email'], 'mode' => $_SESSION['mode'] = 0);
+        echo json_encode($infosUser, JSON_FORCE_OBJECT);
     }
     if ($_POST['request'] === 'sendMessageChat') {
         $timeZone = new DateTimeZone('Brazil/East');
         $dateTime = new DateTime();
         $dateTime->setTimezone($timeZone);
-        $infosClient = array('name' => $_SESSION['clientName'], 'email' => $_SESSION['emailClient'], 'message' => $_POST['Message'], 'dateTime' => $dateTime->format('H:i:s'), 'definedAuth' => $_SESSION['mode']);
+        $infosUser = array('name' => $_SESSION['name'], 'email' => $_SESSION['email'], 'message' => $_POST['Message'], 'dateTime' => $dateTime->format('H:i:s'), 'definedAuth' => $_SESSION['mode']);
+        $db->insetData('INSERT INTO chat_teste (name, email, message, last_time, definedAuth) VALUE (?,?,?,?,?)', [$_SESSION['name'], $_SESSION['email'], $_POST['Message'], $dateTime->format(' Y-m-d H:i:s'), $_SESSION['mode']]);
         try {
 
-            echo json_encode($infosClient, JSON_FORCE_OBJECT);
+            echo json_encode($infosUser, JSON_FORCE_OBJECT);
         } catch (\Exception $e) {
-            echo "Error: " + $e;
+            echo json_encode(array("Error: " => $e));
+        }
+    }
+
+    if($_POST['request'] === 'updateChat'){
+        $datas = $db->FetchAllData('SELECT * FROM chat_teste');
+        foreach($datas as $data){
+            
+            
+            $array_teste = json_encode(array('id' => $data->id, 'name' => $data->name, 'message' => $data->message, 'dateTime' => $data->last_time, 'definedAuth' => $data->definedAuth), JSON_FORCE_OBJECT);
+            echo  $array_teste ."*";
         }
     }
 }

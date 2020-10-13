@@ -5,8 +5,6 @@
     hrx.onload = function () {
         var info_Connect = JSON.parse(this.responseText)
 
-
-        console.log(info_Connect)
         if (info_Connect.auth === true) {
             form1.classList.add('form-display-none');
             form2.classList.add('form-display-block');
@@ -25,23 +23,41 @@ var textChatEmail = document.querySelector(".form1 input[type='email']");
 var containerMsg = document.querySelector(".messages-send");
 
 
-// if (submit) {
-//     submit.addEventListener('click', function (event) {
-//         var param = document.querySelector("input[type='text']").value
-//         event.preventDefault();
-//         var hrx = new XMLHttpRequest();
-//         hrx.open('POST', '../src/classes/Chat.php', true)
-//         hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+var updateMessage = setInterval(function(){
+    var messagesBlock = document.querySelectorAll('.message-block > span');
+    //console.log(messagesBlock)
+    var inter = 0;
+    if(inter > 100) {clearInterval(x)}
+    var hrxUp = new XMLHttpRequest();
+            hrxUp.open('POST', '../src/classes/Chat.php', true);
+            hrxUp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            hrxUp.responseType = 'text';
+            hrxUp.onload = function () {
+                
+                //var info_Client_Connect = JSON.parse(this.responseText)
+                var info_Client_Connect =this.responseText
+                
+                var arrayData = info_Client_Connect.split('*')
+                //console.log(JSON.parse(arrayData[0]))
+                //console.log(arrayData)
+                var objVal = new Object();
+                objVal.data = [];
+                for(let i = 0; i < arrayData.length - 1; i++){
+                    objVal.data.push(JSON.parse(arrayData[i]))
+                    
+                }
+                var containerMessages = document.querySelector('.messages-send');
+                containerMessages.innerHTML = ""
+                for(let i = 0; i < objVal.data.length; i++){
+                    SendMessageChat(objVal.data[i])
+                    containerMsg.scrollTop = containerMsg.scrollHeight;
+                    
+                }
+                
+            }
+            hrxUp.send('request=updateChat');
+}, 1000)
 
-//         hrx.onload = function () {
-
-//             console.log(this.responseText)
-//             //console.log(JSON.parse(this.responseText))
-//         }
-//         hrx.send('clientName=' + param)
-
-//     })
-// }
 
 if (sendMessage) {
     sendMessage.addEventListener('click', function (e) {
@@ -51,8 +67,9 @@ if (sendMessage) {
             hrx.open('POST', '../src/classes/Chat.php', true);
             hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             hrx.onload = function () {
+                
                 var info_Client_Connect = JSON.parse(this.responseText)
-                console.log(info_Client_Connect)
+                //console.log(info_Client_Connect)
                 SendMessageChat(info_Client_Connect)
                 messageText.value = '';
                 containerMsg.scrollTop = containerMsg.scrollHeight;
@@ -98,7 +115,7 @@ if (submit) {
                 hrxS.open('POST', '../src/classes/Chat.php', true);
                 hrxS.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 hrxS.onload = function () {
-                    console.log(this.responseText)
+                    //console.log(this.responseText)
                     var info_Support_Connect = JSON.parse(this.responseText)
                     if (info_Support_Connect.auth) {
                         form1.classList.add('form-display-none');
@@ -121,17 +138,18 @@ function SendMessageChat(obj) {
     var nameClient = document.createElement('p')
     var message = document.createElement('p')
     var dateTime = document.createElement('p')
+    var id = document.createElement('span')
     var containerMessages = document.querySelector('.messages-send');
     var date = new Date();
     nameClient.innerText = obj.name;
     message.innerText = obj.message;
     dateTime.innerText = obj.dateTime;
-    console.log(obj.mode)
+    id.innerHTML = obj.id;
     if (obj.definedAuth === 1) { div.setAttribute('class', 'support message-block') } else { div.setAttribute('class', 'client message-block') }
-
     div.appendChild(nameClient);
     div.appendChild(message);
     div.appendChild(dateTime);
+    div.appendChild(id)
     containerMessages.appendChild(div);
 }
 
