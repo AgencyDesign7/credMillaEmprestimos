@@ -105,7 +105,10 @@ class DataBase
         }
     }
 
-    public function deleteDate($sql, $param = []){
+    public function deleteData($sql, $param = []){
+        $this->insetData($sql, $param);
+    }
+    public function updateData($sql, $param = []){
         $this->insetData($sql, $param);
     }
 

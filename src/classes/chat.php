@@ -6,6 +6,7 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
+
 include_once('./Classes.php');
 
 use chatC\{Person, Client, Controller, DataBase, Support};
@@ -38,6 +39,12 @@ if (isset($_POST['request'])) {
                         $_SESSION['mode'] = 1;
                         $_SESSION['name'] = $post->name;
                         $_SESSION['email'] = $post ->email;
+                        
+                        if($_POST['status'] === true){
+                            $db->updateData('UPDATE supportlogin SET online=true WHERE login = ?', [$user]);
+                        }
+                        
+
                     } else {
                         echo json_encode(array('auth' => false));
                     }
@@ -72,12 +79,27 @@ if (isset($_POST['request'])) {
 
     if($_POST['request'] === 'updateChat'){
         $datas = $db->FetchAllData('SELECT * FROM chat_teste');
+
         foreach($datas as $data){
+
+            //teste filter messages from chat to update *BUG: not work, duplicate results
+            //Try: change position, first loop elementsUpdate after datas
+            $elementsUpdate = json_decode($_POST['messagesid'], true);
+            var_dump($elementsUpdate);
+            foreach($elementsUpdate as $key => $value ){
+                if($value === $data->message){
+                    continue;
+                }else{
+                     json_encode(array('id' => $data->id, 'name' => $data->name, 'message' => $data->message, 'dateTime' => $data->last_time, 'definedAuth' => $data->definedAuth), JSON_FORCE_OBJECT);
+                }
+            }
+
+            //Working: send all data from db
+            //$array_teste = json_encode(array('id' => $data->id, 'name' => $data->name, 'message' => $data->message, 'dateTime' => $data->last_time, 'definedAuth' => $data->definedAuth), JSON_FORCE_OBJECT);
+            //echo  $array_teste ."*";
             
-            
-            $array_teste = json_encode(array('id' => $data->id, 'name' => $data->name, 'message' => $data->message, 'dateTime' => $data->last_time, 'definedAuth' => $data->definedAuth), JSON_FORCE_OBJECT);
-            echo  $array_teste ."*";
         }
+        
     }
 }
 
