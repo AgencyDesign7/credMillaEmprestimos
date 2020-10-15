@@ -12,7 +12,7 @@ include_once('./Classes.php');
 use chatC\{Person, Client, Controller, DataBase, Support};
 
 $db = new DataBase();
-
+$Controller = new Controller();
 
 if (isset($_POST['checkStart'])) {
     if ($_POST['checkStart'] === 'Auth') {
@@ -55,13 +55,22 @@ if (isset($_POST['request'])) {
         }
     }
 
-
+    if($_POST['request'] === 'countdb'){
+        echo $Controller->CountQueue();
+        
+    }
 
     if ($_POST['request'] === 'enterChatClient') {
         $_SESSION['name'] = $_POST['clientName'];
         $_SESSION['email'] = $_POST['email'];
         $infosUser = array('name' =>  $_SESSION['name'], 'email' =>  $_SESSION['email'], 'mode' => $_SESSION['mode'] = 0);
+        
+
+        $Client = new Client($_SESSION['name'], session_id());
+        $Controller->ConnectChatQueue($Client);
+
         echo json_encode($infosUser, JSON_FORCE_OBJECT);
+
     }
     if ($_POST['request'] === 'sendMessageChat') {
         $timeZone = new DateTimeZone('Brazil/East');
@@ -84,22 +93,41 @@ if (isset($_POST['request'])) {
 
             //teste filter messages from chat to update *BUG: not work, duplicate results
             //Try: change position, first loop elementsUpdate after datas
-            $elementsUpdate = json_decode($_POST['messagesid'], true);
-            var_dump($elementsUpdate);
-            foreach($elementsUpdate as $key => $value ){
-                if($value === $data->message){
-                    continue;
-                }else{
-                     json_encode(array('id' => $data->id, 'name' => $data->name, 'message' => $data->message, 'dateTime' => $data->last_time, 'definedAuth' => $data->definedAuth), JSON_FORCE_OBJECT);
-                }
-            }
+            // $elementsUpdate = json_decode($_POST['messagesid'], true);
+            // var_dump($elementsUpdate);
+            // foreach($elementsUpdate as $key => $value ){
+            //     if($value === $data->message){
+            //         continue;
+            //     }else{
+            //          echo json_encode(array('id' => $data->id, 'name' => $data->name, 'message' => $data->message, 'dateTime' => $data->last_time, 'definedAuth' => $data->definedAuth), JSON_FORCE_OBJECT);
+            //     }
+            // }
 
             //Working: send all data from db
-            //$array_teste = json_encode(array('id' => $data->id, 'name' => $data->name, 'message' => $data->message, 'dateTime' => $data->last_time, 'definedAuth' => $data->definedAuth), JSON_FORCE_OBJECT);
-            //echo  $array_teste ."*";
+            $array_teste = json_encode(array('id' => $data->id, 'name' => $data->name, 'message' => $data->message, 'dateTime' => $data->last_time, 'definedAuth' => $data->definedAuth), JSON_FORCE_OBJECT);
+            echo  $array_teste ."*";
             
         }
         
+    }
+    if($_POST['request'] === 'ckeck-online'){
+    
+        $datas = $db->FetchAllData('SELECT * FROM supportlogin');
+        foreach($datas as $data){
+           
+            
+            if($data->online === 1){
+                $resultJson = json_encode(array('id' => $data->id, 'name' => $data->name, 'status'=> $data->online), JSON_FORCE_OBJECT);
+                if($data->online > 1){
+                    echo $resultJson . "*";
+                }else{
+                    echo $resultJson;
+                }
+                
+            }else{
+                echo json_encode(array('status' => 0) ,JSON_FORCE_OBJECT);
+            }
+        }
     }
 }
 

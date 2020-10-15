@@ -1,12 +1,13 @@
 <?php
 
 namespace chatC;
+include_once('../classes/Person.php');
 
 class Client extends Person
 {
 
-    function __construct($id, $idSession, $name)
+    function __construct($name, $idSession)
     {
-        parent::__construct($id, $idSession, $name);
+        parent::__construct($name, $idSession);
     }
 }

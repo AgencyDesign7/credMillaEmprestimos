@@ -4,13 +4,10 @@ namespace chatC;
 use \DateTime;
 use \DateTimeZone;
 class Person {
-
-    private $id;
     public $idSession;
     public $name;
     
-    function __construct($id, $idSession, $name){
-        $this->id = $id;
+    function __construct($name, $idSession){
         $this->idSession = $idSession;
         $this->name = $name;
 
@@ -23,7 +20,7 @@ class Person {
         $dateTime = new DateTime();
         $dateTime->setTimezone($timeZone);
         //$db->insetData("INSERT INTO  queue_users (name, session, date_time) VALUES (?,?,?)",[ $name, $idSession, $dateTime->format('Y-m-d H:i:s')]);
-        $db->deleteDate('DELETE FROM queue_users WHERE name = ?', [$this->name]);
+        $db->deleteData('DELETE FROM queue_users WHERE name = ?', [$this->name]);
         // $db->prepare("INSERT INTO queue_users ('name', 'seesion', 'date_time') VALUES (:name, :session, :date_time)");
         // $db->bindParam(':name', $_SESSION['name']);
         // $db->bindParam(':session',session_id());
@@ -32,12 +29,19 @@ class Person {
 
     function __destruct()
     {   
-       
-        //$db->deleteDate('DELETE FROM queue_users WHERE name = ?', [$this->name]);
         
     }
 
     function SendMessageChat(){
 
+    }
+
+    function getName()
+    {
+        return $this->name;
+    }
+
+    function getidSession(){
+        return $this->idSession;
     }
 }

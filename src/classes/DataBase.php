@@ -99,7 +99,7 @@ class DataBase
             // $stmt->bindParam(2,session_id());
             // $stmt->bindParam(3, $dateTime->format('Y-m-d H:i:s'));
             $stmt->execute($param);
-            //return $stmt->fetch;
+            return $stmt->rowCount();
         } catch (PDOException $th) {
             throw new Exception($th->getMessage());
         }

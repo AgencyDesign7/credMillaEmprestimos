@@ -647,6 +647,7 @@ input[type="file"]{
 }
 
 .social{
+    position: relative;
     width: 100%;
     height: fit-content;
     display: flex;
@@ -654,7 +655,7 @@ input[type="file"]{
     padding: 0 40px 20px 40px;
 }
 .social img{
-    width: 100px;
+    width: 75px;
     height: auto;
 }
 
@@ -691,7 +692,7 @@ input[type="file"]{
     align-items: center;
     width: 500px;
     height: 500px;
-    border-radius: 20px;
+    border-radius: 0 !important;
     background-color: var(--color-box-button);
 }
 
@@ -729,10 +730,13 @@ input[type="file"]{
     width: 100px;
     height: 40px;
 }
+.form2{
+    border-radius: 0;
+}
 
 .chat-container-form .form2{
     display: none;
-    width: 500px;
+    width: 400px;
     height: 500px;
     flex-direction: row;
     justify-content: flex-end;
@@ -740,12 +744,13 @@ input[type="file"]{
 }
 
 .chat-container-form .form2 input{
-    margin: 0;
+    margin: 0 10px 0 0;
+    width: 50px !important;
 }
 .chat-container-form .form2 textarea{
     width: 80%;
     height: 40px;
-    margin: 0;
+    margin: 0 0 0 15px;
     resize: none !important;
 }
 .chat-container-form .form2 input[type="submit"]{
@@ -754,13 +759,15 @@ input[type="file"]{
 }
 .chat-message{
     position: relative;
+    overflow-x: hidden;
+
 }
 
 .chat-container-form .messages-send{
     position: absolute;
     display:  flex;
     flex-direction: column;
-    width: 90%;
+    width: 95%;
     height: 80%;
     margin-left: auto;
     margin-right: auto;
@@ -783,13 +790,16 @@ input[type="file"]{
 }
 .chat-container-form .messages-send .message-block > p:nth-child(1){
     font-weight: bold;
+    font-size: 12px;
 }
 .chat-container-form .messages-send .message-block > p:nth-child(3){
-    font-size: 12px;
+    font-size: 10px;
+    direction: ltr !important;
 }
 .chat-container-form .messages-send .message-block > p:nth-child(2){
     margin: 5px 0 5px 0;
     direction: ltr !important;
+    font-size: 12px;
 }
 .message-block > span{
     display: none;
@@ -811,7 +821,7 @@ input[type="file"]{
     margin-bottom: 15px;
 }
 .init-head-message p{
-    font-size: 14px;
+    font-size: 10px;
     margin-bottom: 0px;
     text-align: center;
 }
@@ -839,3 +849,70 @@ input[type="file"]{
     margin: 0;
 }
 
+
+/* chat Iframe */
+.chat-frame-container{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: 100%;
+    right: 15px;
+    top: -435px;
+    width: fit-content;
+    height: 0;
+    overflow-y: hidden;
+    transition: height 0.5 ease-in-out;;
+}
+
+.chat-frame-container iframe{
+    width: 400px;
+    height: 500px;
+    border: 1px solid var(--color-box);
+}
+iframe html{
+    overflow: hidden !important;
+}
+
+.chat-frame-container span{
+    border: 1px solid var(--color-box);
+    background-color:var(--color-navbar-container);
+    padding: 10px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.chat-frame-container span a{
+    text-decoration: none;
+    color: black;
+}
+
+#maximaze-img{
+    width: 20px !important;
+    height: auto !important;
+}
+.frame-maximaze{
+    width: max-content;
+    position: absolute;
+    top: 0;
+    left: 92%;
+}
+
+.offline-msg textarea{
+    resize: none;
+    width: 90%;
+}
+
+.offline-msg label:first-child{
+    font-size: 14px;
+    font-weight: normal;
+    padding: 15px;
+}
+
+.open-form{
+    height: 600px;
+    transition: height 0.3s ease-in-out;
+}
