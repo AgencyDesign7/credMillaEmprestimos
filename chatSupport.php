@@ -74,8 +74,8 @@
 
             <div class="messages-send">
                 <div class="init-head-message">
-                    <p>Bem vindo ao chat credMilla emprestimos</p>
-                    <p>Suporte Pedro Henrrique está conectado...</p>
+                    <p></p>
+                    <p></p>
                 </div>
                 <!-- <div class="suport message-block">
                     <p>Pedro Henrrique:</p>
@@ -89,12 +89,18 @@
                 </div> -->
 
             </div>
-            <form action="" method="post" class="form2">
+            <form action="" method="post" class="form2 support-manager">
                 <textarea name="texttosend" id="" cols="30" rows="10"></textarea>
                 <input class="sub-btn2" type="submit" value="Enviar">
             </form>
         </div>
-
+        <div class="painel-view">
+            <div class="queue-users">
+                <p>Total de usuários na fila:</p><span></span>
+            </div>
+            <div class="btn-InitChat"><a href="#">Iniciar Atendimento</a></div>
+            <div class="btn-FinishChat"><a href="#">Finalizar Chat</a></div>
+        </div>
     </div>
 
     <script src="./scripts/script.chat.resouce.js"></script>

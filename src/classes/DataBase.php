@@ -92,7 +92,7 @@ class DataBase
             $_SESSION['ERROR-DB'] = $th->getMessage();
         }
     }
-    public function insetData($sql, $param = []){
+    public function insertData($sql, $param){
         try {
             $stmt = $this->pdo->prepare($sql);
             // $stmt->bindParam(1, $nameUser);
@@ -105,11 +105,11 @@ class DataBase
         }
     }
 
-    public function deleteData($sql, $param = []){
-        $this->insetData($sql, $param);
+    public function deleteData($sql, $param){
+        $this->insertData($sql, $param);
     }
-    public function updateData($sql, $param = []){
-        $this->insetData($sql, $param);
+    public function updateData($sql, $param){
+        $this->insertData($sql, $param);
     }
 
 }

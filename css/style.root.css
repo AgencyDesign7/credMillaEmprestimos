@@ -743,6 +743,11 @@ input[type="file"]{
     align-items: flex-end;
 }
 
+.support-manager{
+    width: 500px !important;
+    height: 700px !important;
+}
+
 .chat-container-form .form2 input{
     margin: 0 10px 0 0;
     width: 50px !important;
@@ -790,16 +795,15 @@ input[type="file"]{
 }
 .chat-container-form .messages-send .message-block > p:nth-child(1){
     font-weight: bold;
-    font-size: 12px;
+    font-size: 14px;
 }
 .chat-container-form .messages-send .message-block > p:nth-child(3){
-    font-size: 10px;
-    direction: ltr !important;
+    font-size: 11px;
 }
 .chat-container-form .messages-send .message-block > p:nth-child(2){
     margin: 5px 0 5px 0;
     direction: ltr !important;
-    font-size: 12px;
+    font-size: 14px;
 }
 .message-block > span{
     display: none;
@@ -919,4 +923,33 @@ iframe html{
 
 .imageLoad{
     display: none;
+}
+
+/* Suport Chat */
+
+.painel-view{
+    margin: 40px;
+}
+
+.queue-users{
+    margin: 0 5px 20px 0;
+    font-size: 16px;
+}
+.queue-users span{
+    font-size: 16px;
+}
+
+.btn-InitChat, .btn-FinishChat{
+    margin: 15px;
+    background-color: var(--color-send-job-from);
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-InitChat a, .btn-FinishChat a{
+    text-decoration: none;
+    font-size: 14px;
+    color: white;
 }

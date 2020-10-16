@@ -19,7 +19,7 @@
     hrx.open('POST', '../src/classes/Chat.php', true);
     hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     hrx.onload = function () {
-       console.log(this.responseText)
+        //console.log(this.responseText)
     }
     hrx.send('request=countdb');
 }()
@@ -33,10 +33,12 @@ var textChatName = document.querySelector(".form1 input[type='text']");
 var textChatEmail = document.querySelector(".form1 input[type='email']");
 var containerMsg = document.querySelector(".messages-send");
 var chatMsgHead = document.querySelector("#init-support-msg");
-console.log(form2)
+var SuportInitChat = document.querySelector(".btn-InitChat");
+var SupportFinishChat = document.querySelector(".btn-FinishChat");
 
-if(true){
-    var updateMessage = setInterval(function(){
+
+if (true) {
+    var updateMessage = setInterval(function () {
         var auxRequest = false;
         var messagesBlock = document.querySelectorAll('.message-block > span');;
         var messagesSend = document.querySelectorAll('.message-block > :nth-child(2)');
@@ -44,55 +46,53 @@ if(true){
         var inter = 0;
         //if(inter > 100) {clearInterval(x)}
         var hrxUp = new XMLHttpRequest();
-                hrxUp.open('POST', '../src/classes/Chat.php', true);
-                hrxUp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                hrxUp.responseType = 'text';
-                
-                hrxUp.onload = function () {
-                    //console.log(this.responseText)
-    
-                    var info_Client_Connect =this.responseText
-                    
-                    var arrayData = info_Client_Connect.split('*')
-                    
-                    var objVal = new Object();
-                    objVal.data = [];
-                    for(let i = 0; i < arrayData.length - 1; i++){
-                        objVal.data.push(JSON.parse(arrayData[i]))
-                        
-                    }
-                    var containerMessages = document.querySelector('.messages-send');
-                    
-                    if(objVal.data.length > 0){
-                        if(form2 !== null){
-                            SendMessageChat(objVal)
-                        }
-                    }
-                    UpdateMsgQueueInformationClient();
-                }
+        hrxUp.open('POST', '../src/classes/Chat.php', true);
+        hrxUp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        hrxUp.responseType = 'text';
 
-                if(messagesSend.length > 0){
-                    var arrElements = []
-                    messagesSend.forEach(d=>{
-                        arrElements.push(d.innerHTML)
-                    })
+        hrxUp.onload = function () {
+            //console.log(this.responseText)
+            var info_Client_Connect = this.responseText
+
+            var arrayData = info_Client_Connect.split('*')
+
+            var objVal = new Object();
+            objVal.data = [];
+            for (let i = 0; i < arrayData.length - 1; i++) {
+                objVal.data.push(JSON.parse(arrayData[i]))
+
+            }
+            var containerMessages = document.querySelector('.messages-send');
+
+            if (objVal.data.length > 0) {
+                if (form2 !== null) {
+                    SendMessageChat(objVal)
                 }
-                hrxUp.send('request=updateChat&messagesid='+ JSON.stringify(arrElements));
-                console.log('update...')
-    }, 3000)
-}else{
+            }
+            UpdateMsgQueueInformationClient();
+        }
+
+        if (messagesSend.length > 0) {
+            var arrElements = []
+            messagesSend.forEach(d => {
+                arrElements.push(d.innerHTML)
+            })
+        }
+        hrxUp.send('request=updateChat');
+        console.log('update...')
+    }, 2000)
+} else {
     clearInterval(updateMessage);
 }
 
 
-function UpdateMsgQueueInformationClient(){
+function UpdateMsgQueueInformationClient() {
     var hrxUp = new XMLHttpRequest();
     hrxUp.open('POST', '../src/classes/Chat.php', true);
     hrxUp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     hrxUp.responseType = 'text';
-    
     hrxUp.onload = function () {
-        if(form2 !== null){
+        if (form2 !== null && chatMsgHead !== null) {
 
             chatMsgHead.textContent = 'Aguarde, em breve você será atendido... você é ' + (Number(this.responseText) + 1) + 'º da fila';
         }
@@ -110,10 +110,10 @@ if (sendMessage) {
             hrx.open('POST', '../src/classes/Chat.php', true);
             hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             hrx.onload = function () {
-                
+
                 var info_Client_Connect = JSON.parse(this.responseText)
                 //console.log(info_Client_Connect)
-                
+
                 //SendMessageChat(info_Client_Connect)
                 messageText.value = '';
                 //containerMsg.scrollTop = containerMsg.scrollHeight;
@@ -143,10 +143,10 @@ if (submit) {
                     var info_Client_Connect = JSON.parse(this.responseText)
                     form1.classList.add('form-display-none');
                     form2.classList.add('form-display-block');
-                   
+
                 }
                 hrx.send('clientName=' + textChatName.value + '&email=' + textChatEmail.value + '&request=enterChatClient');
-                
+
             } else {
                 alert("Favor preencher Nome e email")
             }
@@ -181,11 +181,11 @@ if (submit) {
 function SendMessageChat(obj) {
     var spanMessageID = document.querySelectorAll('.message-block > :nth-child(4)');
 
-    if(spanMessageID.length > 0 && obj.data.length > 0){
-        
-        for(var i = 0; i < obj.data.length; i++){
+    if (spanMessageID.length > 0 && obj.data.length > 0) {
+
+        for (var i = 0; i < obj.data.length; i++) {
             //Verify if index is not null, if equal null, is because not exist element in block-message but was send message and add in database
-            if(spanMessageID[i] === undefined){
+            if (spanMessageID[i] === undefined) {
                 var div = document.createElement('div')
                 var nameClient = document.createElement('p')
                 var message = document.createElement('p')
@@ -204,12 +204,12 @@ function SendMessageChat(obj) {
                 div.appendChild(id)
                 containerMessages.appendChild(div);
                 containerMsg.scrollTop = containerMsg.scrollHeight
-                
-            }else{
 
-                if(Number(spanMessageID[i].innerHTML) === Number(obj.data[i].id)){
+            } else {
+
+                if (Number(spanMessageID[i].innerHTML) === Number(obj.data[i].id)) {
                     //Alredy exist in block-message
-                }else{
+                } else {
                     //Case haven't found in list
                     var div = document.createElement('div')
                     var nameClient = document.createElement('p')
@@ -229,33 +229,69 @@ function SendMessageChat(obj) {
                     div.appendChild(id)
                     containerMessages.appendChild(div);
                     containerMsg.scrollTop = containerMsg.scrollHeight
-                    
+
                 }
             }
         }
-    }else{
-        obj.data.forEach(function(ob){
+    } else {
+        obj.data.forEach(function (ob) {
             var div = document.createElement('div')
-                var nameClient = document.createElement('p')
-                var message = document.createElement('p')
-                var dateTime = document.createElement('p')
-                var id = document.createElement('span')
-                var containerMessages = document.querySelector('.messages-send');
-                var date = new Date();
-                nameClient.innerText = ob.name;
-                message.innerText = ob.message;
-                dateTime.innerText = ob.dateTime;
-                id.innerHTML = ob.id;
-                if (ob.definedAuth === 1) { div.setAttribute('class', 'support message-block') } else { div.setAttribute('class', 'client message-block') }
-                div.appendChild(nameClient);
-                div.appendChild(message);
-                div.appendChild(dateTime);
-                div.appendChild(id)
-                containerMessages.appendChild(div);
-                containerMsg.scrollTop = containerMsg.scrollHeight
+            var nameClient = document.createElement('p')
+            var message = document.createElement('p')
+            var dateTime = document.createElement('p')
+            var id = document.createElement('span')
+            var containerMessages = document.querySelector('.messages-send');
+            var date = new Date();
+            nameClient.innerText = ob.name;
+            message.innerText = ob.message;
+            dateTime.innerText = ob.dateTime;
+            id.innerHTML = ob.id;
+            if (ob.definedAuth === 1) { div.setAttribute('class', 'support message-block') } else { div.setAttribute('class', 'client message-block') }
+            div.appendChild(nameClient);
+            div.appendChild(message);
+            div.appendChild(dateTime);
+            div.appendChild(id)
+            containerMessages.appendChild(div);
+            containerMsg.scrollTop = containerMsg.scrollHeight
         })
     }
-    
+
 }
 
 
+if (SuportInitChat !== null && SupportFinishChat !== null) {
+    SuportInitChat.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        var hrxS = new XMLHttpRequest();
+        hrxS.open('POST', '../src/classes/Chat.php', true);
+        hrxS.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        hrxS.onload = function () {
+            console.log(this.responseText)
+        }
+        hrxS.send('request=initChat');
+
+    })
+    SupportFinishChat.addEventListener('click', function (event) {
+        event.preventDefault();
+        var hrxS = new XMLHttpRequest();
+        hrxS.open('POST', '../src/classes/Chat.php', true);
+        hrxS.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        hrxS.onload = function () {
+            console.log(this.responseText)
+        }
+        hrxS.send('request=finishChat');
+    })
+}
+
+function ClientVeifyRoom() {
+    if (location.pathname === '/chat.php') {
+        var hrxS = new XMLHttpRequest();
+        hrxS.open('POST', '../src/classes/Chat.php', true);
+        hrxS.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        hrxS.onload = function () {
+            console.log(this.responseText)
+        }
+        hrxS.send('request=connectChat');
+    }
+}
