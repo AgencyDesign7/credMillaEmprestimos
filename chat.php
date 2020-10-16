@@ -2,7 +2,7 @@
 <html lang="en">
 <?php 
     if(!isset($_SESSION)){session_start();}
-
+    
 ?>
 <head>
     <meta charset="UTF-8">
@@ -31,11 +31,12 @@
         <div class="chat-message">
             
             <div class="messages-send">
-                <div class="frame-maximaze"><a href="./chat.php" target="_black"><img id="maximaze-img" src="./resource/img/icons/maximize-size.png" alt=""></a></div>
+                <!-- <div class="frame-maximaze"><a href="./chat.php" target="_black"><img id="maximaze-img" src="./resource/img/icons/maximize-size.png" alt=""></a></div> -->
                 <div class="init-head-message">
                     <p>Bem vindo ao chat credMilla emprestimos</p>
-                    <p>Suporte Pedro Henrrique está conectado...</p>
+                    <p id="init-support-msg"></p>
                 </div>
+                <div class="imageLoad"><img src="./resource/img/icons/spingLoad.gif" alt=""></div>
                 <!-- <div class="suport message-block">
                     <p>Pedro Henrrique:</p>
                     <p>Olá, como vai?</p>

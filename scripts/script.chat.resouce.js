@@ -32,6 +32,8 @@ var form2 = document.querySelector(".form2")
 var textChatName = document.querySelector(".form1 input[type='text']");
 var textChatEmail = document.querySelector(".form1 input[type='email']");
 var containerMsg = document.querySelector(".messages-send");
+var chatMsgHead = document.querySelector("#init-support-msg");
+console.log(form2)
 
 if(true){
     var updateMessage = setInterval(function(){
@@ -45,6 +47,7 @@ if(true){
                 hrxUp.open('POST', '../src/classes/Chat.php', true);
                 hrxUp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 hrxUp.responseType = 'text';
+                
                 hrxUp.onload = function () {
                     //console.log(this.responseText)
     
@@ -60,29 +63,14 @@ if(true){
                     }
                     var containerMessages = document.querySelector('.messages-send');
                     
-                    for(let i = 0; i < objVal.data.length; i++){
-                        
-                        // if(messagesSend.length > 0){
-                        //     if(messagesSend[i].innerHTML === objVal.data[i].message){
-                        //         console.log(objVal.data[i])
-                        //         objVal.data.splice(i, 1)
-    
-                        //     }
-                                //containerMessages.innerHTML = ""
-                            
-                            //SendMessageChat(objVal.data[i])
-                            console.log('update')
-                            
-                        }
-                        if(objVal.data.length > 0){
+                    if(objVal.data.length > 0){
+                        if(form2 !== null){
                             SendMessageChat(objVal)
                         }
-                        //console.log(objVal.data)
-                        // SendMessageChat(objVal.data[i])
-                        // containerMsg.scrollTop = containerMsg.scrollHeight
-                    
-                    
+                    }
+                    UpdateMsgQueueInformationClient();
                 }
+
                 if(messagesSend.length > 0){
                     var arrElements = []
                     messagesSend.forEach(d=>{
@@ -90,12 +78,29 @@ if(true){
                     })
                 }
                 hrxUp.send('request=updateChat&messagesid='+ JSON.stringify(arrElements));
+                console.log('update...')
     }, 3000)
 }else{
     clearInterval(updateMessage);
 }
 
 
+function UpdateMsgQueueInformationClient(){
+    var hrxUp = new XMLHttpRequest();
+    hrxUp.open('POST', '../src/classes/Chat.php', true);
+    hrxUp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    hrxUp.responseType = 'text';
+    
+    hrxUp.onload = function () {
+        if(form2 !== null){
+
+            chatMsgHead.textContent = 'Aguarde, em breve você será atendido... você é ' + (Number(this.responseText) + 1) + 'º da fila';
+        }
+
+    }
+
+    hrxUp.send('request=infoQueue');
+}
 
 if (sendMessage) {
     sendMessage.addEventListener('click', function (e) {
@@ -138,9 +143,10 @@ if (submit) {
                     var info_Client_Connect = JSON.parse(this.responseText)
                     form1.classList.add('form-display-none');
                     form2.classList.add('form-display-block');
+                   
                 }
                 hrx.send('clientName=' + textChatName.value + '&email=' + textChatEmail.value + '&request=enterChatClient');
-
+                
             } else {
                 alert("Favor preencher Nome e email")
             }

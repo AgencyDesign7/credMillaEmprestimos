@@ -32,7 +32,7 @@ class Controller
 
     function CountQueue()
     {
-        return $this->db->insetData('SELECT * FROM queue_users');
+        return $this->db->FetchAllData('SELECT * FROM queue_users', []);
     }
 
     function FinishChat($idCurrent)
@@ -43,6 +43,7 @@ class Controller
 
     function NextQueue()
     {
+        $datasQueue = $this->db->FetchAllData('SELECT * FROM queue_users', []);
     }
 
     function UpdateQueue()

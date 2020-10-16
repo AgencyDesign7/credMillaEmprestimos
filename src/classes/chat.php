@@ -29,7 +29,7 @@ if (isset($_POST['request'])) {
         if ($_POST['login'] && $_POST['password']) {
             $user = $_POST['login'];
             $password = $_POST['password'];
-            $posts = $db->FetchAllData('SELECT * FROM `supportlogin` WHERE `login`="admin"');
+            $posts = $db->FetchAllData('SELECT * FROM `supportlogin` WHERE `login`= ?', $_POST['login']);
             if ($posts) {
                 foreach ($posts as $post) {
                     $ResultLogin = strcmp($user, $post->login);
@@ -87,22 +87,9 @@ if (isset($_POST['request'])) {
     }
 
     if($_POST['request'] === 'updateChat'){
-        $datas = $db->FetchAllData('SELECT * FROM chat_teste');
+        $datas = $db->FetchAllData('SELECT * FROM chat_teste', []);
 
         foreach($datas as $data){
-
-            //teste filter messages from chat to update *BUG: not work, duplicate results
-            //Try: change position, first loop elementsUpdate after datas
-            // $elementsUpdate = json_decode($_POST['messagesid'], true);
-            // var_dump($elementsUpdate);
-            // foreach($elementsUpdate as $key => $value ){
-            //     if($value === $data->message){
-            //         continue;
-            //     }else{
-            //          echo json_encode(array('id' => $data->id, 'name' => $data->name, 'message' => $data->message, 'dateTime' => $data->last_time, 'definedAuth' => $data->definedAuth), JSON_FORCE_OBJECT);
-            //     }
-            // }
-
             //Working: send all data from db
             $array_teste = json_encode(array('id' => $data->id, 'name' => $data->name, 'message' => $data->message, 'dateTime' => $data->last_time, 'definedAuth' => $data->definedAuth), JSON_FORCE_OBJECT);
             echo  $array_teste ."*";
@@ -110,9 +97,16 @@ if (isset($_POST['request'])) {
         }
         
     }
+    if($_POST['request'] === 'infoQueue'){
+        $name = $_SESSION['name'];
+        $sessionId = session_id();
+        $data = $db->FetchAllData('SELECT * FROM queue_users', []);
+        echo array_search($sessionId, array_column($data, 'session'));
+    }
+
     if($_POST['request'] === 'ckeck-online'){
     
-        $datas = $db->FetchAllData('SELECT * FROM supportlogin');
+        $datas = $db->FetchAllData('SELECT * FROM supportlogin', []);
         foreach($datas as $data){
            
             
@@ -126,9 +120,11 @@ if (isset($_POST['request'])) {
                 
             }else{
                 echo json_encode(array('status' => 0) ,JSON_FORCE_OBJECT);
+                session_unset();
             }
         }
     }
+
 }
 
 

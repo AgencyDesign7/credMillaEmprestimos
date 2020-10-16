@@ -53,11 +53,11 @@ class DataBase
         $this->pdo = null;
     }
 
-    public function FetchAllData($sql)
+    public function FetchAllData($sql, $props)
     {
         try {
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute();
+            $stmt->execute($props);
             return $stmt->fetchAll();
         } catch (PDOException $th) {
             echo $th->getMessage();
