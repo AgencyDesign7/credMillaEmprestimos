@@ -23,7 +23,7 @@ class Controller
 
     function ConnectChatQueue($Client)
     {
-        $this->db->insertData('INSERT INTO queue_users(name, session, date_time) VALUES (?,?,?)', [$Client->getName(), $Client->getidSession(), $this->getDataTime('Y-m-d h:i:s')]);
+        $this->db->insertData('INSERT INTO queue_users(name, session, date_time) VALUES (?,?,?)', [$Client->getName(), $Client->getidSession(), $this->getDataTime('Y-m-d H:i:s')]);
 
     }
 

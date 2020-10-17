@@ -5,6 +5,7 @@
     var buttonCadastro = document.querySelector('#cadastro-trabalho')
     var formCloseMsg = document.querySelector('.chat-frame-container span')
     var iframeForm = document.querySelector('.chat-frame-container')
+    var iframe = document.querySelector('.chat-frame')
     var chatIcon = document.querySelector('.chat-link')
 
     if (!navbarMenus || !btnClose || !btnMenu) {
@@ -35,10 +36,19 @@
     }
 
     if(formCloseMsg){
-        console.log(iframeForm)
+        var form1 = document.querySelector(".form1")
+        var form2 = document.querySelector(".form2")
+        //console.log(iframeForm)
         formCloseMsg.addEventListener('click', function(event){
             event.preventDefault()
             iframeForm.classList.remove('open-form');
+            var hrx = new XMLHttpRequest();
+            hrx.open('POST', '../src/classes/Chat.php', true);
+            hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            hrx.onload = function (){
+                iframe.contentWindow.location.reload(true);
+            }
+            hrx.send('request=closeChat')
         })
     }
     if(chatIcon){

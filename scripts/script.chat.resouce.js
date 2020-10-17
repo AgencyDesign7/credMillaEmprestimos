@@ -3,7 +3,12 @@
     hrx.open('POST', '../src/classes/Chat.php', true);
     hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     hrx.onload = function () {
-        var info_Connect = JSON.parse(this.responseText)
+        try{
+
+            var info_Connect = JSON.parse(this.responseText)
+        }catch(e){
+            console.error("Auth: ", e.message);
+        }
 
         if (info_Connect.auth === true) {
             form1.classList.add('form-display-none');
@@ -59,7 +64,12 @@ if (true) {
             var objVal = new Object();
             objVal.data = [];
             for (let i = 0; i < arrayData.length - 1; i++) {
-                objVal.data.push(JSON.parse(arrayData[i]))
+                try{
+
+                    objVal.data.push(JSON.parse(arrayData[i]))
+                }catch(e){
+                    console.error("Update Chat: ", e.message)
+                }
 
             }
             var containerMessages = document.querySelector('.messages-send');
@@ -87,14 +97,42 @@ if (true) {
 
 
 function UpdateMsgQueueInformationClient() {
+    var listUsers = document.querySelector('.users-queue');
+    var counterUsers = document.querySelector('.queue-users p > span');
     var hrxUp = new XMLHttpRequest();
     hrxUp.open('POST', '../src/classes/Chat.php', true);
     hrxUp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     hrxUp.responseType = 'text';
     hrxUp.onload = function () {
-        if (form2 !== null && chatMsgHead !== null) {
+        if(document.location.pathname === "/chatSupport.php"){
+            var obj = new Object();
+            obj.data = [];
+            var result = this.responseText.split('*');
+            for(let i = 0; i < result.length - 1; i++){
+                try{
 
-            chatMsgHead.textContent = 'Aguarde, em breve você será atendido... você é ' + (Number(this.responseText) + 1) + 'º da fila';
+                    obj.data.push(JSON.parse(result[i]));
+                }catch(e){
+                    console.error("Update queue: ", e.message)
+                }
+            }
+            if(listUsers !== null){
+                var list = ""
+                obj.data.forEach(function(ob){
+                    list +='<li><p>'+ ob.name + '</p></li>'; 
+                })
+                listUsers.innerHTML = `<ul>${list}</ul>`
+            }
+            if(counterUsers !== null){
+                counterUsers.innerHTML = obj.data.length
+            }
+            
+            
+        }else{
+            if (form2 !== null && chatMsgHead !== null) {
+                console.log(this.responseText);
+                chatMsgHead.textContent = this.responseText;
+            }
         }
 
     }
@@ -111,7 +149,13 @@ if (sendMessage) {
             hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             hrx.onload = function () {
 
-                var info_Client_Connect = JSON.parse(this.responseText)
+                try{
+
+                    var info_Client_Connect = JSON.parse(this.responseText)
+                }catch(e){
+                    console.error("Send Message: ", e.message)
+                }
+                
                 //console.log(info_Client_Connect)
 
                 //SendMessageChat(info_Client_Connect)
@@ -140,7 +184,11 @@ if (submit) {
                 hrx.open('POST', '../src/classes/Chat.php', true);
                 hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 hrx.onload = function () {
-                    var info_Client_Connect = JSON.parse(this.responseText)
+                    try{
+                        var info_Client_Connect = JSON.parse(this.responseText)
+                    }catch(e){
+                        console.error("Enter Chat: ", e.message)
+                    }
                     form1.classList.add('form-display-none');
                     form2.classList.add('form-display-block');
 
@@ -161,7 +209,12 @@ if (submit) {
                 hrxS.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 hrxS.onload = function () {
                     //console.log(this.responseText)
-                    var info_Support_Connect = JSON.parse(this.responseText)
+                    try{
+
+                        var info_Support_Connect = JSON.parse(this.responseText)
+                    }catch(e){
+                        console.error("Enter Chat: ", e.message)
+                    }
                     if (info_Support_Connect.auth) {
                         form1.classList.add('form-display-none');
                         form2.classList.add('form-display-block');
@@ -197,7 +250,21 @@ function SendMessageChat(obj) {
                 message.innerText = obj.data[i].message;
                 dateTime.innerText = obj.data[i].dateTime;
                 id.innerHTML = obj.data[i].id;
-                if (obj.data[i].definedAuth === 1) { div.setAttribute('class', 'support message-block') } else { div.setAttribute('class', 'client message-block') }
+                switch (obj.data[i].definedAuth) {
+                    case 0:
+                        div.setAttribute('class', 'client message-block')
+                        break;
+                    case 1:
+                        div.setAttribute('class', 'support message-block')
+                    break;
+                    case 2:
+                        div.setAttribute('class', 'System message-block')
+                    break;
+                    default:
+                        break;
+                }
+                //if (obj.data[i].definedAuth === 1) { div.setAttribute('class', 'support message-block') } else { div.setAttribute('class', 'client message-block') }
+                
                 div.appendChild(nameClient);
                 div.appendChild(message);
                 div.appendChild(dateTime);
@@ -222,7 +289,20 @@ function SendMessageChat(obj) {
                     message.innerText = obj.data[i].message;
                     dateTime.innerText = obj.data[i].dateTime;
                     id.innerHTML = obj.data[i].id;
-                    if (obj.data[i].definedAuth === 1) { div.setAttribute('class', 'support message-block') } else { div.setAttribute('class', 'client message-block') }
+                    switch (obj.data[i].definedAuth) {
+                        case 0:
+                            div.setAttribute('class', 'client message-block')
+                            break;
+                        case 1:
+                            div.setAttribute('class', 'support message-block')
+                        break;
+                        case 2:
+                            div.setAttribute('class', 'System message-block')
+                        break;
+                        default:
+                            break;
+                    }
+                    //if (obj.data[i].definedAuth === 1) { div.setAttribute('class', 'support message-block') } else { div.setAttribute('class', 'client message-block') }
                     div.appendChild(nameClient);
                     div.appendChild(message);
                     div.appendChild(dateTime);
@@ -246,7 +326,20 @@ function SendMessageChat(obj) {
             message.innerText = ob.message;
             dateTime.innerText = ob.dateTime;
             id.innerHTML = ob.id;
-            if (ob.definedAuth === 1) { div.setAttribute('class', 'support message-block') } else { div.setAttribute('class', 'client message-block') }
+            switch (ob.definedAuth) {
+                case 0:
+                    div.setAttribute('class', 'client message-block')
+                    break;
+                case 1:
+                    div.setAttribute('class', 'support message-block')
+                break;
+                case 2:
+                    div.setAttribute('class', 'System message-block')
+                break;
+                default:
+                    break;
+            }
+            // if (ob.definedAuth === 1) { div.setAttribute('class', 'support message-block') } else { div.setAttribute('class', 'client message-block') }
             div.appendChild(nameClient);
             div.appendChild(message);
             div.appendChild(dateTime);
@@ -267,7 +360,18 @@ if (SuportInitChat !== null && SupportFinishChat !== null) {
         hrxS.open('POST', '../src/classes/Chat.php', true);
         hrxS.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         hrxS.onload = function () {
-            console.log(this.responseText)
+            containerMsg.innerHTML = "";
+            try{
+
+                var response = JSON.parse(this.responseText);
+            }catch(e){
+                console.error("Init Chat: ", e.message)
+            }
+            if (location.pathname === '/chatSupport.php'){
+                if(response.clients === false){
+                    alert('Não existe clientes na fila')
+                }
+            }
         }
         hrxS.send('request=initChat');
 
@@ -278,7 +382,15 @@ if (SuportInitChat !== null && SupportFinishChat !== null) {
         hrxS.open('POST', '../src/classes/Chat.php', true);
         hrxS.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         hrxS.onload = function () {
-            console.log(this.responseText)
+            try{
+
+                var result = JSON.parse(this.responseText);
+            }catch(e){
+                console.error("Finish Chat: ", e.message)
+            }
+           if(result.Error){
+               alert("Você não está conectado a nenhum chat no momento")
+           }
         }
         hrxS.send('request=finishChat');
     })
@@ -290,7 +402,7 @@ function ClientVeifyRoom() {
         hrxS.open('POST', '../src/classes/Chat.php', true);
         hrxS.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         hrxS.onload = function () {
-            console.log(this.responseText)
+            containerMsg.innerHTML = "";
         }
         hrxS.send('request=connectChat');
     }

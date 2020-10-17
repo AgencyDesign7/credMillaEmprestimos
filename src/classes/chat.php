@@ -6,8 +6,10 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-
+// session_unset();
+$Error = "Nada";
 include_once('./Classes.php');
+// session_unset();
 
 use chatC\{Person, Client, Controller, DataBase, Support};
 
@@ -126,10 +128,25 @@ if (isset($_POST['request'])) {
     }
 
     if($_POST['request'] === 'infoQueue'){
-        $name = $_SESSION['name'];
-        $sessionId = session_id();
-        $data = $db->FetchAllData('SELECT * FROM queue_users', []);
-        echo array_search($sessionId, array_column($data, 'session'));
+        if($_SESSION["mode"] === 1){
+            $data = $db->FetchAllData('SELECT * FROM queue_users', []);
+            foreach($data as $d){
+                $result = json_encode(array('name' => $d->name), JSON_FORCE_OBJECT);
+                echo $result . '*';
+            }
+        }else{
+            $name = $_SESSION['name'];
+            $sessionId = session_id();
+            $data = $db->FetchAllData('SELECT * FROM queue_users', []);
+            $result = array_search($sessionId, array_column($data, 'session'));
+            if(gettype($result) === 'boolean'){
+                echo "";
+            }else{
+                echo 'Aguarde, em breve você será atendido... você é  '.$result .'º da fila';
+            }
+            //echo array_search($sessionId, array_column($data, 'session'));
+        }
+        
     }
 
     if($_POST['request'] === 'ckeck-online'){
@@ -155,14 +172,27 @@ if (isset($_POST['request'])) {
 
     if($_POST['request'] === 'initChat'){
         $clientsQueue = $Controller->CountQueue();
+        $message = "wrong answer";
         //get the first person in list queue
         //create room for chat
+        if(count($clientsQueue) === 0){
+            echo json_encode(array('clients'=> false));
+            exit();
+        }
+        
         $res = $Controller->SelectRoom($Controller->Connect_client_with_support($clientsQueue[0]));
         $result = $db->insertData("UPDATE supportlogin SET currentRoom=? WHERE login=?", [$Controller->NextQueue(), $_SESSION['login']]);
-        
         if($result === 1){ //sucess
             //delete user from queue
-            $result = $db->insertData("DELETE FROM queue_users WHERE session=?", [$clientsQueue[0]->session]); 
+            $Client = $db->FetchAllData("SELECT * FROM queue_users WHERE session=?", [$clientsQueue[0]->session]);
+            
+            $queryResult = $db->insertData('INSERT INTO `roomsupport` (`name`, `session`, `date_time`) VALUES (?,?,?)', [$clientsQueue[0]->name, $clientsQueue[0]->session, $clientsQueue[0]->date_time]);
+            echo $queryResult;
+            if($queryResult === 1){//sucess
+                $db->insertData("DELETE FROM queue_users WHERE session=?", [$clientsQueue[0]->session]); 
+            }else{
+                echo json_encode(array('error'=> "Error inserir usuario chatroom"));
+            }
         }else{
 
         }
@@ -173,7 +203,23 @@ if (isset($_POST['request'])) {
     }
 
     if($_POST['request'] === 'finishChat'){
-       
+        $MessageFinishChat = "Chat finalizado...";
+        $resultSupport = $db->FetchAllData("SELECT * FROM supportlogin WHERE login=?", [$_SESSION['login']]);
+        if(count($resultSupport) === 1){
+            if($resultSupport[0]->currentRoom === ""){
+                echo json_encode(array('Error' => "NO DATA ROOM"), JSON_FORCE_OBJECT);
+            }
+            exit();
+           $db->insertData("INSERT INTO ".$resultSupport[0]->currentRoom." (name, email, message, last_time, definedAuth) VALUES (?,?,?,?,?)", ["System", "suport@suport.com.br", $MessageFinishChat, $Controller->getDataTime('H:i:s'), 2]);
+        }
+        $result = $db->insertData("UPDATE supportlogin SET currentRoom=? WHERE login=?", ["", $_SESSION['login']]);
+        echo json_encode(array('EndChat' => true), JSON_FORCE_OBJECT);
+    }
+
+    if($_POST['request'] === 'closeChat'){
+        if(isset($_SESSION)){
+            session_unset();
+        }
     }
 
 }

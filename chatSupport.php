@@ -96,7 +96,8 @@
         </div>
         <div class="painel-view">
             <div class="queue-users">
-                <p>Total de usuários na fila:</p><span></span>
+                <p>Total de usuários na fila:<span></span></p>
+                <div class="users-queue"></div>
             </div>
             <div class="btn-InitChat"><a href="#">Iniciar Atendimento</a></div>
             <div class="btn-FinishChat"><a href="#">Finalizar Chat</a></div>

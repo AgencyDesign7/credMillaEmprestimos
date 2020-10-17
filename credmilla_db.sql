@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2020 at 05:15 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.2.30
+-- Tempo de geração: 17-Out-2020 às 03:18
+-- Versão do servidor: 10.4.8-MariaDB
+-- versão do PHP: 7.3.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `credmilla_db`
+-- Banco de dados: `credmilla_db`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chat_teste`
+-- Estrutura da tabela `chat_teste`
 --
 
 CREATE TABLE `chat_teste` (
@@ -37,7 +38,7 @@ CREATE TABLE `chat_teste` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `chat_teste`
+-- Extraindo dados da tabela `chat_teste`
 --
 
 INSERT INTO `chat_teste` (`id`, `name`, `email`, `message`, `last_time`, `definedAuth`) VALUES
@@ -47,7 +48,7 @@ INSERT INTO `chat_teste` (`id`, `name`, `email`, `message`, `last_time`, `define
 -- --------------------------------------------------------
 
 --
--- Table structure for table `queue_users`
+-- Estrutura da tabela `queue_users`
 --
 
 CREATE TABLE `queue_users` (
@@ -58,17 +59,43 @@ CREATE TABLE `queue_users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `queue_users`
+-- Extraindo dados da tabela `queue_users`
 --
 
 INSERT INTO `queue_users` (`id`, `name`, `session`, `date_time`) VALUES
-(18, 'marcos', 'l09gs1sb2rlnv18c8ettubngh2', '2020-10-16 03:56:36'),
-(19, 'jo', '304d3akjul5scs3b4aut8nh0mt', '2020-10-16 04:03:38');
+(30, 'juvenildo', 'jkslfsdf15', '2020-10-10 14:00:15'),
+(31, 'silas', 'jkslfsdf15', '2020-10-10 14:00:15'),
+(32, 'rogerio', 'jkslfsdf15', '2020-10-10 14:00:15'),
+(33, 'hiago', 'r09v3cgocls3hj5ik6t99f86d8', '2020-10-16 21:57:06'),
+(34, 'marcos', 'r09v3cgocls3hj5ik6t99f86d8', '2020-10-16 22:08:12'),
+(37, 'adenilton', 'r09v3cgocls3hj5ik6t99f86d8', '2020-10-16 22:14:36');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `supportlogin`
+-- Estrutura da tabela `roomsupport`
+--
+
+CREATE TABLE `roomsupport` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `session` text NOT NULL,
+  `date_time` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `roomsupport`
+--
+
+INSERT INTO `roomsupport` (`id`, `name`, `session`, `date_time`) VALUES
+(1, 'marcos', 'r09v3cgocls3hj5ik6t99f86d8', '04:58:55'),
+(2, 'marcos', '1561sdf1sd61f', '00:00:00'),
+(3, 'juvenildo', 'jkslfsdf15', '14:00:15');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `supportlogin`
 --
 
 CREATE TABLE `supportlogin` (
@@ -83,52 +110,64 @@ CREATE TABLE `supportlogin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `supportlogin`
+-- Extraindo dados da tabela `supportlogin`
 --
 
 INSERT INTO `supportlogin` (`id`, `name`, `email`, `login`, `password`, `online`, `available`, `currentRoom`) VALUES
-(1, 'admin', 'admin@suporte.com.br', 'admin', '$2y$10$WMblVDDlXsDymnscf6zL/OHScC6eJsZZqI3dkjONoFdIgaUX.iIPW', 1, 0, '2020_l09gs1sb2rlnv18c8ettubngh2');
+(1, 'admin', 'admin@suporte.com.br', 'admin', '$2y$10$WMblVDDlXsDymnscf6zL/OHScC6eJsZZqI3dkjONoFdIgaUX.iIPW', 1, 0, '');
 
 --
--- Indexes for dumped tables
+-- Índices para tabelas despejadas
 --
 
 --
--- Indexes for table `chat_teste`
+-- Índices para tabela `chat_teste`
 --
 ALTER TABLE `chat_teste`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `queue_users`
+-- Índices para tabela `queue_users`
 --
 ALTER TABLE `queue_users`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `supportlogin`
+-- Índices para tabela `roomsupport`
+--
+ALTER TABLE `roomsupport`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `supportlogin`
 --
 ALTER TABLE `supportlogin`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de tabelas despejadas
 --
 
 --
--- AUTO_INCREMENT for table `chat_teste`
+-- AUTO_INCREMENT de tabela `chat_teste`
 --
 ALTER TABLE `chat_teste`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
 
 --
--- AUTO_INCREMENT for table `queue_users`
+-- AUTO_INCREMENT de tabela `queue_users`
 --
 ALTER TABLE `queue_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
--- AUTO_INCREMENT for table `supportlogin`
+-- AUTO_INCREMENT de tabela `roomsupport`
+--
+ALTER TABLE `roomsupport`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de tabela `supportlogin`
 --
 ALTER TABLE `supportlogin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;

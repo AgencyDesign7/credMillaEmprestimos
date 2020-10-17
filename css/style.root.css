@@ -819,6 +819,18 @@ input[type="file"]{
     border-bottom-left-radius: 15px;
     
 }
+.chat-container-form .messages-send .System{
+    width: 100%;
+    align-self: flex-end;
+    background-color: rgb(255, 238, 0);
+    padding: 5px 10px 5px 8px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 15px;
+    
+}
+
+
+
 .init-head-message{
     width: 100%;
     height: fit-content;
@@ -932,11 +944,42 @@ iframe html{
 }
 
 .queue-users{
+    width: 300px;
+    height: 100px;
     margin: 0 5px 20px 0;
     font-size: 16px;
 }
 .queue-users span{
     font-size: 16px;
+}
+.queue-users p, .queue-users span{
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+.queue-users ul{
+    all: unset;
+    list-style: decimal;
+    margin: 5px 0 0 10px;
+    width: 80%;
+    
+}
+.users-queue li {
+    border-bottom: solid 1px black;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.users-queue li p{
+    font-size: 18px;
+}
+.users-queue{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 95px;
+    overflow-y: scroll;
 }
 
 .btn-InitChat, .btn-FinishChat{
