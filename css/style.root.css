@@ -273,6 +273,7 @@ form > p:first-child{
     height: 30px;
     box-shadow: none;
     border: none;
+    outline: none;
 }
 .inputs input::placeholder, select, input[type="date"]{
     color: var(--color-placeholder-form);
@@ -548,6 +549,9 @@ button{
     background-color: var(--color-box-button);
     font-size: 15px;
 }
+.container-box button:hover{
+    cursor: pointer;
+}
 
 .container-box span{
     width: 100%;
@@ -647,12 +651,13 @@ input[type="file"]{
 }
 
 .social{
-    position: relative;
+    position: fixed;
     width: 100%;
     height: fit-content;
     display: flex;
     justify-content: space-between;
     padding: 0 40px 20px 40px;
+    top: 80%;
 }
 .social img{
     width: 75px;

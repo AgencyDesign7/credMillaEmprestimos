@@ -48,22 +48,22 @@
                     <div class="certificao-select">
                         <label for="certificacao">Certificação:</label>
                         <div class="inputs-radio">
-                            <input type="radio" name="cert" value="FEBRABAN">
+                            <input type="radio" name="first" value="FEBRABAN">
                             <label for="">FEBRABAN</label>
                         </div>
                         <div class="inputs-radio">
-                            <input type="radio" name="cert" value="ANEPS">
+                            <input type="radio" name="first" value="ANEPS">
                             <label for="">ANEPS</label>
                         </div>
                     </div>
                     <div class="certificao-select">
-                        <label for="experiencia">Experiência com call center::</label>
+                        <label for="experiencia">Experiência com call center:</label>
                         <div class="inputs-radio">
-                            <input type="radio" name="cert" value="SIM">
+                            <input type="radio" name="second" value="SIM">
                             <label for="">SIM</label>
                         </div>
                         <div class="inputs-radio">
-                            <input type="radio" name="cert" value="NÃO">
+                            <input type="radio" name="second" value="NÃO">
                             <label for="">NÃO</label>
                         </div>
                     </div>

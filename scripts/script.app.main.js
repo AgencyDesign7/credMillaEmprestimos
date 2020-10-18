@@ -41,14 +41,17 @@
         //console.log(iframeForm)
         formCloseMsg.addEventListener('click', function(event){
             event.preventDefault()
-            iframeForm.classList.remove('open-form');
-            var hrx = new XMLHttpRequest();
-            hrx.open('POST', '../src/classes/Chat.php', true);
-            hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            hrx.onload = function (){
-                iframe.contentWindow.location.reload(true);
+            let confirm = window.confirm("Se continuar o chat será desconectado, deseja continuar? ");
+            if(confirm === true){
+                iframeForm.classList.remove('open-form');
+                var hrx = new XMLHttpRequest();
+                hrx.open('POST', '../src/classes/Chat.php', true);
+                hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                hrx.onload = function (){
+                    iframe.contentWindow.location.reload(true);
+                }
+                hrx.send('request=closeChat')
             }
-            hrx.send('request=closeChat')
         })
     }
     if(chatIcon){
