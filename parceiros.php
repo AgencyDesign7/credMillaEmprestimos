@@ -37,16 +37,18 @@
         </div>
 
         <div class="parceiros">
-            <img src="./resource/img/bank/bank-1.jpg" alt="">
-            <img src="./resource/img/bank/bank-2.jpg" alt="">
-            <img src="./resource/img/bank/bank-3.jpg" alt="">
-            <img src="./resource/img/bank/bank-4.jpg" alt="">
-            <img src="./resource/img/bank/bank-5.jpg" alt="">
-            <img src="./resource/img/bank/bank-6.jpg" alt="">
-            <img src="./resource/img/bank/bank-7.jpg" alt="">
-            <img src="./resource/img/bank/bank-8.jpg" alt="">
-            <img src="./resource/img/bank/bank-9.jpg" alt="">
-            <img src="./resource/img/bank/bank-10.jpg" alt="">
+            <div class="imgs-container-parceiros">
+                <img src="./resource/img/bank/bank-1.jpg" alt="">
+                <img src="./resource/img/bank/bank-2.jpg" alt="">
+                <img src="./resource/img/bank/bank-3.jpg" alt="">
+                <img src="./resource/img/bank/bank-4.jpg" alt="">
+                <img src="./resource/img/bank/bank-5.jpg" alt="">
+                <img src="./resource/img/bank/bank-6.jpg" alt="">
+                <img src="./resource/img/bank/bank-7.jpg" alt="">
+                <img src="./resource/img/bank/bank-8.jpg" alt="">
+                <img src="./resource/img/bank/bank-9.jpg" alt="">
+                <img src="./resource/img/bank/bank-10.jpg" alt="">
+            </div>
         </div>
     </div>
 

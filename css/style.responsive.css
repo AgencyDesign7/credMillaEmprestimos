@@ -120,6 +120,12 @@
         justify-content: center;
         align-items: center;
     }
+    .chat-frame-container iframe{
+        width: 100vw;
+    }
+    .chat-frame-container{
+        right: 0;
+    }
     
     
 }

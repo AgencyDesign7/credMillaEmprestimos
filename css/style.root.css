@@ -398,7 +398,7 @@ button{
 
 .parceiros img{ 
     width: auto;
-    max-height: 200px;
+    max-height: 150px;
     margin: 20px;
 
 }
@@ -410,6 +410,14 @@ button{
 .par-div-text{
     display: flex;
     flex-direction: column;
+}
+
+.imgs-container-parceiros{
+    max-width: 1000px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Nossa historia */
