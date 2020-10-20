@@ -3,18 +3,18 @@
         <p>Solicite sua simulação de empréstimo</p>
         <p>Preencha o formulário e aguarde nosso contato!</p>
         <div class="inputs">
-            <div><span id="userId"></span><input id="nameInput" type="text" placeholder="Nome completo*"></div>
-            <div><span id="cpfId"></span><input type="text" placeholder="CPF*"></div>
-            <div><span id="perfilId"></span><select name="perfil-inv" id="perfil-inv">
+            <div><span id="userId"></span><input name="nome_completo" id="nameInput" type="text" placeholder="Nome completo*" required></div>
+            <div><span id="cpfId"></span><input name="cpf" type="text" placeholder="CPF*" required></div>
+            <div><span id="perfilId"></span><select name="perfil-inv" id="perfil-inv" required>
                     <option value="select">Escolha seu perfil...</option>
                     <option value="INSS">INSS</option>
                     <option value="Federal">Federal</option>
                     <option value="Municipal">Municipal</option>
                     <option value="Estadual">Estadual</option>
                 </select></div>
-            <div><span id="emailId"></span><input id="emailInput" type="email" placeholder="Email*"></div>
-            <div><span id="telId"></span><input type="tel" placeholder="Telefone*"></div>
-            <div><span id="dateId"></span><input type="date"></div>
+            <div><span id="emailId"></span><input name="email" id="emailInput" type="email" placeholder="Email*" required></div>
+            <div><span id="telId"></span><input name="telefone" type="tel" placeholder="Telefone*" required></div>
+            <div><span id="dateId"></span><input name="nascimento" type="date" required></div>
             <div><button type="submit" value=""><span id="sendBtn"></span>ENVIAR</button></div>
         </div>
     </form>

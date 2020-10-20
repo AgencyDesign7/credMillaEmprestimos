@@ -41,10 +41,10 @@
                 <p>Fale conosco</p>
                 <p>Dúvida, sugestão ou crítica</p>
                 <div class="cont-input">
-                    <input type="text" name="i-name" id="" placeholder="Nome*">
-                    <input type="email" name="i-email" id="" placeholder="Email*">
-                    <input type="text" name="i-tel" id="" placeholder="Telefone*">
-                    <textarea type="text" name="i-msg" id="" placeholder="Mensagem*"></textarea>
+                    <input type="text" name="i-name" id="" placeholder="Nome*" required>
+                    <input type="email" name="i-email" id="" placeholder="Email*" required>
+                    <input type="text" name="i-tel" id="" placeholder="Telefone*" required>
+                    <textarea type="text" name="i-msg" id="" placeholder="Mensagem*" required></textarea>
                     <div class="btn-contato"><button>Enviar</button></div>
                 </div>
             </form>

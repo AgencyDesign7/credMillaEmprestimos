@@ -35,43 +35,42 @@
             <p>Entre em contato</p>
             <span></span>
         </div>
-
         <div class="form-contato cadastro-page">
-            <form action="">
+            <form action="cadastro.php" method="GET">
                 <p>CADASTRO</p>
                 <p>Preencha todos os campos do formulário</p>
                 <div class="cont-input">
-                    <input type="text" name="i-name" id="" placeholder="Nome*">
-                    <input type="email" name="i-email" id="" placeholder="CPF*">
-                    <input type="tel" name="i-disable" id="" placeholder="--*">
-                    <textarea type="text" name="i-msg" id="" placeholder="Por que eu quero trabalhar na CredMilla?*"></textarea>
+                    <input type="text" name="i-name" id="" placeholder="Nome*" required>
+                    <input type="number" name="i-cpf" id="" placeholder="CPF*" required>
+                    <!-- <div type="tel" name="i-disable" id="" placeholder="--*" required> -->
+                    <textarea type="text" name="i-msg" id="" placeholder="Por que eu quero trabalhar na CredMilla?*" required></textarea>
                     <div class="certificao-select">
                         <label for="certificacao">Certificação:</label>
                         <div class="inputs-radio">
-                            <input type="radio" name="first" value="FEBRABAN">
+                            <input type="radio" name="i-certification" value="FEBRABAN" required>
                             <label for="">FEBRABAN</label>
                         </div>
                         <div class="inputs-radio">
-                            <input type="radio" name="first" value="ANEPS">
+                            <input type="radio" name="i-certification" value="ANEPS" required>
                             <label for="">ANEPS</label>
                         </div>
                     </div>
                     <div class="certificao-select">
                         <label for="experiencia">Experiência com call center:</label>
                         <div class="inputs-radio">
-                            <input type="radio" name="second" value="SIM">
+                            <input type="radio" name="i-experience" value="SIM" required>
                             <label for="">SIM</label>
                         </div>
                         <div class="inputs-radio">
-                            <input type="radio" name="second" value="NÃO">
+                            <input type="radio" name="i-experience" value="NÃO" required>
                             <label for="">NÃO</label>
                         </div>
                     </div>
                     <div class="curriculo-anexo">
                         <label for="curriculo">Anexe seu currículo:</label>
-                        <input type="file">
+                        <input type="file" name="curriculo"  required>
                     </div>
-                    <div class="btn-contato"><button>Enviar</button></div>
+                    <div class="btn-contato"><button onclick="HandleFormsRequestEmail(this)">Enviar</button></div>
                 </div>
             </form>
         </div>

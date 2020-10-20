@@ -117,3 +117,17 @@
    
 }()
 
+function HandleFormsRequestEmail(buttonEvent){
+    buttonEvent.preventDefault();
+    alert(buttonEvent)
+    var hrx = new XMLHttpRequest();
+    hrx.open('POST', '../handleForms.php', true);
+    hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    hrx.onload = function (){
+        
+
+    }
+    let StringRequest = "";
+
+    hrx.send(StringRequest);
+}
