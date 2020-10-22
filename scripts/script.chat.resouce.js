@@ -9,10 +9,11 @@
         }catch(e){
             console.error("Auth: ", e.message);
         }
-
-        if (info_Connect.auth === true) {
-            form1.classList.add('form-display-none');
-            form2.classList.add('form-display-block');
+        if(info_Connect.auth !== undefined){
+            if (info_Connect.auth === true) {
+                form1.classList.add('form-display-none');
+                form2.classList.add('form-display-block');
+            }
         }
     }
     hrx.send('checkStart=Auth');
@@ -89,7 +90,6 @@ if (true) {
             })
         }
         hrxUp.send('request=updateChat');
-        console.log('update...')
     }, 2000)
 } else {
     clearInterval(updateMessage);
@@ -130,8 +130,12 @@ function UpdateMsgQueueInformationClient() {
             
         }else{
             if (form2 !== null && chatMsgHead !== null) {
-                console.log(this.responseText);
                 chatMsgHead.textContent = this.responseText;
+                if(form2.classList.contains('form-display-block')){
+                    setTimeout(function(){
+                        document.querySelector('.load-container').style = "display: none;"
+                    },2000)
+                }
             }
         }
 
@@ -215,11 +219,13 @@ if (submit) {
                     }catch(e){
                         console.error("Enter Chat: ", e.message)
                     }
-                    if (info_Support_Connect.auth) {
-                        form1.classList.add('form-display-none');
-                        form2.classList.add('form-display-block');
-                    } else {
-                        alert('Login ou senha incorreto')
+                    if(info_Support_Connect.auth !== undefined){
+                        if (info_Support_Connect.auth) {
+                            form1.classList.add('form-display-none');
+                            form2.classList.add('form-display-block');
+                        } else {
+                            alert('Login ou senha incorreto')
+                        }
                     }
                 }
                 hrxS.send('login=' + userName.value + '&password=' + password.value + '&status=' + status.checked + '&request=enterChatSupport');
@@ -363,13 +369,16 @@ if (SuportInitChat !== null && SupportFinishChat !== null) {
             containerMsg.innerHTML = "";
             try{
 
+                
                 var response = JSON.parse(this.responseText);
             }catch(e){
                 console.error("Init Chat: ", e.message)
             }
             if (location.pathname === '/chatSupport.php'){
-                if(response.clients === false){
-                    alert('Não existe clientes na fila')
+                if(response.clients !== undefined){
+                    if(response.clients === false){
+                        alert('Não existe clientes na fila')
+                    }
                 }
             }
         }
@@ -384,13 +393,21 @@ if (SuportInitChat !== null && SupportFinishChat !== null) {
         hrxS.onload = function () {
             try{
 
+                //console.log(this.responseText);
                 var result = JSON.parse(this.responseText);
+                if(result.EndChat !== undefined){
+                    if(result.EndChat === true){
+                        alert("Chat finalizado!")
+                    }
+                }
             }catch(e){
                 console.error("Finish Chat: ", e.message)
             }
-           if(result.Error){
-               alert("Você não está conectado a nenhum chat no momento")
-           }
+            if(result.Error !== undefined){
+                if(result.Error === "NO DATA ROOM"){
+                    alert("Você não está conectado a nenhum chat no momento")
+                }
+            }
         }
         hrxS.send('request=finishChat');
     })

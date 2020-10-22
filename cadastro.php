@@ -70,7 +70,7 @@
                         <label for="curriculo">Anexe seu currículo:</label>
                         <input type="file" name="curriculo"  required>
                     </div>
-                    <div class="btn-contato"><button onclick="HandleFormsRequestEmail(this)">Enviar</button></div>
+                    <div class="btn-contato"><button data-cadastroBtn type="submit">Enviar</button></div>
                 </div>
             </form>
         </div>

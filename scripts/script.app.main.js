@@ -38,7 +38,6 @@
     if(formCloseMsg){
         var form1 = document.querySelector(".form1")
         var form2 = document.querySelector(".form2")
-        //console.log(iframeForm)
         formCloseMsg.addEventListener('click', function(event){
             event.preventDefault()
             let confirm = window.confirm("Se continuar o chat será desconectado, deseja continuar? ");
@@ -70,7 +69,6 @@
     hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     hrx.onload = function () {
         var result = JSON.parse(this.responseText);
-        console.log(result)
         if(ChatContainerIframe){
             
             if(result.length !== undefined){
@@ -117,17 +115,60 @@
    
 }()
 
-function HandleFormsRequestEmail(buttonEvent){
-    buttonEvent.preventDefault();
-    alert(buttonEvent)
-    var hrx = new XMLHttpRequest();
-    hrx.open('POST', '../handleForms.php', true);
-    hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    hrx.onload = function (){
+!function HandleFormsRequestEmail(btn){
+    let buttonContato = document.querySelector('[data-Contato]');
+    let buttonEmprestimo = document.querySelector('[data-Emprestimo]');
+    let buttonCadastro = document.querySelector('[data-cadastroBtn]');
+   
+    
+    
+   
+    if(buttonCadastro){
+        buttonCadastro.addEventListener('click', event =>{
+            event.preventDefault()
+            var name = document.querySelector('[name="i-name"]')
+            var cpf = document.querySelector('[name="i-cpf"]')
+            var msg = document.querySelector('[name="i-msg"]')
+            var certificacao = document.querySelectorAll('[name="i-certification"]')
+            var experiencia = document.querySelectorAll('[name="i-experience"]')
+            var curriculo = document.querySelector('[name="curriculo"]')
+            
+            
+        })
+    }
+    if(buttonContato){
+        buttonContato.addEventListener('click', event =>{
+            event.preventDefault()
+            var name = document.querySelector('[name="i-name"]')
+            var email = document.querySelector('[name="i-email"]')
+            var tel = document.querySelector('[name="i-tel"]')
+            var msg = document.querySelector('[name="i-msg"]')
+        })
+    }
+    if(buttonEmprestimo){
+        buttonEmprestimo.addEventListener('click', event =>{
+            event.preventDefault()
+            var name = document.querySelector('[name="nome_completo"]')
+            var cpf = document.querySelector('[name="cpf"]')
+            var perfilInvestidor = document.querySelector('[name="perfil-inv"]')
+            var email = document.querySelector('[name="email"]')
+            var telefone = document.querySelector('[name="telefone"]')
+            var nascimento = document.querySelector('[name="nascimento"]')
+        })
+    }
+    
+    var sendForm = async function(inputs){
         
-
+        var hrx = new XMLHttpRequest();
+        hrx.open('POST', '../handleForms.php', true);
+        hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        hrx.onload = async function (){
+            var responseData = await this.responseText;
+        }
+        hrx.send(inputs)
+        return responseData;
     }
     let StringRequest = "";
 
-    hrx.send(StringRequest);
-}
+    //hrx.send(StringRequest);
+}()

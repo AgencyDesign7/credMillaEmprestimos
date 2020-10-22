@@ -19,6 +19,7 @@
         <p>Chat CredMilla emprestimos</p>
     </div> -->
     <div class="chat-container-form">
+        
         <form action="" method="post" class="form1">
             
             <img src="./resource/img/icons/chatpageIcon.png" alt="">
@@ -28,7 +29,9 @@
             <input name="clientName" type="email" placeholder="Digite seu email aqui" require="true">
             <input class="sub-btn1" type="submit" value="Entrar">
         </form>
+        
         <div class="chat-message">
+        <div class="load-container"><img src="./resource/img/icons/spingLoad.gif" alt=""></div>
             
             <div class="messages-send">
                 <!-- <div class="frame-maximaze"><a href="./chat.php" target="_black"><img id="maximaze-img" src="./resource/img/icons/maximize-size.png" alt=""></a></div> -->
