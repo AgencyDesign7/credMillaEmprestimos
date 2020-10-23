@@ -36,7 +36,7 @@
             <span></span>
         </div>
         <div class="form-contato cadastro-page">
-            <form action="./handleForms.php" method="POST">
+            <form action="./handleForms.php" method="POST" enctype="multipart/form-data">
                 <p>CADASTRO</p>
                 <p>Preencha todos os campos do formulário</p>
                 <div class="cont-input">
@@ -67,10 +67,10 @@
                         </div>
                     </div>
                     <div class="curriculo-anexo">
-                        <label for="curriculo">Anexe seu currículo:</label>
-                        <input type="file" name="curriculo"  required>
+                        <label for="curriculoLb">Anexe seu currículo:</label>
+                        <input type="file" name="file"  required>
                     </div>
-                    <div class="btn-contato"><button data-cadastroBtn type="submit">Enviar</button></div>
+                    <div class="btn-contato"><button data-cadastroBtn type="submit" name="submit">Enviar</button></div>
                 </div>
             </form>
         </div>
