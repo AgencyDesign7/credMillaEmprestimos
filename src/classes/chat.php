@@ -1,15 +1,10 @@
 <?php
-
-//https://stackoverflow.com/questions/27814416/php-session-inaccessible-on-other-pages
-
 if (!isset($_SESSION)) {
     session_start();
 }
 
-// session_unset();
-$Error = "Nada";
+
 include_once('./Classes.php');
-// session_unset();
 
 use chatC\{Person, Client, Controller, DataBase, Support};
 
@@ -41,12 +36,6 @@ if (isset($_POST['request'])) {
             
         }
         
-        //$data = $db->FetchAllData('SELECT * FROM supportlogin WHERE login=?', [$_SESSION['login']]);
-        //$data = $Controller->UpdateChat($data->currentRoom);
-        //echo $data->currentRoom;
-
-            //$db->updateData('UPDATE supportlogin SET currentRoom='.$Controller->NextQueue() .' WHERE login = ?', [$user]);
-
         foreach($datas as $data){
             //Working: send all data from db
             $array_teste = json_encode(array('id' => $data->id, 'name' => $data->name, 'message' => $data->message, 'dateTime' => $data->last_time, 'definedAuth' => $data->definedAuth), JSON_FORCE_OBJECT);
@@ -71,7 +60,7 @@ if (isset($_POST['request'])) {
                         $_SESSION['name'] = $post->name;
                         $_SESSION['email'] = $post ->email;
                         
-                        if($_POST['status'] === true){
+                        if(true){
                             $db->updateData('UPDATE supportlogin SET online=true WHERE login = ?', [$_SESSION['login']]);
                         }
                         
@@ -84,11 +73,6 @@ if (isset($_POST['request'])) {
                 echo json_encode(array('error' => "usuario ou senha incorreto"));
             }
         }
-    }
-
-    if($_POST['request'] === 'countdb'){
-        //echo $Controller->CountQueue();
-        
     }
 
     if ($_POST['request'] === 'enterChatClient') {
@@ -149,7 +133,6 @@ if (isset($_POST['request'])) {
                     echo 'Aguarde, em breve você será atendido... você é  '.$result .'º da fila';
                 }
             }
-            //echo array_search($sessionId, array_column($data, 'session'));
         }
         
     }
@@ -178,9 +161,6 @@ if (isset($_POST['request'])) {
     if($_POST['request'] === 'initChat'){
         $clientsQueue = $Controller->CountQueue();
         $message = "wrong answer";
-        // echo(count($clientsQueue));
-        // exit();
-        //get the first person in list queue
 
         //create room for chat
         if((count($clientsQueue)) === 0){
@@ -209,9 +189,6 @@ if (isset($_POST['request'])) {
         }else{
 
         }
-        //Check if room has been created
-        
-        //Connect client in the chat
 
     }
 
@@ -234,34 +211,37 @@ if (isset($_POST['request'])) {
             session_unset();
         }
     }
+    if($_POST['request'] === 'logout'){
+        if(isset($_SESSION)){
+            $db->updateData('UPDATE supportlogin SET online=false WHERE login = ?', [$_SESSION['login']]);
+            echo json_encode(array('logout' => true), JSON_FORCE_OBJECT);
+            session_unset();
+        }
+    }
+
+    if($_POST["request"] === "visitors"){
+        $resultAllVisitors = $db->FetchAllData("SELECT COUNT( * ) FROM visitors", []);
+        $resultUniqueVisitors = $db->FetchAllData("SELECT COUNT( DISTINCT `ip` ) FROM visitors", []);
+        $finalResult = array();
+        $arrayVisitors = array();
+        if(!empty($resultAllVisitors)){
+            foreach($resultAllVisitors as $key => $value){
+                foreach($value as $key => $value){
+                    $arrayVisitors["AllVisitors"] = $value;
+                }
+                         
+            }
+        }
+        if(!empty($resultUniqueVisitors)){
+            foreach($resultUniqueVisitors as $key => $value){
+                foreach($value as $key => $value){
+                    $arrayVisitors["UniqueVisitors"] = $value;
+                }
+                         
+            }
+        }
+
+        echo json_encode($arrayVisitors, JSON_FORCE_OBJECT);
+    }
 
 }
-
-
-
-
-
-// $db = new DataBase();
-// $posts = $db->FetchAllData('SELECT * FROM chat1');
-
-// foreach ($posts as $post) {
-//     $myobj = array('name' => $post->name, 'message' => $post->message, 'date_time' => $post->date_time);
-//     $objectJson = json_encode($myobj, JSON_FORCE_OBJECT);
-//     echo $objectJson;
-
-//     $timeZone = new DateTimeZone('Brazil/East');
-//     $dateTime = new DateTime();
-//     $dateTime->setTimezone($timeZone);
-//     //echo $dateTime->format('Y-m-d H:i:s');
-// }
-
-//$name = $_POST['clientName'];
-//echo 'From php ' . $name . 'Session ' . session_id();
-
-//$person = new Person(15, session_id(), $_POST["clientName"]);
-//echo ((object)$person)->idSession;
-
-
-// $controller = new Controller();
-// $personData = $controller->ConnectChat(1, session_id(), $name);
-//var_dump($personData);

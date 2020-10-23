@@ -660,7 +660,7 @@ input[type="file"]{
 
 .social{
     position: fixed;
-    width: 100%;
+    width: fit-content;
     height: fit-content;
     display: flex;
     justify-content: space-between;
@@ -672,9 +672,14 @@ input[type="file"]{
     height: auto;
 }
 
+.chat{
+    right: 0;
+}
+
 .display-none-content{
     display: none !important;
 }
+
 
 /* Chat main */
 .title-chat{
@@ -696,6 +701,7 @@ input[type="file"]{
     width: 100%;
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
 }
 .chat-container-form .form1{
     all: unset;
@@ -757,7 +763,7 @@ input[type="file"]{
 }
 
 .support-manager{
-    width: 500px !important;
+    width: 100% !important;
     height: 700px !important;
 }
 
@@ -768,7 +774,7 @@ input[type="file"]{
 .chat-container-form .form2 textarea{
     width: 80%;
     height: 40px;
-    margin: 0 0 0 15px;
+    margin:0;
     resize: none !important;
 }
 .chat-container-form .form2 input[type="submit"]{
@@ -893,6 +899,16 @@ input[type="file"]{
     margin: 0;
 }
 
+.logout-btn{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px 40px 0 0;
+}
+.logout-btn a{
+    text-decoration: none;
+}
 
 /* chat Iframe */
 .chat-frame-container{

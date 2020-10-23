@@ -69,4 +69,8 @@ class Controller
         $dateTime->setTimezone($timeZone);
         return $dateTime->format($format);
     }
+
+    function GetIpAndress($ip){
+        $this->db->insertData('INSERT INTO visitors(ip, date_time) VALUES (?,?)', [$ip, $this->getDataTime('Y-m-d H:i:s')]);
+    }
 }

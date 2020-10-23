@@ -36,7 +36,7 @@
             <span></span>
         </div>
         <div class="form-contato cadastro-page">
-            <form action="cadastro.php" method="GET">
+            <form action="./handleForms.php" method="POST">
                 <p>CADASTRO</p>
                 <p>Preencha todos os campos do formulário</p>
                 <div class="cont-input">

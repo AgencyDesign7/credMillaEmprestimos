@@ -3,31 +3,23 @@
     hrx.open('POST', '../src/classes/Chat.php', true);
     hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     hrx.onload = function () {
-        try{
+        try {
 
             var info_Connect = JSON.parse(this.responseText)
-        }catch(e){
+        } catch (e) {
             console.error("Auth: ", e.message);
         }
-        if(info_Connect.auth !== undefined){
+        if (info_Connect.auth !== undefined) {
             if (info_Connect.auth === true) {
-                form1.classList.add('form-display-none');
-                form2.classList.add('form-display-block');
+                if (form1 !== null && form2 !== null) {
+
+                    form1.classList.add('form-display-none');
+                    form2.classList.add('form-display-block');
+                }
             }
         }
     }
     hrx.send('checkStart=Auth');
-}()
-
-//Only for teste sql commands
-!function CheckValues() {
-    var hrx = new XMLHttpRequest();
-    hrx.open('POST', '../src/classes/Chat.php', true);
-    hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    hrx.onload = function () {
-        //console.log(this.responseText)
-    }
-    hrx.send('request=countdb');
 }()
 
 var submit = document.querySelector(".sub-btn1")
@@ -42,59 +34,57 @@ var chatMsgHead = document.querySelector("#init-support-msg");
 var SuportInitChat = document.querySelector(".btn-InitChat");
 var SupportFinishChat = document.querySelector(".btn-FinishChat");
 
+function UpdateChat(booleanUpdate) {
+    if (booleanUpdate) {
+        var updateMessage = setInterval(function () {
+            console.log('update..')
+            var auxRequest = false;
+            var messagesBlock = document.querySelectorAll('.message-block > span');;
+            var messagesSend = document.querySelectorAll('.message-block > :nth-child(2)');
+            var hrxUp = new XMLHttpRequest();
+            hrxUp.open('POST', '../src/classes/Chat.php', true);
+            hrxUp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            hrxUp.responseType = 'text';
+            console.log('Update...')
+            hrxUp.onload = function () {
+                var info_Client_Connect = this.responseText
 
-if (true) {
-    var updateMessage = setInterval(function () {
-        var auxRequest = false;
-        var messagesBlock = document.querySelectorAll('.message-block > span');;
-        var messagesSend = document.querySelectorAll('.message-block > :nth-child(2)');
-        //console.log(messagesBlock)
-        var inter = 0;
-        //if(inter > 100) {clearInterval(x)}
-        var hrxUp = new XMLHttpRequest();
-        hrxUp.open('POST', '../src/classes/Chat.php', true);
-        hrxUp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        hrxUp.responseType = 'text';
+                var arrayData = info_Client_Connect.split('*')
 
-        hrxUp.onload = function () {
-            //console.log(this.responseText)
-            var info_Client_Connect = this.responseText
+                var objVal = new Object();
+                objVal.data = [];
+                for (let i = 0; i < arrayData.length - 1; i++) {
+                    try {
 
-            var arrayData = info_Client_Connect.split('*')
+                        objVal.data.push(JSON.parse(arrayData[i]))
+                    } catch (e) {
+                        console.error("Update Chat: ", e.message)
+                    }
 
-            var objVal = new Object();
-            objVal.data = [];
-            for (let i = 0; i < arrayData.length - 1; i++) {
-                try{
-
-                    objVal.data.push(JSON.parse(arrayData[i]))
-                }catch(e){
-                    console.error("Update Chat: ", e.message)
                 }
+                var containerMessages = document.querySelector('.messages-send');
 
-            }
-            var containerMessages = document.querySelector('.messages-send');
-
-            if (objVal.data.length > 0) {
-                if (form2 !== null) {
-                    SendMessageChat(objVal)
+                if (objVal.data.length > 0) {
+                    if (form2 !== null) {
+                        SendMessageChat(objVal)
+                    }
                 }
+                UpdateMsgQueueInformationClient();
+                UpdateVisitors();
             }
-            UpdateMsgQueueInformationClient();
-        }
 
-        if (messagesSend.length > 0) {
-            var arrElements = []
-            messagesSend.forEach(d => {
-                arrElements.push(d.innerHTML)
-            })
-        }
-        hrxUp.send('request=updateChat');
-    }, 2000)
-} else {
-    clearInterval(updateMessage);
+            if (messagesSend.length > 0) {
+                var arrElements = []
+                messagesSend.forEach(d => {
+                    arrElements.push(d.innerHTML)
+                })
+            }
+            hrxUp.send('request=updateChat');
+        }, 2000)
+    } else {
+        clearInterval(updateMessage);
+    }
 }
-
 
 function UpdateMsgQueueInformationClient() {
     var listUsers = document.querySelector('.users-queue');
@@ -104,37 +94,44 @@ function UpdateMsgQueueInformationClient() {
     hrxUp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     hrxUp.responseType = 'text';
     hrxUp.onload = function () {
-        if(document.location.pathname === "/chatSupport.php"){
+        if (document.location.pathname === "/chatSupport.php" || document.location.pathname === "/adminPage.php" || document.location.pathname === "/visitorsTable.php") {
             var obj = new Object();
             obj.data = [];
             var result = this.responseText.split('*');
-            for(let i = 0; i < result.length - 1; i++){
-                try{
+            for (let i = 0; i < result.length - 1; i++) {
+                try {
 
                     obj.data.push(JSON.parse(result[i]));
-                }catch(e){
+                } catch (e) {
                     console.error("Update queue: ", e.message)
                 }
             }
-            if(listUsers !== null){
+            if (listUsers !== null) {
                 var list = ""
-                obj.data.forEach(function(ob){
-                    list +='<li><p>'+ ob.name + '</p></li>'; 
+                obj.data.forEach(function (ob) {
+                    list += '<li><p>' + ob.name + '</p></li>';
                 })
                 listUsers.innerHTML = `<ul>${list}</ul>`
             }
-            if(counterUsers !== null){
+            if (counterUsers !== null) {
                 counterUsers.innerHTML = obj.data.length
             }
-            
-            
-        }else{
+            var chatAlert = document.querySelector('.chat-queue');
+            if (chatAlert !== null && obj.data.length > 0) {
+
+                chatAlert.innerHTML = `
+                <i class="fa fa-comments"></i> <span>Chat</span>
+                <small class="label pull-right bg-green queue-users-chat">${obj.data.length}</small>`
+            }
+
+
+        } else {
             if (form2 !== null && chatMsgHead !== null) {
                 chatMsgHead.textContent = this.responseText;
-                if(form2.classList.contains('form-display-block')){
-                    setTimeout(function(){
+                if (form2.classList.contains('form-display-block')) {
+                    setTimeout(function () {
                         document.querySelector('.load-container').style = "display: none;"
-                    },2000)
+                    }, 2000)
                 }
             }
         }
@@ -142,6 +139,31 @@ function UpdateMsgQueueInformationClient() {
     }
 
     hrxUp.send('request=infoQueue');
+}
+function UpdateVisitors() {
+    var visitorTotal = document.querySelector('.bg-yellow .inner h3');
+    var uniqueVisitor = document.querySelector('.bg-red .inner h3');
+
+    var hrxUp = new XMLHttpRequest();
+    hrxUp.open('POST', '../src/classes/Chat.php', true);
+    hrxUp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    hrxUp.responseType = 'text';
+    hrxUp.onload = function () {
+        if (document.location.pathname === "/chatSupport.php" || document.location.pathname === "/adminPage.php" || document.location.pathname === "/visitorsTable.php") {
+
+            let result = JSON.parse(this.responseText);
+            if (result) {
+                if (visitorTotal !== null && uniqueVisitor !== null) {
+                    visitorTotal.innerHTML = result.AllVisitors;
+                    uniqueVisitor.innerHTML = result.UniqueVisitors;
+                }
+            }
+
+
+        }
+
+    }
+    hrxUp.send('request=visitors');
 }
 
 if (sendMessage) {
@@ -153,19 +175,13 @@ if (sendMessage) {
             hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             hrx.onload = function () {
 
-                try{
+                try {
 
                     var info_Client_Connect = JSON.parse(this.responseText)
-                }catch(e){
+                } catch (e) {
                     console.error("Send Message: ", e.message)
                 }
-                
-                //console.log(info_Client_Connect)
-
-                //SendMessageChat(info_Client_Connect)
                 messageText.value = '';
-                //containerMsg.scrollTop = containerMsg.scrollHeight;
-
             }
             hrx.send('request=sendMessageChat&Message=' + messageText.value);
 
@@ -178,7 +194,9 @@ if (sendMessage) {
 }
 
 if (submit) {
+
     submit.addEventListener('click', function (event) {
+
         event.preventDefault();
         if (document.location.pathname === '/chat.php') {
 
@@ -188,13 +206,18 @@ if (submit) {
                 hrx.open('POST', '../src/classes/Chat.php', true);
                 hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 hrx.onload = function () {
-                    try{
+                    try {
                         var info_Client_Connect = JSON.parse(this.responseText)
-                    }catch(e){
+                    } catch (e) {
                         console.error("Enter Chat: ", e.message)
                     }
-                    form1.classList.add('form-display-none');
-                    form2.classList.add('form-display-block');
+                    if (form1 !== null && form2 !== null) {
+
+                        form1.classList.add('form-display-none');
+                        form2.classList.add('form-display-block');
+                    }
+                    UpdateChat(true)
+
 
                 }
                 hrx.send('clientName=' + textChatName.value + '&email=' + textChatEmail.value + '&request=enterChatClient');
@@ -202,27 +225,30 @@ if (submit) {
             } else {
                 alert("Favor preencher Nome e email")
             }
-        } else if (document.location.pathname === "/chatSupport.php") {
-            var userName = document.querySelector(".form1 input[name='supportName']");
-            var password = document.querySelector(".form1 input[name='password']");
-            var status = document.querySelector(".form1 input[type='checkbox']");
+        } else if (document.location.pathname === "/login.php") {
+            var userName = document.querySelector("input[name='emailUser']");
+            var password = document.querySelector("input[name='passwordUser']");
+            var status = document.querySelector("input[type='checkbox']");
 
             if (userName.value && password.value) {
                 var hrxS = new XMLHttpRequest();
                 hrxS.open('POST', '../src/classes/Chat.php', true);
                 hrxS.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 hrxS.onload = function () {
-                    //console.log(this.responseText)
-                    try{
+                    try {
 
                         var info_Support_Connect = JSON.parse(this.responseText)
-                    }catch(e){
+                    } catch (e) {
                         console.error("Enter Chat: ", e.message)
                     }
-                    if(info_Support_Connect.auth !== undefined){
+                    if (info_Support_Connect.auth !== undefined) {
                         if (info_Support_Connect.auth) {
-                            form1.classList.add('form-display-none');
-                            form2.classList.add('form-display-block');
+
+                            UpdateChat(true)
+                            window.location.href = "./adminPage.php"
+                            document.querySelector('.chat-message').classList.remove('display-none-content');
+                            document.querySelector('.painel-view').classList.remove('display-none-content');
+                            document.querySelector('.logout-btn').classList.remove('display-none-content');
                         } else {
                             alert('Login ou senha incorreto')
                         }
@@ -231,7 +257,7 @@ if (submit) {
                 hrxS.send('login=' + userName.value + '&password=' + password.value + '&status=' + status.checked + '&request=enterChatSupport');
 
             } else {
-                alert("Favor preencher Nome e email")
+                alert("Favor preencher email e senha")
             }
         }
     })
@@ -262,15 +288,14 @@ function SendMessageChat(obj) {
                         break;
                     case 1:
                         div.setAttribute('class', 'support message-block')
-                    break;
+                        break;
                     case 2:
                         div.setAttribute('class', 'System message-block')
-                    break;
+                        break;
                     default:
                         break;
                 }
-                //if (obj.data[i].definedAuth === 1) { div.setAttribute('class', 'support message-block') } else { div.setAttribute('class', 'client message-block') }
-                
+
                 div.appendChild(nameClient);
                 div.appendChild(message);
                 div.appendChild(dateTime);
@@ -301,14 +326,13 @@ function SendMessageChat(obj) {
                             break;
                         case 1:
                             div.setAttribute('class', 'support message-block')
-                        break;
+                            break;
                         case 2:
                             div.setAttribute('class', 'System message-block')
-                        break;
+                            break;
                         default:
                             break;
                     }
-                    //if (obj.data[i].definedAuth === 1) { div.setAttribute('class', 'support message-block') } else { div.setAttribute('class', 'client message-block') }
                     div.appendChild(nameClient);
                     div.appendChild(message);
                     div.appendChild(dateTime);
@@ -338,14 +362,14 @@ function SendMessageChat(obj) {
                     break;
                 case 1:
                     div.setAttribute('class', 'support message-block')
-                break;
+                    break;
                 case 2:
                     div.setAttribute('class', 'System message-block')
-                break;
+                    break;
                 default:
                     break;
             }
-            // if (ob.definedAuth === 1) { div.setAttribute('class', 'support message-block') } else { div.setAttribute('class', 'client message-block') }
+
             div.appendChild(nameClient);
             div.appendChild(message);
             div.appendChild(dateTime);
@@ -357,6 +381,9 @@ function SendMessageChat(obj) {
 
 }
 
+if (location.pathname === '/adminPage.php' || location.pathname === '/chatSupport.php' || location.pathname === '/visitorsTable.php') {
+    UpdateChat(true);
+}
 
 if (SuportInitChat !== null && SupportFinishChat !== null) {
     SuportInitChat.addEventListener('click', function (event) {
@@ -367,17 +394,19 @@ if (SuportInitChat !== null && SupportFinishChat !== null) {
         hrxS.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         hrxS.onload = function () {
             containerMsg.innerHTML = "";
-            try{
+            try {
 
-                
+
                 var response = JSON.parse(this.responseText);
-            }catch(e){
+            } catch (e) {
                 console.error("Init Chat: ", e.message)
             }
-            if (location.pathname === '/chatSupport.php'){
-                if(response.clients !== undefined){
-                    if(response.clients === false){
+            if (location.pathname === '/chatSupport.php') {
+                if (response.clients !== undefined) {
+                    if (response.clients === false) {
                         alert('Não existe clientes na fila')
+                    } else {
+
                     }
                 }
             }
@@ -391,20 +420,20 @@ if (SuportInitChat !== null && SupportFinishChat !== null) {
         hrxS.open('POST', '../src/classes/Chat.php', true);
         hrxS.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         hrxS.onload = function () {
-            try{
-
-                //console.log(this.responseText);
+            try {
                 var result = JSON.parse(this.responseText);
-                if(result.EndChat !== undefined){
-                    if(result.EndChat === true){
+                if (result.EndChat !== undefined) {
+                    if (result.EndChat === true) {
+
                         alert("Chat finalizado!")
                     }
                 }
-            }catch(e){
+            } catch (e) {
                 console.error("Finish Chat: ", e.message)
             }
-            if(result.Error !== undefined){
-                if(result.Error === "NO DATA ROOM"){
+            if (result.Error !== undefined) {
+                if (result.Error === "NO DATA ROOM") {
+
                     alert("Você não está conectado a nenhum chat no momento")
                 }
             }
@@ -424,3 +453,59 @@ function ClientVeifyRoom() {
         hrxS.send('request=connectChat');
     }
 }
+
+!function logOut() {
+    var logOutBtn = document.querySelector('.logout-btn-2')
+    if (logOutBtn) {
+        logOutBtn.addEventListener('click', function (event) {
+            var hrxS = new XMLHttpRequest();
+            hrxS.open('POST', '../src/classes/Chat.php', true);
+            hrxS.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            hrxS.onload = function () {
+                let response = JSON.parse(this.responseText)
+                if (response.logout !== null) {
+                    if (response.logout) {
+                        window.location.href = "./login.php";
+                    }
+                }
+            }
+            hrxS.send('request=logout')
+        })
+    }
+}()
+!function logOut() {
+    var logOutBtn = document.querySelector('.logout-btn')
+    if (logOutBtn) {
+        logOutBtn.addEventListener('click', function (event) {
+            window.location.href = "./adminPage.php"
+        })
+    }
+}()
+
+!function HandleFormsRequestEmail(btn) {
+    let buttonOfflineSend = document.querySelector('[data-offlinesendbtn]');
+    if (buttonOfflineSend) {
+        buttonOfflineSend.addEventListener('click', event => {
+            event.preventDefault()
+            var name = document.querySelector('[name="clientName"]').value
+            var email = document.querySelector('[name="clientEmail"]').value
+            var msg = document.querySelector('[name="msgClient"]').value
+
+            if (name !== "" && email !== "" && msg !== "") {
+                var responseData;
+                var hrx = new XMLHttpRequest();
+                hrx.open('POST', '../handleForms.php', true);
+                hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                hrx.onload = async function () {
+                    responseData = await this.responseText;
+                    console.log(responseData)
+
+                }
+                hrx.send(`Nome=${name}&Email=${email}&Menssagem=${msg}&Request='Contato Chat'`)
+            } else {
+                alert('Favor preencher todos os campos')
+            }
+        })
+    }
+}()
+

@@ -24,10 +24,10 @@
             <label for="nameClient">Digite seu nome: </label>
             <input name="clientName" type="text" placeholder="Digite seu nome aqui">
             <label for="nameClient">Digite seu email: </label>
-            <input name="clientName" type="email" placeholder="Digite seu email aqui" require="true">
+            <input name="clientEmail" type="email" placeholder="Digite seu email aqui" require="true">
             <label for="msgClient">Digite sua mensagem: </label>
-            <textarea name="" id="" cols="30" rows="10"></textarea>
-            <input class="sub-btn-offline" type="submit" value="Enviar">
+            <textarea name="msgClient" id="" cols="30" rows="10"></textarea>
+            <input class="sub-btn-offline" data-offlineSendBtn type="submit" value="Enviar">
         </form>
     </div>
     

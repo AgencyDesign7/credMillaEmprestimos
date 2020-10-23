@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php 
+include_once('./src/classes/Controller.php');
+include_once('./src/classes/DataBase.php');
+use chatC\Controller;
+    if(!empty($_SERVER["HTTP_CLIENT_IP"])){
+        $ip = $_SERVER["HTTP_CLIENT_IP"];
+    }else if(!empty($_SERVER["HTTP_X_FORWARDED_FOR"])){
+        $ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+    }else{
+        $ip = $_SERVER["REMOTE_ADDR"];
+    }
 
+    $cr = new Controller();
+    $cr->GetIpAndress($ip);
+?>
 <head>
     <!-- 
         Creator: Adenilton Batista Xavier

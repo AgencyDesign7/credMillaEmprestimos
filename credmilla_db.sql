@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 17-Out-2020 às 03:18
--- Versão do servidor: 10.4.8-MariaDB
--- versão do PHP: 7.3.11
+-- Generation Time: Oct 23, 2020 at 08:26 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.2.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `credmilla_db`
+-- Database: `credmilla_db`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `chat_teste`
+-- Table structure for table `chat_teste`
 --
 
 CREATE TABLE `chat_teste` (
@@ -38,7 +37,7 @@ CREATE TABLE `chat_teste` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Extraindo dados da tabela `chat_teste`
+-- Dumping data for table `chat_teste`
 --
 
 INSERT INTO `chat_teste` (`id`, `name`, `email`, `message`, `last_time`, `definedAuth`) VALUES
@@ -48,7 +47,7 @@ INSERT INTO `chat_teste` (`id`, `name`, `email`, `message`, `last_time`, `define
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `queue_users`
+-- Table structure for table `queue_users`
 --
 
 CREATE TABLE `queue_users` (
@@ -58,22 +57,10 @@ CREATE TABLE `queue_users` (
   `date_time` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Extraindo dados da tabela `queue_users`
---
-
-INSERT INTO `queue_users` (`id`, `name`, `session`, `date_time`) VALUES
-(30, 'juvenildo', 'jkslfsdf15', '2020-10-10 14:00:15'),
-(31, 'silas', 'jkslfsdf15', '2020-10-10 14:00:15'),
-(32, 'rogerio', 'jkslfsdf15', '2020-10-10 14:00:15'),
-(33, 'hiago', 'r09v3cgocls3hj5ik6t99f86d8', '2020-10-16 21:57:06'),
-(34, 'marcos', 'r09v3cgocls3hj5ik6t99f86d8', '2020-10-16 22:08:12'),
-(37, 'adenilton', 'r09v3cgocls3hj5ik6t99f86d8', '2020-10-16 22:14:36');
-
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `roomsupport`
+-- Table structure for table `roomsupport`
 --
 
 CREATE TABLE `roomsupport` (
@@ -84,18 +71,18 @@ CREATE TABLE `roomsupport` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Extraindo dados da tabela `roomsupport`
+-- Dumping data for table `roomsupport`
 --
 
 INSERT INTO `roomsupport` (`id`, `name`, `session`, `date_time`) VALUES
-(1, 'marcos', 'r09v3cgocls3hj5ik6t99f86d8', '04:58:55'),
-(2, 'marcos', '1561sdf1sd61f', '00:00:00'),
-(3, 'juvenildo', 'jkslfsdf15', '14:00:15');
+(5, 'adenilton', 'l09gs1sb2rlnv18c8ettubngh2', '19:50:51'),
+(6, 'Av', 'l09gs1sb2rlnv18c8ettubngh2', '19:52:00'),
+(7, 'Adenilton', 'l09gs1sb2rlnv18c8ettubngh2', '01:47:07');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `supportlogin`
+-- Table structure for table `supportlogin`
 --
 
 CREATE TABLE `supportlogin` (
@@ -110,67 +97,104 @@ CREATE TABLE `supportlogin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Extraindo dados da tabela `supportlogin`
+-- Dumping data for table `supportlogin`
 --
 
 INSERT INTO `supportlogin` (`id`, `name`, `email`, `login`, `password`, `online`, `available`, `currentRoom`) VALUES
 (1, 'admin', 'admin@suporte.com.br', 'admin', '$2y$10$WMblVDDlXsDymnscf6zL/OHScC6eJsZZqI3dkjONoFdIgaUX.iIPW', 1, 0, '');
 
+-- --------------------------------------------------------
+
 --
--- Índices para tabelas despejadas
+-- Table structure for table `visitors`
+--
+
+CREATE TABLE `visitors` (
+  `id` int(11) NOT NULL,
+  `ip` varchar(100) NOT NULL,
+  `date_time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `visitors`
+--
+
+INSERT INTO `visitors` (`id`, `ip`, `date_time`) VALUES
+(1, '::1', '2020-10-23 09:19:29'),
+(2, '::1', '2020-10-23 09:23:00'),
+(3, '::1', '2020-10-23 09:23:21'),
+(4, '127.0.0.1', '2020-10-23 09:23:21'),
+(5, '127.0.0.1', '2020-10-23 09:23:21'),
+(6, '127.0.0.2', '2020-10-23 09:23:21'),
+(7, '::1', '2020-10-23 12:24:12');
+
+--
+-- Indexes for dumped tables
 --
 
 --
--- Índices para tabela `chat_teste`
+-- Indexes for table `chat_teste`
 --
 ALTER TABLE `chat_teste`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `queue_users`
+-- Indexes for table `queue_users`
 --
 ALTER TABLE `queue_users`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `roomsupport`
+-- Indexes for table `roomsupport`
 --
 ALTER TABLE `roomsupport`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `supportlogin`
+-- Indexes for table `supportlogin`
 --
 ALTER TABLE `supportlogin`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT de tabelas despejadas
+-- Indexes for table `visitors`
+--
+ALTER TABLE `visitors`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de tabela `chat_teste`
+-- AUTO_INCREMENT for table `chat_teste`
 --
 ALTER TABLE `chat_teste`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
 
 --
--- AUTO_INCREMENT de tabela `queue_users`
+-- AUTO_INCREMENT for table `queue_users`
 --
 ALTER TABLE `queue_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
--- AUTO_INCREMENT de tabela `roomsupport`
+-- AUTO_INCREMENT for table `roomsupport`
 --
 ALTER TABLE `roomsupport`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT de tabela `supportlogin`
+-- AUTO_INCREMENT for table `supportlogin`
 --
 ALTER TABLE `supportlogin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `visitors`
+--
+ALTER TABLE `visitors`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -3,7 +3,8 @@
         <p>Solicite sua simulação de empréstimo</p>
         <p>Preencha o formulário e aguarde nosso contato!</p>
         <div class="inputs">
-            <div><span id="userId"></span><input name="nome_completo" id="nameInput" type="text" placeholder="Nome completo*" required></div>
+            <div><span id="userId"></span><input name="nome_completo" id="nameInput" type="text"
+                    placeholder="Nome completo*" required></div>
             <div><span id="cpfId"></span><input name="cpf" type="text" placeholder="CPF*" required></div>
             <div><span id="perfilId"></span><select name="perfil-inv" id="perfil-inv" required>
                     <option value="select">Escolha seu perfil...</option>
@@ -12,20 +13,26 @@
                     <option value="Municipal">Municipal</option>
                     <option value="Estadual">Estadual</option>
                 </select></div>
-            <div><span id="emailId"></span><input name="email" id="emailInput" type="email" placeholder="Email*" required></div>
+            <div><span id="emailId"></span><input name="email" id="emailInput" type="email" placeholder="Email*"
+                    required></div>
             <div><span id="telId"></span><input name="telefone" type="tel" placeholder="Telefone*" required></div>
             <div><span id="dateId"></span><input name="nascimento" type="date" required></div>
-            <div class="sendEmprest"><button data-Emprestimo type="submit" value=""><span id="sendBtn"></span>ENVIAR</button></div>
+            <div class="sendEmprest"><button data-Emprestimo type="submit" value=""><span
+                        id="sendBtn"></span>ENVIAR</button></div>
         </div>
     </form>
 </div>
-<div class="social">
+<div class="social whatsapp">
     <a href="https://api.whatsapp.com/send?phone=5531984707717"><img src="./resource/img/icons/watsapp-icon.png"
             alt=""></a>
+</div>
+<div class="social chat">
     <a class="chat-link" href="#" target=""><img src="./resource/img/icons/chat-icon.png" alt=""></a>
+
     <div class="chat-frame-container">
         <span><a href="#">X</a></span>
-        <div class="frame-maximaze"><a target="_black"><img id="maximaze-img" src="./resource/img/icons/maximize-size.png" alt=""></a></div>
+        <div class="frame-maximaze"><a target="_black"><img id="maximaze-img"
+                    src="./resource/img/icons/maximize-size.png" alt=""></a></div>
         <iframe class="chat-frame" frameborder="0" scrolling="no"></iframe>
     </div>
 </div>
