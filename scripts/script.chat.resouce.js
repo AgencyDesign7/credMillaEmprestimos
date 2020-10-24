@@ -187,7 +187,7 @@ if (sendMessage) {
 
 
         } else {
-            alert('Campo de menssagem vazio')
+            alert('Campo de Mensagem vazio')
         }
 
     })
@@ -501,11 +501,11 @@ function ClientVeifyRoom() {
                     console.log(responseData)
 
                 }
-                hrx.send(`Nome=${name}&Email=${email}&Menssagem=${msg}&Request='Contato Chat'`)
+                hrx.send(`Nome=${name}&Email=${email}&Mensagem=${msg}&Request='Contato Chat'`)
             } else {
                 alert('Favor preencher todos os campos')
             }
         })
     }
-}()
+}
 

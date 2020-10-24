@@ -782,6 +782,7 @@ input[type="file"]{
     height: 40px;
 }
 .chat-message{
+    width: 500px;
     position: relative;
     overflow-x: hidden;
 
@@ -1059,4 +1060,26 @@ iframe html{
 .text-sucess p{
     font-size: 30px;
     color: black;
+}
+
+/* feedback form send */
+.container-feedback{
+    width: 100%;
+    display: inline-block;
+   
+}
+.content-feedback{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 30px 0;
+}
+
+.content-feedback img{
+    width: 100px;
+    height: auto;
+}
+.content-feedback button{
+    margin: 30px 0;
 }

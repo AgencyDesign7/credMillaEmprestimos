@@ -37,14 +37,15 @@
         </div>
 
         <div class="form-contato">
-            <form action="">
+            <form action="./handleForms.php" method="POST" enctype="multipart/form-data" >
                 <p>Fale conosco</p>
                 <p>Dúvida, sugestão ou crítica</p>
                 <div class="cont-input">
-                    <input type="text" name="i-name" id="" placeholder="Nome*" required>
-                    <input type="email" name="i-email" id="" placeholder="Email*" required>
-                    <input type="text" name="i-tel" id="" placeholder="Telefone*" required>
-                    <textarea type="text" name="i-msg" id="" placeholder="Mensagem*" required></textarea>
+                    <input type="hidden" name="Request" value="Fale conosco" id="">   
+                    <input type="text" name="Nome" id="" placeholder="Nome*" required>
+                    <input type="email" name="Email" id="" placeholder="Email*" required>
+                    <input type="text" name="Telefone" id="" placeholder="Telefone*" required>
+                    <textarea type="text" name="Mensagem" id="" placeholder="Mensagem*" required></textarea>
                     <div class="btn-contato"><button data-Contato type="submit">Enviar</button></div>
                 </div>
             </form>

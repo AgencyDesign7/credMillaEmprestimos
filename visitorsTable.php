@@ -170,11 +170,10 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 4.0
+                    <td>1</td>
+                    <td>127.0.0.1
                     </td>
-                    <td>Win 95+</td>
+                    <td>2020-10-20 18:03:00</td>
                   </tr>
                 </tbody>
                 <tfoot>
