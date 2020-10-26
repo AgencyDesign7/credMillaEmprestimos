@@ -916,7 +916,7 @@ input[type="file"]{
     display: flex;
     flex-direction: column;
     position: absolute;
-    width: 100%;
+    /* width: 400px; */
     right: 15px;
     top: -435px;
     width: fit-content;

@@ -401,7 +401,13 @@ if (SuportInitChat !== null && SupportFinishChat !== null) {
             } catch (e) {
                 console.error("Init Chat: ", e.message)
             }
+            
             if (location.pathname === '/chatSupport.php') {
+                if(response.InitError !== undefined){
+                    if(response.InitError === "error"){
+                        alert("Você ainda está conectada em um chat, favor finalizar antes de começar um novo")
+                    }
+                }
                 if (response.clients !== undefined) {
                     if (response.clients === false) {
                         alert('Não existe clientes na fila')

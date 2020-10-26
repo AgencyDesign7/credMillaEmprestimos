@@ -73,6 +73,18 @@
     .mob-h{
         display: block;
     }
+
+    .chat-frame-container iframe{
+        width: 100vw !important;
+    }
+    .chat-frame-container{
+        right: 0;
+    }
+
+    .chat-frame-container .open-form{
+        width: 100vw !important;
+    }
+    
 }
 
 @media only screen and (max-width: 500px){
@@ -121,10 +133,14 @@
         align-items: center;
     }
     .chat-frame-container iframe{
-        width: 100vw;
+        width: 100vw !important;
     }
     .chat-frame-container{
         right: 0;
+    }
+
+    .chat-frame-container .open-form{
+        width: 100vw !important;
     }
     
     

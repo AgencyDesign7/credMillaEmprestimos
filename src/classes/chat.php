@@ -83,6 +83,8 @@ if (isset($_POST['request'])) {
 
         $Client = new Client($_SESSION['name'], session_id());
         $Controller->ConnectChatQueue($Client);
+        //create room client
+        $res = $Controller->SelectRoom($Controller->Connect_client_with_support($Client->getidSession()));
 
         echo json_encode($infosUser, JSON_FORCE_OBJECT);
 
@@ -128,9 +130,9 @@ if (isset($_POST['request'])) {
                 echo "";
             }else{
                 if($result === 0){
-                    echo 'Aguarde, em breve você será atendido... você é o próximo a ser atendido';
+                    echo 'Aguarde, em breve você será atendido... você é o próximo a ser atendido.      Caso queira, deixe sua pergunta enquanto aguarda pelo atendimento';
                 }else{
-                    echo 'Aguarde, em breve você será atendido... você é  '.$result .'º da fila';
+                    echo 'Aguarde, em breve você será atendido... você é  '.$result .'º da fila.        Caso queira, deixe sua pergunta enquanto aguarda pelo atendimento';
                 }
             }
         }
@@ -168,8 +170,17 @@ if (isset($_POST['request'])) {
             exit();
         }
        
-
-        $res = $Controller->SelectRoom($Controller->Connect_client_with_support($clientsQueue[0]));
+        //create room client
+        //$res = $Controller->SelectRoom($Controller->Connect_client_with_support($clientsQueue[0]));
+        //Check if alheady connected
+        $CheckResult = $db->FetchAllData("SELECT * FROM supportlogin WHERE login=?", [$_SESSION['login']]);
+        foreach($CheckResult as $su){
+            if(!$su->currentRoom === ""){
+                echo json_encode(array('InitError' => "error"));
+                exit();
+            }
+        }
+        //inset name of the room in support currentRoom
         $result = $db->insertData("UPDATE supportlogin SET currentRoom=? WHERE login=?", [$Controller->NextQueue(), $_SESSION['login']]);
         if($result === 1){ //sucess
             
@@ -178,11 +189,12 @@ if (isset($_POST['request'])) {
             
             $queryResult = $db->insertData('INSERT INTO `roomsupport` (`name`, `session`, `date_time`) VALUES (?,?,?)', [$clientsQueue[0]->name, $clientsQueue[0]->session, $clientsQueue[0]->date_time]);
 
+            //Message warning after support has been connected
             $resultConectSupportMsg = $db->insertData('INSERT INTO ' . $Controller->getDataTime('Y'). '_'.$clientsQueue[0]->session.' (`name`, `email`, `message`, `last_time`, `definedAuth`) VALUES (?,?,?,?,?)', ['System', 'suporte@suport', 'Atendente '. $_SESSION['name']  . ' conectado...', $Controller->getDataTime('H:i:s'), 2]);
             
             echo $queryResult;
             if($queryResult === 1){//sucess
-                $db->insertData("DELETE FROM queue_users WHERE session=?", [$clientsQueue[0]->session]); 
+                $db->deleteData("DELETE FROM queue_users WHERE session=?", [$clientsQueue[0]->session]); 
             }else{
                 echo json_encode(array('error'=> "Error inserir usuario chatroom"));
             }
