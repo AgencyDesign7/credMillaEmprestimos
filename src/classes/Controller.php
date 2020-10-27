@@ -45,7 +45,7 @@ class Controller
     }
 
     function Connect_client_with_support($clientSession){
-        $roomName = ($this->getDataTime('Y'). '_'.$clientSession);
+        $roomName = 'credmilla_chat_db.'.($this->getDataTime('Y'). '_'.$clientSession);
         $this->db->insertData('CREATE TABLE ' . $roomName .' (id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT, name varchar(100) NOT NULL, email varchar(100) NOT NULL, message text NOT NULL, last_time TIME NOT NULL, definedAuth int(11) NOT NULL)', []);
         return $roomName;
     }

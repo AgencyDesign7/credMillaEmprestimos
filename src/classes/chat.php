@@ -28,11 +28,11 @@ if (isset($_POST['request'])) {
         if($_SESSION['mode'] === 1){
 
             $datas = $db->FetchAllData('SELECT * FROM supportlogin WHERE login=?', [$_SESSION['login']]);
-            $datas = $db->FetchAllData('SELECT * FROM '. $datas[0]->currentRoom, []);
+            $datas = $db->FetchAllData('SELECT * FROM credmilla_chat_db.'. $datas[0]->currentRoom, []);
         }else{
             
             $datas = array((object) array( "currentRoom" => $_SESSION['ChatRoom']));
-            $datas = $db->FetchAllData('SELECT * FROM '. $datas[0]->currentRoom, []);
+            $datas = $db->FetchAllData('SELECT * FROM credmilla_chat_db.'. $datas[0]->currentRoom, []);
             
         }
         
@@ -129,7 +129,7 @@ if (isset($_POST['request'])) {
         $dateTime = new DateTime();
         $dateTime->setTimezone($timeZone);
         $infosUser = array('name' => $_SESSION['name'], 'email' => $_SESSION['email'], 'message' => $_POST['Message'], 'dateTime' => $dateTime->format('H:i:s'), 'definedAuth' => $_SESSION['mode']);
-        $db->insertData('INSERT INTO '.$data[0]->currentRoom. ' (name, email, message, last_time, definedAuth) VALUE (?,?,?,?,?)', [$_SESSION['name'], $_SESSION['email'], $_POST['Message'], $dateTime->format('H:i:s'), $_SESSION['mode']]);
+        $db->insertData('INSERT INTO credmilla_chat_db.'.$data[0]->currentRoom. ' (name, email, message, last_time, definedAuth) VALUE (?,?,?,?,?)', [$_SESSION['name'], $_SESSION['email'], $_POST['Message'], $dateTime->format('H:i:s'), $_SESSION['mode']]);
         try {
 
             echo json_encode($infosUser, JSON_FORCE_OBJECT);
@@ -221,7 +221,7 @@ if (isset($_POST['request'])) {
             $queryResult = $db->insertData('INSERT INTO `roomsupport` (`name`, `session`, `date_time`) VALUES (?,?,?)', [$clientsQueue[0]->name, $clientsQueue[0]->session, $clientsQueue[0]->date_time]);
 
             //Message warning after support has been connected
-            $resultConectSupportMsg = $db->insertData('INSERT INTO ' . $Controller->getDataTime('Y'). '_'.$clientsQueue[0]->session.' (`name`, `email`, `message`, `last_time`, `definedAuth`) VALUES (?,?,?,?,?)', ['System', 'suporte@suport', 'Atendente '. $_SESSION['name']  . ' conectado...', $Controller->getDataTime('H:i:s'), 2]);
+            $resultConectSupportMsg = $db->insertData('INSERT INTO credmilla_chat_db.' . $Controller->getDataTime('Y'). '_'.$clientsQueue[0]->session.' (`name`, `email`, `message`, `last_time`, `definedAuth`) VALUES (?,?,?,?,?)', ['System', 'suporte@suport', 'Atendente '. $_SESSION['name']  . ' conectado...', $Controller->getDataTime('H:i:s'), 2]);
             
             echo $queryResult;
             if($queryResult === 1){//sucess
@@ -243,7 +243,7 @@ if (isset($_POST['request'])) {
                 echo json_encode(array('Error' => "NO DATA ROOM"), JSON_FORCE_OBJECT);
                 exit();
             }
-           $db->insertData("INSERT INTO ".$resultSupport[0]->currentRoom." (name, email, message, last_time, definedAuth) VALUES (?,?,?,?,?)", ["System", "suport@suport.com.br", $MessageFinishChat, $Controller->getDataTime('H:i:s'), 2]);
+           $db->insertData("INSERT INTO credmilla_chat_db.".$resultSupport[0]->currentRoom." (name, email, message, last_time, definedAuth) VALUES (?,?,?,?,?)", ["System", "suport@suport.com.br", $MessageFinishChat, $Controller->getDataTime('H:i:s'), 2]);
         }
         $result = $db->insertData("UPDATE supportlogin SET currentRoom=? WHERE login=?", ["", $_SESSION['login']]);
         $db->deleteData('DELETE FROM `roomsupport`', []);

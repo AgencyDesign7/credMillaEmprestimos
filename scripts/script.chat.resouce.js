@@ -225,6 +225,7 @@ if (submit) {
                 hrx.open('POST', '../src/classes/Chat.php', true);
                 hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 hrx.onload = function () {
+                    console.log(this.responseText)
                     try {
                         var verifySupportOnline = JSON.parse(this.responseText)
                     } catch (e) {
