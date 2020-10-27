@@ -37,7 +37,7 @@
                 <!-- <div class="frame-maximaze"><a href="./chat.php" target="_black"><img id="maximaze-img" src="./resource/img/icons/maximize-size.png" alt=""></a></div> -->
                 <div class="init-head-message">
                     <p>Bem vindo ao chat credMilla emprestimos</p>
-                    <p id="init-support-msg"></p>
+                    <div class="init-support-msg"></div>
                 </div>
                 <div class="imageLoad"><img src="./resource/img/icons/spingLoad.gif" alt=""></div>
                 <!-- <div class="suport message-block">

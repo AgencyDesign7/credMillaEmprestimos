@@ -30,7 +30,7 @@ var form2 = document.querySelector(".form2")
 var textChatName = document.querySelector(".form1 input[type='text']");
 var textChatEmail = document.querySelector(".form1 input[type='email']");
 var containerMsg = document.querySelector(".messages-send");
-var chatMsgHead = document.querySelector("#init-support-msg");
+var chatMsgHead = document.querySelector(".init-support-msg");
 var SuportInitChat = document.querySelector(".btn-InitChat");
 var SupportFinishChat = document.querySelector(".btn-FinishChat");
 
@@ -146,7 +146,7 @@ function UpdateMsgQueueInformationClient() {
         } else {
             if (true) {
                 
-                chatMsgHead.textContent = this.responseText;
+                chatMsgHead.innerHTML = this.responseText;
                 if (form2.classList.contains('form-display-block')) {
                     setTimeout(function () {
                         document.querySelector('.load-container').style = "display: none;"
@@ -226,16 +226,21 @@ if (submit) {
                 hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 hrx.onload = function () {
                     try {
-                        var info_Client_Connect = JSON.parse(this.responseText)
+                        var verifySupportOnline = JSON.parse(this.responseText)
                     } catch (e) {
                         console.error("Enter Chat: ", e.message)
                     }
-                    if (form1 !== null && form2 !== null) {
+                    if(verifySupportOnline.supportOnline === true){
 
-                        form1.classList.add('form-display-none');
-                        form2.classList.add('form-display-block');
+                        if (form1 !== null && form2 !== null) {
+    
+                            form1.classList.add('form-display-none');
+                            form2.classList.add('form-display-block');
+                        }
+                        UpdateChat(true)
+                    }else{
+                        window.location.href = "../chatOffline.php"
                     }
-                    UpdateChat(true)
 
 
                 }

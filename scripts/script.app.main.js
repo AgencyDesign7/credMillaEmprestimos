@@ -64,6 +64,7 @@
     }
 }()
 
+
 !function iframeCheckOnlineSupport() {
     var ChatContainerIframe = document.querySelector('.chat-frame-container iframe');
     var btnMaximizeChat = document.querySelector('.frame-maximaze a')

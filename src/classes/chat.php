@@ -98,15 +98,21 @@ if (isset($_POST['request'])) {
         $_SESSION['email'] = $_POST['email'];
         $infosUser = array('name' =>  $_SESSION['name'], 'email' =>  $_SESSION['email'], 'mode' => $_SESSION['mode'] = 0);
         
+        $onlineSupport = $db->FetchAllData('SELECT * FROM supportlogin WHERE online=1', []);
+        if(!empty($onlineSupport)){
+            $Client = new Client($_SESSION['name'], session_id());
+            $Controller->ConnectChatQueue($Client);
+            //create room client
+            $res = $Controller->SelectRoom($Controller->Connect_client_with_support($Client->getidSession()));
 
-        $Client = new Client($_SESSION['name'], session_id());
-        $Controller->ConnectChatQueue($Client);
-        //create room client
-        $res = $Controller->SelectRoom($Controller->Connect_client_with_support($Client->getidSession()));
+            echo json_encode(array('supportOnline' => true), JSON_FORCE_OBJECT);
 
-        echo json_encode($infosUser, JSON_FORCE_OBJECT);
+            $_SESSION['ChatRoom'] = $Controller->NextQueue();
+        }else{
+            echo json_encode(array('supportOnline' => false), JSON_FORCE_OBJECT);
+        }
 
-        $_SESSION['ChatRoom'] = $Controller->NextQueue();
+        
     }
     
     if ($_POST['request'] === 'sendMessageChat') {
@@ -148,9 +154,9 @@ if (isset($_POST['request'])) {
                 echo "";
             }else{
                 if($result === 0){
-                    echo 'Aguarde, em breve você será atendido... você é o próximo a ser atendido.      Caso queira, deixe sua pergunta enquanto aguarda pelo atendimento';
+                    echo '<p>Aguarde, em breve você será atendido... você é o próximo a ser atendido.</p><p>Caso queira, deixe sua pergunta enquanto aguarda pelo atendimento</p>';
                 }else{
-                    echo 'Aguarde, em breve você será atendido... você é  '.$result .'º da fila.        Caso queira, deixe sua pergunta enquanto aguarda pelo atendimento';
+                    echo '<p>Aguarde, em breve você será atendido... você é  '.$result .'º da fila.</p><p>Caso queira, deixe sua pergunta enquanto aguarda pelo atendimento</p>';
                 }
             }
         }
