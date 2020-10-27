@@ -49,6 +49,8 @@ if (isset($_POST['request'])) {
         if ($_POST['login'] && $_POST['password']) {
             $_SESSION['login'] = $_POST['login'];
             $password = $_POST['password'];
+            $status = $_POST['status'];
+            $_SESSION['status'] = $_POST['status'];
             $posts = $db->FetchAllData('SELECT * FROM `supportlogin` WHERE `login`= ?', [$_POST['login']]);
             if ($posts) {
                 foreach ($posts as $post) {
@@ -60,18 +62,34 @@ if (isset($_POST['request'])) {
                         $_SESSION['name'] = $post->name;
                         $_SESSION['email'] = $post ->email;
                         
-                        if(true){
+                        //reset currentRoom on login
+                        $db->insertData("UPDATE supportlogin SET currentRoom=? WHERE login=?", ["", $_SESSION['login']]);
+                        if($status === "true"){
+                            //change status
                             $db->updateData('UPDATE supportlogin SET online=true WHERE login = ?', [$_SESSION['login']]);
                         }
                         
 
                     } else {
-                        echo json_encode(array('auth' => false));
+                        echo json_encode(array('auth' => false, 'status' => $status));
                     }
                 }
             } else {
-                echo json_encode(array('error' => "usuario ou senha incorreto"));
+                echo json_encode(array('auth' => false, 'error' => "usuario ou senha incorreto"));
             }
+        }
+    }
+
+    if ($_POST['request'] === 'changeStatus') {
+        $statusDb = $db->FetchAllData('SELECT online FROM `supportlogin` WHERE `login`= ?', [$_SESSION['login']]);
+        if($statusDb[0]->online === 0){
+            $db->updateData('UPDATE supportlogin SET online=true WHERE login = ?', [$_SESSION['login']]);
+            $_SESSION['status'] = "true";
+            echo json_encode(array('online' => true), JSON_FORCE_OBJECT);
+        }else{
+            $db->updateData('UPDATE supportlogin SET online=false WHERE login = ?', [$_SESSION['login']]);
+            $_SESSION['status'] = "false";
+            echo json_encode(array('online' => false), JSON_FORCE_OBJECT);
         }
     }
 
@@ -137,6 +155,13 @@ if (isset($_POST['request'])) {
             }
         }
         
+    }
+
+    if($_POST['request'] === 'infoConnect'){
+        $roomConnected = $db->FetchAllData('SELECT * FROM roomsupport', []);
+        foreach($roomConnected as $ro){
+            echo $ro->name;
+        }
     }
 
     if($_POST['request'] === 'ckeck-online'){
@@ -215,6 +240,7 @@ if (isset($_POST['request'])) {
            $db->insertData("INSERT INTO ".$resultSupport[0]->currentRoom." (name, email, message, last_time, definedAuth) VALUES (?,?,?,?,?)", ["System", "suport@suport.com.br", $MessageFinishChat, $Controller->getDataTime('H:i:s'), 2]);
         }
         $result = $db->insertData("UPDATE supportlogin SET currentRoom=? WHERE login=?", ["", $_SESSION['login']]);
+        $db->deleteData('DELETE FROM `roomsupport`', []);
         echo json_encode(array('EndChat' => true), JSON_FORCE_OBJECT);
     }
 

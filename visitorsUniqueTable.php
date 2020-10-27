@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<?php 
-    if(!isset($_SESSION)){
+<?php
+
+use chatC\DataBase;
+
+if(!isset($_SESSION)){
       session_start();
     }
     if(!isset($_SESSION['login'])){
@@ -127,7 +130,7 @@
           </a>
           <ul class="treeview-menu" style="display: none;">
             <li class="active"><a href="./visitorsTable.php"><i class="fa fa-circle-o"></i> Total Visitantes</a></li>
-            <li><a href="./visitorsUniqueTable.php"><i class="fa fa-circle-o"></i>Total único visitante</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i>Total único visitante</a></li>
           </ul>
         </li>
         <li class="header">CHAT CREDMILLA</li>
@@ -147,58 +150,69 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Dashboard
+        Visitantes
         <small>Painel de Controle</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
+        <li><a href="./adminPage.php"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Visitantes</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
-      <!-- Small boxes (Stat box) -->
       <div class="row">
-
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-              <h3><i class="fa fa-spin fa-refresh"></i></h3>
-
-              <p>Visitantes</p>
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Visitantes</h3>
             </div>
-            <div class="icon">
-              <i class="ion ion-person-add"></i>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>IP</th>
+                    <th>DATA</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                    require_once('./src/classes/DataBase.php');
+                    $db = new DataBase();
+                    $res = $db->FetchAllData("SELECT * FROM visitors GROUP BY ip ORDER by ip DESC", []);
+                    
+                    if(true){
+                      foreach($res as $r){
+                        echo "<tr>
+                        <td>$r->id</td>
+                        <td>$r->ip
+                        </td>
+                        <td>$r->date_time</td>
+                      </tr>
+                        ";
+                      }
+                    }
+                  
+                  ?>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th>ID</th>
+                    <th>IP</th>
+                    <th>DATA</th>
+                  </tr>
+                </tfoot>
+              </table>
             </div>
-            <a href="./visitorsTable.php" class="small-box-footer">Mais informação <i
-                class="fa fa-arrow-circle-right"></i></a>
+            <!-- /.box-body -->
           </div>
+          <!-- /.box -->
         </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red">
-            <div class="inner">
-              <h3><i class="fa fa-spin fa-refresh"></i></h3>
-
-              <p>Visitantes únicos</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-pie-graph"></i>
-            </div>
-            <a href="./visitorsTable.php" class="small-box-footer">Mais informação<i
-                class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
+        <!-- /.col -->
       </div>
       <!-- /.row -->
-      <!-- Main row -->
-      <div class="row"></div>
-      <!-- Left col -->
     </section>
     <section class="col-lg-7 connectedSortable">
     </section>
@@ -229,10 +243,7 @@
   <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
   <!-- jQuery UI 1.11.4 -->
   <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-  <script>
-    $.widget.bridge('uibutton', $.ui.button);
-  </script>
+
   <!-- Bootstrap 3.3.6 -->
   <script src="bootstrap/js/bootstrap.min.js"></script>
   <!-- Morris.js charts -->

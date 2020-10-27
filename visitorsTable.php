@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<?php 
-    if(!isset($_SESSION)){
+<?php
+
+use chatC\DataBase;
+
+if(!isset($_SESSION)){
       session_start();
     }
     if(!isset($_SESSION['login'])){
@@ -95,7 +98,13 @@
         </div>
         <div class="pull-left info">
           <p> <?php echo $_SESSION['login']; ?></p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          <a href="#"><?php
+            if($_SESSION['status'] === "true"){
+              echo "<i class='fa fa-circle text-success'></i> Online";
+            }else{
+              echo "<i class='fa fa-circle text-danger'></i> Offline";
+            }
+          ?></a>
         </div>
       </div>
       <!-- search form -->
@@ -121,7 +130,7 @@
           </a>
           <ul class="treeview-menu" style="display: none;">
             <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Total Visitantes</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>Total único visitante</a></li>
+            <li><a href="./visitorsUniqueTable.php"><i class="fa fa-circle-o"></i>Total único visitante</a></li>
           </ul>
         </li>
         <li class="header">CHAT CREDMILLA</li>
@@ -169,12 +178,24 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>127.0.0.1
-                    </td>
-                    <td>2020-10-20 18:03:00</td>
-                  </tr>
+                  <?php
+                    require_once('./src/classes/DataBase.php');
+                    $db = new DataBase();
+                    $res = $db->FetchAllData("SELECT * FROM visitors", []);
+                    
+                    if(true){
+                      foreach($res as $r){
+                        echo "<tr>
+                        <td>$r->id</td>
+                        <td>$r->ip
+                        </td>
+                        <td>$r->date_time</td>
+                      </tr>
+                        ";
+                      }
+                    }
+                  
+                  ?>
                 </tbody>
                 <tfoot>
                   <tr>

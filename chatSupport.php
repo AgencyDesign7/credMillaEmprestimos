@@ -25,6 +25,7 @@
     <div class="title-chat">
         <p>Chat CredMilla emprestimos Support</p>
     </div>
+    <div class='info-room'><p>Conectado com: </p></div>
     <div class="chat-container-form">
         <!-- <form action="" method="post" class="form1">
             <img src="./resource/img/icons/chatpageIcon.png" alt="">

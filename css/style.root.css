@@ -709,10 +709,11 @@ input[type="file"]{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 500px;
+    width: 400px;
     height: 500px;
     border-radius: 0 !important;
     background-color: var(--color-box-button);
+    position: absolute;
 }
 
 .chat-container-form .form1 label{
@@ -755,7 +756,7 @@ input[type="file"]{
 
 .chat-container-form .form2{
     display: none;
-    width: 400px;
+    width: 100%;
     height: 500px;
     flex-direction: row;
     justify-content: flex-end;
@@ -909,6 +910,14 @@ input[type="file"]{
 }
 .logout-btn a{
     text-decoration: none;
+}
+.info-room{
+    width: 100%;
+    margin: 20px 0;
+}
+
+.info-room p{
+    text-align: center;
 }
 
 /* chat Iframe */

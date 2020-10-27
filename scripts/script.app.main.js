@@ -57,6 +57,9 @@
         chatIcon.addEventListener('click', function (event) {
             event.preventDefault()
             iframeForm.classList.add('open-form');
+            setTimeout(function () {
+                iframe.contentWindow.document.querySelector('.load-container').style = "display: none;"
+            }, 2000)
         })
     }
 }()
