@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+  <link rel="stylesheet" href="./css/custom.css.RegisterUser.css">
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
@@ -131,7 +132,7 @@
           </ul>
         </li>
         <?php 
-            if($_SESSION['permissions'] === 123){
+            if($_SESSION['permissions'] === 1){
               echo '
               <li class="header">CONTROLE USUÁRIOS</li>
             <li class="treeview">
@@ -182,48 +183,81 @@
     </section>
 
     <!-- Main content -->
-    <section class="content">
-      <!-- Small boxes (Stat box) -->
-      <div class="row">
-
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-              <h3><i class="fa fa-spin fa-refresh"></i></h3>
-
-              <p>Visitantes</p>
+    <section class="content d-flex">
+    <div class="container-user">
+    <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Adicional usuário</h3>
             </div>
-            <div class="icon">
-              <i class="ion ion-person-add"></i>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form class="form-horizontal">
+              <div class="box-body">
+              
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Nome</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputEmail3" placeholder="Nome">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Email</label>
+
+                  <div class="col-sm-10">
+                    <input type="email" class="form-control" id="inputPassword3" placeholder="Email">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Senha</label>
+
+                  <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Repetir senha </label>
+
+                  <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                  </div>
+                </div>
+
+
+                <div class="box-header with-border">
+              <h3 class="box-title">Permissões</h3>
             </div>
-            <a href="./visitorsTable.php" class="small-box-footer">Mais informação <i
-                class="fa fa-arrow-circle-right"></i></a>
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox"> Visitantes
+                      </label>
+                    </div>
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox"> Adicionar, Excluir e Editar Usuários
+                      </label>
+                    </div>
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox"> Chat
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="submit" class="btn btn-default">Cancel</button>
+                <button type="submit" class="btn btn-success pull-right">Salvar</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
           </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red">
-            <div class="inner">
-              <h3><i class="fa fa-spin fa-refresh"></i></h3>
-
-              <p>Visitantes únicos</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-pie-graph"></i>
-            </div>
-            <a href="./visitorsTable.php" class="small-box-footer">Mais informação<i
-                class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-      </div>
-      <!-- /.row -->
-      <!-- Main row -->
-      <div class="row"></div>
-      <!-- Left col -->
+    </div>
+    
     </section>
     <section class="col-lg-7 connectedSortable">
     </section>

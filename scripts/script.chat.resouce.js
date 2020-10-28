@@ -34,7 +34,7 @@ var chatMsgHead = document.querySelector(".init-support-msg");
 var SuportInitChat = document.querySelector(".btn-InitChat");
 var SupportFinishChat = document.querySelector(".btn-FinishChat");
 
-if(document.location.pathname === "/chat.php"){
+if (document.location.pathname === "/chat.php") {
     UpdateChat(true)
 }
 
@@ -88,23 +88,23 @@ function UpdateChat(booleanUpdate) {
         clearInterval(updateMessage);
     }
 }
-function SupportConnectedWith(){
+function SupportConnectedWith() {
     let chatInfo = document.querySelector('.info-room p')
     var hrxUp = new XMLHttpRequest();
     hrxUp.open('POST', '../src/classes/Chat.php', true);
     hrxUp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     hrxUp.responseType = 'text';
-    hrxUp.onload = function (){
-        if(chatInfo !== null){
+    hrxUp.onload = function () {
+        if (chatInfo !== null) {
 
-            chatInfo.innerHTML = 'Conectado com: ' +this.responseText;
+            chatInfo.innerHTML = 'Conectado com: ' + this.responseText;
         }
     }
     hrxUp.send('request=infoConnect');
 }
 
 function UpdateMsgQueueInformationClient() {
-   
+
     var listUsers = document.querySelector('.users-queue');
     var counterUsers = document.querySelector('.queue-users p > span');
     var hrxUp = new XMLHttpRequest();
@@ -145,7 +145,7 @@ function UpdateMsgQueueInformationClient() {
 
         } else {
             if (true) {
-                
+
                 chatMsgHead.innerHTML = this.responseText;
                 if (form2.classList.contains('form-display-block')) {
                     setTimeout(function () {
@@ -231,15 +231,18 @@ if (submit) {
                     } catch (e) {
                         console.error("Enter Chat: ", e.message)
                     }
-                    if(verifySupportOnline.supportOnline === true){
-
+                    if (verifySupportOnline.supportOnline === true) {
+                        window.location.href = "../chat.php"
                         if (form1 !== null && form2 !== null) {
-    
+
                             form1.classList.add('form-display-none');
                             form2.classList.add('form-display-block');
+                            setTimeout(function () {
+                                document.querySelector('.load-container').style = "display: none;"
+                            }, 2000)
                         }
                         UpdateChat(true)
-                    }else{
+                    } else {
                         window.location.href = "../chatOffline.php"
                     }
 
@@ -261,7 +264,7 @@ if (submit) {
                 hrxS.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 hrxS.onload = function () {
                     try {
-                      
+
                         var info_Support_Connect = JSON.parse(this.responseText)
                     } catch (e) {
                         console.error("Enter Chat: ", e.message)
@@ -426,10 +429,10 @@ if (SuportInitChat !== null && SupportFinishChat !== null) {
             } catch (e) {
                 console.error("Init Chat: ", e.message)
             }
-            
+
             if (location.pathname === '/chatSupport.php') {
-                if(response.InitError !== undefined){
-                    if(response.InitError === "error"){
+                if (response.InitError !== undefined) {
+                    if (response.InitError === "error") {
                         alert("Você ainda está conectada em um chat, favor finalizar antes de começar um novo")
                     }
                 }
@@ -529,7 +532,7 @@ function ClientVeifyRoom() {
                 hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 hrx.onload = async function () {
                     responseData = await this.responseText;
-                   
+
 
                 }
                 hrx.send(`Nome=${name}&Email=${email}&Mensagem=${msg}&Request='Contato Chat'`)
@@ -540,33 +543,33 @@ function ClientVeifyRoom() {
     }
 }
 
-!function changeStatus(){
+!function changeStatus() {
     let buttonStatus = document.querySelector('.info a');
-    if(buttonStatus){
-        buttonStatus.addEventListener('click', function(){
+    if (buttonStatus) {
+        buttonStatus.addEventListener('click', function () {
             var hrx = new XMLHttpRequest();
-                hrx.open('POST', '../src/classes/Chat.php', true);
-                hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                hrx.onload = function () {
-                    let responseStatus;
-                    try {
-                        responseStatus = JSON.parse(this.responseText);
-                    } catch (error) {
-                        console.warn('Error parse', e.message);
-                    }
-                    if(responseStatus.online !== undefined){
-                        if(responseStatus.online === true){
-                            buttonStatus.innerHTML = "<i class='fa fa-circle text-success'></i> Online";
-                        }else{
-                            buttonStatus.innerHTML ="<i class='fa fa-circle text-danger'></i> Offline";
-                        }
-                    }
-                    
-                    
-                    
-
+            hrx.open('POST', '../src/classes/Chat.php', true);
+            hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            hrx.onload = function () {
+                let responseStatus;
+                try {
+                    responseStatus = JSON.parse(this.responseText);
+                } catch (error) {
+                    console.warn('Error parse', e.message);
                 }
-                hrx.send('request=changeStatus')
+                if (responseStatus.online !== undefined) {
+                    if (responseStatus.online === true) {
+                        buttonStatus.innerHTML = "<i class='fa fa-circle text-success'></i> Online";
+                    } else {
+                        buttonStatus.innerHTML = "<i class='fa fa-circle text-danger'></i> Offline";
+                    }
+                }
+
+
+
+
+            }
+            hrx.send('request=changeStatus')
         })
     }
 }()

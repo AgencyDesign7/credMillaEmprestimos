@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<?php 
-    if(!isset($_SESSION)){
+<?php
+
+use chatC\DataBase;
+
+if(!isset($_SESSION)){
       session_start();
     }
     if(!isset($_SESSION['login'])){
@@ -27,6 +30,7 @@
   <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+  <link rel="stylesheet" href="./css/custom.css.RegisterUser.css">
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
@@ -34,7 +38,7 @@
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="#" class="logo">
+    <a href="index2.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>PN</span>
       <!-- logo for regular state and mobile devices -->
@@ -127,34 +131,9 @@
           </a>
           <ul class="treeview-menu" style="display: none;">
             <li class="active"><a href="./visitorsTable.php"><i class="fa fa-circle-o"></i> Total Visitantes</a></li>
-            <li><a href="./visitorsUniqueTable.php"><i class="fa fa-circle-o"></i>Total único visitante</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i>Total único visitante</a></li>
           </ul>
         </li>
-        <?php 
-            if($_SESSION['permissions'] === 123){
-              echo '
-              <li class="header">CONTROLE USUÁRIOS</li>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-user-plus"></i> <span>Adicionar</span>
-              </a>
-            </li>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-user"></i> <span>Editar</span>
-              </a>
-            </li>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-user-times"></i> <span>Excluir</span>
-              </a>
-            </li>
-              
-              ';
-            }
-            
-        ?>
-
         <li class="header">CHAT CREDMILLA</li>
         <li>
           <a href="./chatSupport.php" class="chat-queue">
@@ -172,67 +151,94 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Dashboard
+        Excluir usuários
         <small>Painel de Controle</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
+        <li><a href="./adminPage.php"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Excluir usuários</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
-      <!-- Small boxes (Stat box) -->
+      <div class="container-user">
+        <div class="box box-info">
+          <div class="box-header with-border">
+            <h3 class="box-title">Digite o nome do usuário para ser deletado</h3>
+          </div>
+          <!-- /.box-header -->
+          <!-- form start -->
+          <form class="form-horizontal">
+            <div class="box-body">
+            </div>
+            <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">Nome</label>
+
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputEmail3" placeholder="Nome">
+              </div>
+            </div>
+
+            <!-- /.box-body -->
+            <div class="box-footer">
+              <button type="submit" class="btn btn-danger pull-right">Deletar</button>
+            </div>
+            <!-- /.box-footer -->
+
+          </form>
+        </div>
+      </div>
       <div class="row">
-
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-              <h3><i class="fa fa-spin fa-refresh"></i></h3>
-
-              <p>Visitantes</p>
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Usuários</h3>
             </div>
-            <div class="icon">
-              <i class="ion ion-person-add"></i>
+            <!-- /.box-header -->
+            <div class="box box-info">
+              <table id="example1" class="table table-bordered table-striped user-delete-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>NOME</th>
+                    <th>PERMISSÃO</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                    require_once('./src/classes/DataBase.php');
+                    $db = new DataBase();
+                    $res = $db->FetchAllData("SELECT * FROM supportlogin ORDER by name DESC", []);
+                    
+                    if(true){
+                      foreach($res as $r){
+                        echo "<tr>
+                        <td>$r->id</td>
+                        <td>$r->name
+                        </td>
+                        <td>$r->permissions</td>
+                      </tr>
+                        ";
+                      }
+                    }
+                  
+                  ?>
+                </tbody>
+              </table>
             </div>
-            <a href="./visitorsTable.php" class="small-box-footer">Mais informação <i
-                class="fa fa-arrow-circle-right"></i></a>
+            <!-- /.box-body -->
           </div>
+          <!-- /.box -->
         </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red">
-            <div class="inner">
-              <h3><i class="fa fa-spin fa-refresh"></i></h3>
-
-              <p>Visitantes únicos</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-pie-graph"></i>
-            </div>
-            <a href="./visitorsTable.php" class="small-box-footer">Mais informação<i
-                class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
+        <!-- /.col -->
       </div>
       <!-- /.row -->
-      <!-- Main row -->
-      <div class="row"></div>
-      <!-- Left col -->
-    </section>
-    <section class="col-lg-7 connectedSortable">
-    </section>
 
-    <section class="col-lg-5 connectedSortable">
     </section>
-    <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+  </section>
   <footer class="main-footer">
     Copyright © 2020 CredMilla – todos os direitos reservados.
   </footer>
@@ -254,10 +260,7 @@
   <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
   <!-- jQuery UI 1.11.4 -->
   <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-  <script>
-    $.widget.bridge('uibutton', $.ui.button);
-  </script>
+
   <!-- Bootstrap 3.3.6 -->
   <script src="bootstrap/js/bootstrap.min.js"></script>
   <!-- Morris.js charts -->

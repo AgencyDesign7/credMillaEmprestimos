@@ -61,6 +61,7 @@ if (isset($_POST['request'])) {
                         $_SESSION['mode'] = 1;
                         $_SESSION['name'] = $post->name;
                         $_SESSION['email'] = $post ->email;
+                        $_SESSION['permissions'] = $post->permissions;
                         
                         //reset currentRoom on login
                         $db->insertData("UPDATE supportlogin SET currentRoom=? WHERE login=?", ["", $_SESSION['login']]);
