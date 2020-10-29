@@ -41,6 +41,7 @@ if (document.location.pathname === "/chat.php") {
 function UpdateChat(booleanUpdate) {
     if (booleanUpdate) {
         var updateMessage = setInterval(function () {
+            console.log('update')
             var auxRequest = false;
             var messagesBlock = document.querySelectorAll('.message-block > span');;
             var messagesSend = document.querySelectorAll('.message-block > :nth-child(2)');
@@ -422,6 +423,7 @@ if (SuportInitChat !== null && SupportFinishChat !== null) {
         hrxS.open('POST', '../src/classes/Chat.php', true);
         hrxS.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         hrxS.onload = function () {
+            console.log(this.responseText)
             containerMsg.innerHTML = "";
             try {
 
@@ -455,6 +457,7 @@ if (SuportInitChat !== null && SupportFinishChat !== null) {
         hrxS.open('POST', '../src/classes/Chat.php', true);
         hrxS.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         hrxS.onload = function () {
+            console.log(this.responseText)
             try {
                 var result = JSON.parse(this.responseText);
                 if (result.EndChat !== undefined) {
@@ -553,6 +556,7 @@ function ClientVeifyRoom() {
             hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             hrx.onload = function () {
                 let responseStatus;
+                console.log(this.responseText)
                 try {
                     responseStatus = JSON.parse(this.responseText);
                 } catch (error) {

@@ -117,21 +117,26 @@
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
-        <li class="header">MENU PRINCIPAL</li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Visitantes</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu" style="display: none;">
-            <li class="active"><a href="./visitorsTable.php"><i class="fa fa-circle-o"></i> Total Visitantes</a></li>
-            <li><a href="./visitorsUniqueTable.php"><i class="fa fa-circle-o"></i>Total único visitante</a></li>
-          </ul>
-        </li>
+      <?php 
+            if($_SESSION['permissionsVisitors'] === 1){
+              echo '
+                <li class="header">MENU PRINCIPAL</li>
+                <li class="treeview">
+                  <a href="#">
+                    <i class="fa fa-dashboard"></i> <span>Visitantes</span>
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu" style="display: none;">
+                    <li class="active"><a href="./visitorsTable.php"><i class="fa fa-circle-o"></i> Total Visitantes</a></li>
+                    <li><a href="./visitorsUniqueTable.php"><i class="fa fa-circle-o"></i>Total único visitante</a></li>
+                  </ul>
+                </li>';
+            }
+        ?>
         <?php 
-            if($_SESSION['permissions'] === 1){
+            if($_SESSION['permissionsUsers'] === 1){
               echo '
               <li class="header">CONTROLE USUÁRIOS</li>
               <li class="treeview">
@@ -168,14 +173,17 @@
             }
             
         ?>
-
-        <li class="header">CHAT CREDMILLA</li>
-        <li>
-          <a href="./chatSupport.php" class="chat-queue">
-            <i class="fa fa-comments"></i> <span>Chat</span>
-
-          </a>
-        </li>
+      <?php
+        if($_SESSION['permissionsChat'] === 1){
+          echo  '<li class="header">CHAT CREDMILLA</li>
+          <li>
+            <a href="./chatSupport.php" class="chat-queue">
+              <i class="fa fa-comments"></i> <span>Chat</span>
+  
+            </a>
+          </li>';
+        }
+       ?>
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -194,51 +202,58 @@
         <li class="active">Dashboard</li>
       </ol>
     </section>
+    <?php
+    if($_SESSION['permissionsVisitors'] === 1){
 
-    <!-- Main content -->
-    <section class="content">
-      <!-- Small boxes (Stat box) -->
-      <div class="row">
-
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-              <h3><i class="fa fa-spin fa-refresh"></i></h3>
-
-              <p>Visitantes</p>
+      echo '
+      <!-- Main content -->
+      <section class="content">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+  
+          <!-- ./col -->
+          <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-yellow">
+              <div class="inner">
+                <h3><i class="fa fa-spin fa-refresh"></i></h3>
+  
+                <p>Visitantes</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-person-add"></i>
+              </div>
+              <a href="./visitorsTable.php" class="small-box-footer">Mais informação <i
+                  class="fa fa-arrow-circle-right"></i></a>
             </div>
-            <div class="icon">
-              <i class="ion ion-person-add"></i>
-            </div>
-            <a href="./visitorsTable.php" class="small-box-footer">Mais informação <i
-                class="fa fa-arrow-circle-right"></i></a>
           </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red">
-            <div class="inner">
-              <h3><i class="fa fa-spin fa-refresh"></i></h3>
-
-              <p>Visitantes únicos</p>
+          <!-- ./col -->
+          <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-red">
+              <div class="inner">
+                <h3><i class="fa fa-spin fa-refresh"></i></h3>
+  
+                <p>Visitantes únicos</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="./visitorsTable.php" class="small-box-footer">Mais informação<i
+                  class="fa fa-arrow-circle-right"></i></a>
             </div>
-            <div class="icon">
-              <i class="ion ion-pie-graph"></i>
-            </div>
-            <a href="./visitorsTable.php" class="small-box-footer">Mais informação<i
-                class="fa fa-arrow-circle-right"></i></a>
           </div>
+          <!-- ./col -->
         </div>
-        <!-- ./col -->
-      </div>
-      <!-- /.row -->
-      <!-- Main row -->
-      <div class="row"></div>
-      <!-- Left col -->
-    </section>
+        <!-- /.row -->
+        <!-- Main row -->
+        <div class="row"></div>
+        <!-- Left col -->
+      </section>
+      ';
+    }
+    ?>
+    
     <section class="col-lg-7 connectedSortable">
     </section>
 
