@@ -263,6 +263,7 @@ if (submit) {
                 hrxS.open('POST', '../src/classes/Chat.php', true);
                 hrxS.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 hrxS.onload = function () {
+        
                     try {
 
                         var info_Support_Connect = JSON.parse(this.responseText)

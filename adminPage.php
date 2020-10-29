@@ -131,25 +131,39 @@
           </ul>
         </li>
         <?php 
-            if($_SESSION['permissions'] === 123){
+            if($_SESSION['permissions'] === 1){
               echo '
               <li class="header">CONTROLE USUÁRIOS</li>
+              <li class="treeview">
+          <a href="#">
+            <i class="fa fa-users"></i> <span>Usuários</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu" style="display: none;">
+              <li class="treeview">
+              <a href="allUser.php">
+                <i class="fa fa-user"></i> <span>Todos Usuários</span>
+              </a>
+            </li>
             <li class="treeview">
-              <a href="#">
+              <a href="registerUser.php">
                 <i class="fa fa-user-plus"></i> <span>Adicionar</span>
               </a>
             </li>
             <li class="treeview">
-              <a href="#">
+              <a href="editUser.php">
                 <i class="fa fa-user"></i> <span>Editar</span>
               </a>
             </li>
             <li class="treeview">
-              <a href="#">
+              <a href="deleteUser.php">
                 <i class="fa fa-user-times"></i> <span>Excluir</span>
               </a>
             </li>
-              
+            </ul>
+        </li>
               ';
             }
             

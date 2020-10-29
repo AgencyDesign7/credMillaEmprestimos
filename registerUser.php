@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<?php 
-    if(!isset($_SESSION)){
+<?php
+
+use chatC\DataBase;
+
+if(!isset($_SESSION)){
       session_start();
     }
     if(!isset($_SESSION['login'])){
@@ -35,7 +38,7 @@
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="#" class="logo">
+    <a href="index2.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>PN</span>
       <!-- logo for regular state and mobile devices -->
@@ -128,34 +131,9 @@
           </a>
           <ul class="treeview-menu" style="display: none;">
             <li class="active"><a href="./visitorsTable.php"><i class="fa fa-circle-o"></i> Total Visitantes</a></li>
-            <li><a href="./visitorsUniqueTable.php"><i class="fa fa-circle-o"></i>Total único visitante</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i>Total único visitante</a></li>
           </ul>
         </li>
-        <?php 
-            if($_SESSION['permissions'] === 1){
-              echo '
-              <li class="header">CONTROLE USUÁRIOS</li>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-user-plus"></i> <span>Adicionar</span>
-              </a>
-            </li>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-user"></i> <span>Editar</span>
-              </a>
-            </li>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-user-times"></i> <span>Excluir</span>
-              </a>
-            </li>
-              
-              ';
-            }
-            
-        ?>
-
         <li class="header">CHAT CREDMILLA</li>
         <li>
           <a href="./chatSupport.php" class="chat-queue">
@@ -173,100 +151,141 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Dashboard
+        Registrar usuários
         <small>Painel de Controle</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
+        <li><a href="./adminPage.php"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Registrar usuários</li>
       </ol>
     </section>
 
     <!-- Main content -->
-    <section class="content d-flex">
-    <div class="container-user">
-    <div class="box box-info">
-            <div class="box-header with-border">
-              <h3 class="box-title">Adicional usuário</h3>
+    <section class="content">
+      <div class="container-user">
+        <div class="box box-info">
+          <div class="box-header with-border">
+            <h3 class="box-title">Digite o nome do usuário para ser deletado</h3>
+          </div>
+          <!-- /.box-header -->
+          <!-- form start -->
+          <form class="form-horizontal">
+          <div class="box-body">
+        
+        <div class="form-group">
+          <label for="inputEmail3" class="col-sm-2 control-label">Nome</label>
+
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputEmail3" placeholder="Nome">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">Email</label>
+
+          <div class="col-sm-10">
+            <input type="email" class="form-control" id="inputPassword3" placeholder="Email">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">Senha</label>
+
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">Repetir senha </label>
+
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+          </div>
+        </div>
+
+
+        <div class="box-header with-border">
+      <h3 class="box-title">Permissões</h3>
+    </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox"> Visitantes
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox"> Adicionar, Excluir e Editar Usuários
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox"> Chat
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer">
+        <button type="submit" class="btn btn-default">Cancel</button>
+        <button type="submit" class="btn btn-success pull-right">Salvar</button>
+      </div>
+      
+
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Usuários</h3>
             </div>
             <!-- /.box-header -->
-            <!-- form start -->
-            <form class="form-horizontal">
-              <div class="box-body">
-              
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Nome</label>
-
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputEmail3" placeholder="Nome">
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Email</label>
-
-                  <div class="col-sm-10">
-                    <input type="email" class="form-control" id="inputPassword3" placeholder="Email">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Senha</label>
-
-                  <div class="col-sm-10">
-                    <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Repetir senha </label>
-
-                  <div class="col-sm-10">
-                    <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                  </div>
-                </div>
-
-
-                <div class="box-header with-border">
-              <h3 class="box-title">Permissões</h3>
+            <div class="box box-info">
+              <table id="example1" class="table table-bordered table-striped user-delete-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>NOME</th>
+                    <th>PERMISSÃO</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                    require_once('./src/classes/DataBase.php');
+                    $db = new DataBase();
+                    $res = $db->FetchAllData("SELECT * FROM supportlogin ORDER by name DESC", []);
+                    
+                    if(true){
+                      foreach($res as $r){
+                        echo "<tr>
+                        <td>$r->id</td>
+                        <td>$r->name
+                        </td>
+                        <td>$r->permissions</td>
+                      </tr>
+                        ";
+                      }
+                    }
+                  
+                  ?>
+                </tbody>
+              </table>
             </div>
-                <div class="form-group">
-                  <div class="col-sm-offset-2 col-sm-10">
-                    <div class="checkbox">
-                      <label>
-                        <input type="checkbox"> Visitantes
-                      </label>
-                    </div>
-                    <div class="checkbox">
-                      <label>
-                        <input type="checkbox"> Adicionar, Excluir e Editar Usuários
-                      </label>
-                    </div>
-                    <div class="checkbox">
-                      <label>
-                        <input type="checkbox"> Chat
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- /.box-body -->
-              <div class="box-footer">
-                <button type="submit" class="btn btn-default">Cancel</button>
-                <button type="submit" class="btn btn-success pull-right">Salvar</button>
-              </div>
-              <!-- /.box-footer -->
-            </form>
+            <!-- /.box-body -->
           </div>
-    </div>
-    
-    </section>
-    <section class="col-lg-7 connectedSortable">
-    </section>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
 
-    <section class="col-lg-5 connectedSortable">
     </section>
-    <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+  </section>
   <footer class="main-footer">
     Copyright © 2020 CredMilla – todos os direitos reservados.
   </footer>
@@ -288,10 +307,7 @@
   <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
   <!-- jQuery UI 1.11.4 -->
   <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-  <script>
-    $.widget.bridge('uibutton', $.ui.button);
-  </script>
+
   <!-- Bootstrap 3.3.6 -->
   <script src="bootstrap/js/bootstrap.min.js"></script>
   <!-- Morris.js charts -->
