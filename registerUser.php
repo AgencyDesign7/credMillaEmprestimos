@@ -30,7 +30,7 @@ if(!isset($_SESSION)){
   <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-  <link rel="stylesheet" href="./css/custom.css.RegisterUser.css">
+  <link rel="stylesheet" href="./css/custom.css.admin.css">
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
@@ -161,7 +161,7 @@ if(!isset($_SESSION)){
     </section>
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content-register">
       <div class="container-user">
         <div class="box box-info">
           <div class="box-header with-border">

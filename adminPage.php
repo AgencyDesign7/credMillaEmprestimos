@@ -27,6 +27,9 @@
   <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+  
+  <link rel="stylesheet" href="./css/custom.css.admin.css">
+
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
@@ -84,6 +87,11 @@
       </div>
     </nav>
   </header>
+  <?php
+    if(!empty($_SESSION['Error_Msg'])){
+      echo $_SESSION['Error_Msg'];
+    }
+  ?>
   <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->

@@ -70,6 +70,8 @@ if (isset($_POST['request'])) {
                         if($status === "true"){
                             //change status
                             $db->updateData('UPDATE supportlogin SET online=true WHERE login = ?', [$_SESSION['login']]);
+                            $_SESSION['Error_Msg'] = "";
+                            $_SESSION['status'] = "true";
                         }
                         
 
@@ -159,7 +161,7 @@ if (isset($_POST['request'])) {
                 if($result === 0){
                     echo '<p>Aguarde, em breve você será atendido... você é o próximo a ser atendido.</p><p>Caso queira, deixe sua pergunta enquanto aguarda pelo atendimento</p>';
                 }else{
-                    echo '<p>Aguarde, em breve você será atendido... você é  '.$result .'º da fila.</p><p>Caso queira, deixe sua pergunta enquanto aguarda pelo atendimento</p>';
+                    echo '<p>Aguarde, em breve você será atendido... você é  '. ($result + 1) .'º da fila.</p><p>Caso queira, deixe sua pergunta enquanto aguarda pelo atendimento</p>';
                 }
             }
         }

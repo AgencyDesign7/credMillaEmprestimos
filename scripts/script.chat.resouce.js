@@ -264,7 +264,7 @@ if (submit) {
                 hrxS.open('POST', '../src/classes/Chat.php', true);
                 hrxS.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 hrxS.onload = function () {
-        
+
                     try {
 
                         var info_Support_Connect = JSON.parse(this.responseText)
@@ -556,15 +556,19 @@ function ClientVeifyRoom() {
             hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             hrx.onload = function () {
                 let responseStatus;
-                console.log(this.responseText)
                 try {
                     responseStatus = JSON.parse(this.responseText);
                 } catch (error) {
                     console.warn('Error parse', e.message);
                 }
                 if (responseStatus.online !== undefined) {
+                    var msgError = document.querySelector('.offlineError-msg');
                     if (responseStatus.online === true) {
                         buttonStatus.innerHTML = "<i class='fa fa-circle text-success'></i> Online";
+                        if (msgError !== null) {
+                            msgError.setAttribute('style', 'height: 0 !important; transition: height 0.3s !important; overflow: hidden !important')
+                        }
+
                     } else {
                         buttonStatus.innerHTML = "<i class='fa fa-circle text-danger'></i> Offline";
                     }

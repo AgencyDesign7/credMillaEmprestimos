@@ -1,0 +1,29 @@
+.content-register{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: white;
+}
+
+.container-user{
+   min-width: 50% !important;
+}
+
+.user-delete-table{
+    min-width: 50vw !important;
+}
+
+/*Error Msg */
+.offlineError-msg{
+    all: unset !important;
+    width: 100vw !important;
+    height: 25px !important;
+    position: absolute !important;
+    z-index: 99 !important;
+    background-color: rgb(214, 100, 100) !important;
+}
+.offlineError-msg p{
+    font-size: 20px;
+    text-align: center;
+}

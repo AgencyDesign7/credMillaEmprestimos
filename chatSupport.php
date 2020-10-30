@@ -5,6 +5,12 @@
     if(!isset($_SESSION['login'])){
         header('location: ./login.php');
       }
+    if($_SESSION['status'] === "false"){
+        header('location: ./adminPage.php');
+        $_SESSION['Error_Msg'] = "<div class='offlineError-msg'><p>Você está offline</p></div>";
+    }else{
+        $_SESSION['Error_Msg'] ="";
+    }
 ?>
 
 <head>
