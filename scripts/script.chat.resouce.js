@@ -41,6 +41,7 @@ if (document.location.pathname === "/chat.php") {
 function UpdateChat(booleanUpdate) {
     if (booleanUpdate) {
         var updateMessage = setInterval(function () {
+            console.log('update')
             var auxRequest = false;
             var messagesBlock = document.querySelectorAll('.message-block > span');;
             var messagesSend = document.querySelectorAll('.message-block > :nth-child(2)');
@@ -263,7 +264,7 @@ if (submit) {
                 hrxS.open('POST', '../src/classes/Chat.php', true);
                 hrxS.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 hrxS.onload = function () {
-        
+
                     try {
 
                         var info_Support_Connect = JSON.parse(this.responseText)
@@ -422,6 +423,7 @@ if (SuportInitChat !== null && SupportFinishChat !== null) {
         hrxS.open('POST', '../src/classes/Chat.php', true);
         hrxS.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         hrxS.onload = function () {
+            console.log(this.responseText)
             containerMsg.innerHTML = "";
             try {
 
@@ -455,6 +457,7 @@ if (SuportInitChat !== null && SupportFinishChat !== null) {
         hrxS.open('POST', '../src/classes/Chat.php', true);
         hrxS.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         hrxS.onload = function () {
+            console.log(this.responseText)
             try {
                 var result = JSON.parse(this.responseText);
                 if (result.EndChat !== undefined) {
@@ -559,8 +562,13 @@ function ClientVeifyRoom() {
                     console.warn('Error parse', e.message);
                 }
                 if (responseStatus.online !== undefined) {
+                    var msgError = document.querySelector('.offlineError-msg');
                     if (responseStatus.online === true) {
                         buttonStatus.innerHTML = "<i class='fa fa-circle text-success'></i> Online";
+                        if (msgError !== null) {
+                            msgError.setAttribute('style', 'height: 0 !important; transition: height 0.3s !important; overflow: hidden !important')
+                        }
+
                     } else {
                         buttonStatus.innerHTML = "<i class='fa fa-circle text-danger'></i> Offline";
                     }
