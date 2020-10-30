@@ -120,29 +120,7 @@ if(!isset($_SESSION)){
       </form>
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu">
-        <li class="header">MENU PRINCIPAL</li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Visitantes</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu" style="display: none;">
-            <li class="active"><a href="./visitorsTable.php"><i class="fa fa-circle-o"></i> Total Visitantes</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>Total único visitante</a></li>
-          </ul>
-        </li>
-        <li class="header">CHAT CREDMILLA</li>
-        <li>
-          <a href="./chatSupport.php" class="chat-queue">
-            <i class="fa fa-comments"></i> <span>Chat</span>
-
-          </a>
-        </li>
-      </ul>
-    </section>
+      <?php include('./src/templates/navbar.menu.include.php'); ?>
     <!-- /.sidebar -->
   </aside>
 
@@ -161,7 +139,7 @@ if(!isset($_SESSION)){
     </section>
 
     <!-- Main content -->
-    <section class="content-register">
+    <section class="content-form-custom">
       <div class="container-user">
         <div class="box box-info">
           <div class="box-header with-border">
@@ -249,7 +227,9 @@ if(!isset($_SESSION)){
                   <tr>
                     <th>ID</th>
                     <th>NOME</th>
-                    <th>PERMISSÃO</th>
+                    <th>PERMISSÃO VISITANTES</th>
+                    <th>PERMISSÃO USUÁRIOS</th>
+                    <th>PERMISSÃO CHAT</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -264,7 +244,9 @@ if(!isset($_SESSION)){
                         <td>$r->id</td>
                         <td>$r->name
                         </td>
-                        <td>$r->permissions</td>
+                        <td>$r->permissionsVisitors</td>
+                        <td>$r->permissionsUsers</td>
+                        <td>$r->permissionsChat</td>
                       </tr>
                         ";
                       }

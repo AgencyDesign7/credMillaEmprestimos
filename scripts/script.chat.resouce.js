@@ -9,7 +9,7 @@
         } catch (e) {
             console.error("Auth: ", e.message);
         }
-        if (info_Connect.auth !== undefined) {
+        if (info_Connect !== undefined && info_Connect.auth !== undefined) {
             if (info_Connect.auth === true) {
                 if (form1 !== null && form2 !== null) {
 
@@ -17,6 +17,8 @@
                     form2.classList.add('form-display-block');
                 }
             }
+        } else {
+            alert('Error chave autorização: Entre em conato com o administrador')
         }
     }
     hrx.send('checkStart=Auth');
@@ -51,26 +53,29 @@ function UpdateChat(booleanUpdate) {
             hrxUp.responseType = 'text';
             hrxUp.onload = function () {
                 var info_Client_Connect = this.responseText
+                if (info_Client_Connect !== "") {
+                    var arrayData = info_Client_Connect.split('*')
 
-                var arrayData = info_Client_Connect.split('*')
+                    var objVal = new Object();
+                    objVal.data = [];
+                    for (let i = 0; i < arrayData.length - 1; i++) {
+                        try {
 
-                var objVal = new Object();
-                objVal.data = [];
-                for (let i = 0; i < arrayData.length - 1; i++) {
-                    try {
+                            objVal.data.push(JSON.parse(arrayData[i]))
+                        } catch (e) {
+                            console.error("Update Chat: ", e.message)
+                        }
 
-                        objVal.data.push(JSON.parse(arrayData[i]))
-                    } catch (e) {
-                        console.error("Update Chat: ", e.message)
                     }
+                    var containerMessages = document.querySelector('.messages-send');
 
-                }
-                var containerMessages = document.querySelector('.messages-send');
-
-                if (objVal.data.length > 0) {
-                    if (form2 !== null) {
-                        SendMessageChat(objVal)
+                    if (objVal.data.length > 0) {
+                        if (form2 !== null) {
+                            SendMessageChat(objVal)
+                        }
                     }
+                } else {
+                    alert("Erro banco de dados: Contate o administrador")
                 }
                 UpdateMsgQueueInformationClient();
                 UpdateVisitors();
@@ -116,44 +121,49 @@ function UpdateMsgQueueInformationClient() {
         if (document.location.pathname === "/chatSupport.php" || document.location.pathname === "/adminPage.php" || document.location.pathname === "/visitorsTable.php") {
             var obj = new Object();
             obj.data = [];
+
             var result = this.responseText.split('*');
-            for (let i = 0; i < result.length - 1; i++) {
-                try {
+            if (result !== "" && result.length !== undefined) {
+                for (let i = 0; i < result.length - 1; i++) {
+                    try {
 
-                    obj.data.push(JSON.parse(result[i]));
-                } catch (e) {
-                    console.error("Update queue: ", e.message)
+                        obj.data.push(JSON.parse(result[i]));
+                    } catch (e) {
+                        console.error("Update queue: ", e.message)
+                    }
                 }
-            }
-            if (listUsers !== null) {
-                var list = ""
-                obj.data.forEach(function (ob) {
-                    list += '<li><p>' + ob.name + '</p></li>';
-                })
-                listUsers.innerHTML = `<ul>${list}</ul>`
-            }
-            if (counterUsers !== null) {
-                counterUsers.innerHTML = obj.data.length
-            }
-            var chatAlert = document.querySelector('.chat-queue');
-            if (chatAlert !== null && obj.data.length > 0) {
+                if (obj.data !== "") {
+                    if (listUsers !== null) {
+                        var list = ""
+                        obj.data.forEach(function (ob) {
+                            list += '<li><p>' + ob.name + '</p></li>';
+                        })
+                        listUsers.innerHTML = `<ul>${list}</ul>`
+                    }
+                    if (counterUsers !== null) {
+                        counterUsers.innerHTML = obj.data.length
+                    }
+                    var chatAlert = document.querySelector('.chat-queue');
+                    if (chatAlert !== null && obj.data.length > 0) {
 
-                chatAlert.innerHTML = `
-                <i class="fa fa-comments"></i> <span>Chat</span>
-                <small class="label pull-right bg-green queue-users-chat">${obj.data.length}</small>`
+                        chatAlert.innerHTML = `
+                        <i class="fa fa-comments"></i> <span>Chat</span>
+                        <small class="label pull-right bg-green queue-users-chat">${obj.data.length}</small>`
+                    }
+                }
+            } else {
+                alert("Error data: Contate o administrador")
             }
 
 
         } else {
-            if (true) {
-
-                chatMsgHead.innerHTML = this.responseText;
-                if (form2.classList.contains('form-display-block')) {
-                    setTimeout(function () {
-                        document.querySelector('.load-container').style = "display: none;"
-                    }, 2000)
-                }
+            chatMsgHead.innerHTML = this.responseText;
+            if (form2.classList.contains('form-display-block')) {
+                setTimeout(function () {
+                    document.querySelector('.load-container').style = "display: none;"
+                }, 2000)
             }
+
         }
 
     }
@@ -232,19 +242,23 @@ if (submit) {
                     } catch (e) {
                         console.error("Enter Chat: ", e.message)
                     }
-                    if (verifySupportOnline.supportOnline === true) {
-                        window.location.href = "../chat.php"
-                        if (form1 !== null && form2 !== null) {
+                    if (verifySupportOnline !== undefined && verifySupportOnline.supportOnline !== undefined) {
+                        if (verifySupportOnline.supportOnline === true) {
+                            window.location.href = "../chat.php"
+                            if (form1 !== null && form2 !== null) {
 
-                            form1.classList.add('form-display-none');
-                            form2.classList.add('form-display-block');
-                            setTimeout(function () {
-                                document.querySelector('.load-container').style = "display: none;"
-                            }, 2000)
+                                form1.classList.add('form-display-none');
+                                form2.classList.add('form-display-block');
+                                setTimeout(function () {
+                                    document.querySelector('.load-container').style = "display: none;"
+                                }, 2000)
+                            }
+                            UpdateChat(true)
+                        } else {
+                            window.location.href = "../chatOffline.php"
                         }
-                        UpdateChat(true)
                     } else {
-                        window.location.href = "../chatOffline.php"
+                        alert("Erro data Support: Contate o administrador")
                     }
 
 
@@ -271,7 +285,7 @@ if (submit) {
                     } catch (e) {
                         console.error("Enter Chat: ", e.message)
                     }
-                    if (info_Support_Connect.auth !== undefined) {
+                    if (info_Support_Connect !== undefined && info_Support_Connect.auth !== undefined) {
                         if (info_Support_Connect.auth) {
 
                             UpdateChat(true)
@@ -434,17 +448,8 @@ if (SuportInitChat !== null && SupportFinishChat !== null) {
             }
 
             if (location.pathname === '/chatSupport.php') {
-                if (response.InitError !== undefined) {
-                    if (response.InitError === "error") {
-                        alert("Você ainda está conectada em um chat, favor finalizar antes de começar um novo")
-                    }
-                }
-                if (response.clients !== undefined) {
-                    if (response.clients === false) {
-                        alert('Não existe clientes na fila')
-                    } else {
-
-                    }
+                if (response !== undefined && response.InitError !== undefined) {
+                    alert(response.InitError)
                 }
             }
         }
@@ -457,23 +462,13 @@ if (SuportInitChat !== null && SupportFinishChat !== null) {
         hrxS.open('POST', '../src/classes/Chat.php', true);
         hrxS.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         hrxS.onload = function () {
-            console.log(this.responseText)
             try {
                 var result = JSON.parse(this.responseText);
-                if (result.EndChat !== undefined) {
-                    if (result.EndChat === true) {
-
-                        alert("Chat finalizado!")
-                    }
-                }
             } catch (e) {
                 console.error("Finish Chat: ", e.message)
             }
-            if (result.Error !== undefined) {
-                if (result.Error === "NO DATA ROOM") {
-
-                    alert("Você não está conectado a nenhum chat no momento")
-                }
+            if (result !== undefined && result.EndChat !== undefined) {
+                alert(result.EndChat);
             }
         }
         hrxS.send('request=finishChat');
@@ -501,10 +496,12 @@ function ClientVeifyRoom() {
             hrxS.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             hrxS.onload = function () {
                 let response = JSON.parse(this.responseText)
-                if (response.logout !== null) {
+                if (response !== null && response.logout !== null) {
                     if (response.logout) {
                         window.location.href = "./login.php";
                     }
+                } else {
+                    alert("Erro logout: Entre em contato com o administrador")
                 }
             }
             hrxS.send('request=logout')
@@ -561,7 +558,7 @@ function ClientVeifyRoom() {
                 } catch (error) {
                     console.warn('Error parse', e.message);
                 }
-                if (responseStatus.online !== undefined) {
+                if (responseStatus !== undefined && responseStatus.online !== undefined) {
                     var msgError = document.querySelector('.offlineError-msg');
                     if (responseStatus.online === true) {
                         buttonStatus.innerHTML = "<i class='fa fa-circle text-success'></i> Online";
@@ -572,6 +569,8 @@ function ClientVeifyRoom() {
                     } else {
                         buttonStatus.innerHTML = "<i class='fa fa-circle text-danger'></i> Offline";
                     }
+                } else {
+                    alert("Error ao mudar status: Entre em contato com o administrador")
                 }
 
 

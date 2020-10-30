@@ -199,25 +199,23 @@ if (isset($_POST['request'])) {
     }
 
     if($_POST['request'] === 'initChat'){
-        $clientsQueue = $Controller->CountQueue();
-        $message = "wrong answer";
-
-        //create room for chat
-        if((count($clientsQueue)) === 0){
-            echo json_encode(array('clients'=> false), JSON_FORCE_OBJECT);
-            exit();
-        }
-       
-        //create room client
-        //$res = $Controller->SelectRoom($Controller->Connect_client_with_support($clientsQueue[0]));
-        //Check if alheady connected
+        //Check if already connected
         $CheckResult = $db->FetchAllData("SELECT * FROM supportlogin WHERE login=?", [$_SESSION['login']]);
         foreach($CheckResult as $su){
-            if(!$su->currentRoom === ""){
-                echo json_encode(array('InitError' => "error"));
+            if(!empty($su->currentRoom)){
+                echo json_encode(array('InitError' => "Você já está conectado a um chat"));
                 exit();
             }
         }
+
+        //verify if queue has someone
+        $clientsQueue = $Controller->CountQueue();
+        if((count($clientsQueue)) === 0){
+            echo json_encode(array('InitError'=> "Não existe clientes na fila"), JSON_FORCE_OBJECT);
+            exit();
+        }
+       
+        
         //inset name of the room in support currentRoom
         $result = $db->insertData("UPDATE supportlogin SET currentRoom=? WHERE login=?", [$Controller->NextQueue(), $_SESSION['login']]);
         if($result === 1){ //sucess
@@ -226,15 +224,15 @@ if (isset($_POST['request'])) {
             $Client = $db->FetchAllData("SELECT * FROM queue_users WHERE session=?", [$clientsQueue[0]->session]);
             
             $queryResult = $db->insertData('UPDATE `supportlogin` SET `nameCurrentClient`=? WHERE login=?', [$clientsQueue[0]->name, $_SESSION['login']]);
-
-            //Message warning after support has been connected
-            $resultConectSupportMsg = $db->insertData('INSERT INTO credmilla_chat_db.' . $Controller->getDataTime('Y'). '_'.$clientsQueue[0]->session.' (`name`, `email`, `message`, `last_time`, `definedAuth`) VALUES (?,?,?,?,?)', ['System', 'suporte@suport', 'Atendente '. $_SESSION['name']  . ' conectado...', $Controller->getDataTime('H:i:s'), 2]);
             
-            echo $queryResult;
             if($queryResult === 1){//sucess
+                
+                //Message warning after support has been connected
+                $resultConectSupportMsg = $db->insertData('INSERT INTO credmilla_chat_db.' . $Controller->getDataTime('Y'). '_'.$clientsQueue[0]->session.' (`name`, `email`, `message`, `last_time`, `definedAuth`) VALUES (?,?,?,?,?)', ['System', 'suporte@suport', 'Atendente '. $_SESSION['name']  . ' conectado...', $Controller->getDataTime('H:i:s'), 2]);
+                
                 $db->deleteData("DELETE FROM queue_users WHERE session=?", [$clientsQueue[0]->session]); 
             }else{
-                echo json_encode(array('error'=> "Error inserir usuario chatroom"));
+                echo json_encode(array('InitError'=> "Erro ao conectar-se ao chat"));
             }
         }else{
 
@@ -247,15 +245,17 @@ if (isset($_POST['request'])) {
         $resultSupport = $db->FetchAllData("SELECT * FROM supportlogin WHERE login=?", [$_SESSION['login']]);
         if((count($resultSupport)) === 1){
             if($resultSupport[0]->currentRoom === ""){
-                echo json_encode(array('Error' => "NO DATA ROOM"), JSON_FORCE_OBJECT);
+                echo json_encode(array('EndChat' => "Você não está conectado a nenhum chat"), JSON_FORCE_OBJECT);
                 exit();
             }
            $db->insertData("INSERT INTO credmilla_chat_db.".$resultSupport[0]->currentRoom." (name, email, message, last_time, definedAuth) VALUES (?,?,?,?,?)", ["System", "suport@suport.com.br", $MessageFinishChat, $Controller->getDataTime('H:i:s'), 2]);
         }
-        $result = $db->insertData("UPDATE supportlogin SET currentRoom=? WHERE login=?", ["", $_SESSION['login']]);
+        
+        $db->insertData("UPDATE supportlogin SET currentRoom=? WHERE login=?", ["", $_SESSION['login']]);
+        
         $db->insertData("UPDATE supportlogin SET nameCurrentClient=? WHERE login=?", ["", $_SESSION['login']]);
-        //$db->deleteData('DELETE FROM `roomsupport`', []);
-        echo json_encode(array('EndChat' => true), JSON_FORCE_OBJECT);
+
+        echo json_encode(array('EndChat' => "Chat finalizado com sucesso"), JSON_FORCE_OBJECT);
     }
 
     if($_POST['request'] === 'closeChat'){

@@ -38,7 +38,7 @@ if(!isset($_SESSION)){
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="adminPage.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>PN</span>
       <!-- logo for regular state and mobile devices -->
@@ -121,7 +121,6 @@ if(!isset($_SESSION)){
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <?php include('./src/templates/navbar.menu.include.php'); ?>
-    </section>
     <!-- /.sidebar -->
   </aside>
 
@@ -130,44 +129,18 @@ if(!isset($_SESSION)){
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Excluir usuários
+        Todos os usuários
         <small>Painel de Controle</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="./adminPage.php"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Excluir usuários</li>
+        <li class="active">Todos os usuários</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content-form-custom">
-      <div class="container-user">
-        <div class="box box-info">
-          <div class="box-header with-border">
-            <h3 class="box-title">Digite o nome do usuário para ser deletado</h3>
-          </div>
-          <!-- /.box-header -->
-          <!-- form start -->
-          <form class="form-horizontal">
-            <div class="box-body">
-            </div>
-            <div class="form-group">
-              <label for="inputEmail3" class="col-sm-1 control-label">Nome</label>
-
-              <div class="col-sm-4">
-                <input type="text" class="form-control" id="inputEmail3" placeholder="Nome">
-              </div>
-            </div>
-
-            <!-- /.box-body -->
-            <div class="box-footer">
-              <button type="submit" class="btn btn-danger pull-left">Deletar</button>
-            </div>
-            <!-- /.box-footer -->
-
-          </form>
-        </div>
-      </div>
+      
       <div class="row">
         <div class="col-xs-12">
           <div class="box">

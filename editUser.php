@@ -38,7 +38,7 @@ if(!isset($_SESSION)){
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="adminPage.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>PN</span>
       <!-- logo for regular state and mobile devices -->
@@ -121,7 +121,6 @@ if(!isset($_SESSION)){
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <?php include('./src/templates/navbar.menu.include.php'); ?>
-    </section>
     <!-- /.sidebar -->
   </aside>
 
@@ -130,12 +129,12 @@ if(!isset($_SESSION)){
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Excluir usuários
+        Editar usuário
         <small>Painel de Controle</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="./adminPage.php"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Excluir usuários</li>
+        <li class="active">Editar usuário</li>
       </ol>
     </section>
 
@@ -144,26 +143,73 @@ if(!isset($_SESSION)){
       <div class="container-user">
         <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="box-title">Digite o nome do usuário para ser deletado</h3>
+            <h3 class="box-title">Editar usuário</h3>
           </div>
           <!-- /.box-header -->
           <!-- form start -->
           <form class="form-horizontal">
-            <div class="box-body">
-            </div>
-            <div class="form-group">
-              <label for="inputEmail3" class="col-sm-1 control-label">Nome</label>
+          <div class="box-body">
+        
+        <div class="form-group">
+          <label for="inputEmail3" class="col-sm-2 control-label">Nome</label>
 
-              <div class="col-sm-4">
-                <input type="text" class="form-control" id="inputEmail3" placeholder="Nome">
-              </div>
-            </div>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputEmail3" placeholder="Nome">
+          </div>
+        </div>
 
-            <!-- /.box-body -->
-            <div class="box-footer">
-              <button type="submit" class="btn btn-danger pull-left">Deletar</button>
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">Email</label>
+
+          <div class="col-sm-10">
+            <input type="email" class="form-control" id="inputPassword3" placeholder="Email">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">Senha</label>
+
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">Repetir senha </label>
+
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+          </div>
+        </div>
+
+
+        <div class="box-header with-border">
+      <h3 class="box-title">Permissões</h3>
+    </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox"> Visitantes
+              </label>
             </div>
-            <!-- /.box-footer -->
+            <div class="checkbox">
+              <label>
+                <input type="checkbox"> Adicionar, Excluir e Editar Usuários
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox"> Chat
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer">
+        <button type="submit" class="btn btn-default">Cancel</button>
+        <button type="submit" class="btn btn-success pull-right">Update</button>
+      </div>
+      
 
           </form>
         </div>

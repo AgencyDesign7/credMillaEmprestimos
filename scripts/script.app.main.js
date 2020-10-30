@@ -74,37 +74,46 @@
     hrx.onload = function () {
         var result = JSON.parse(this.responseText);
         if (ChatContainerIframe) {
+            if (result !== undefined) {
+                if (result.length !== undefined) {
+                    var objSupport = this.responseText
 
-            if (result.length !== undefined) {
-                var objSupport = this.responseText
+                    var arrayData = objSupport.split('*')
 
-                var arrayData = objSupport.split('*')
+                    var objVal = new Object();
+                    objVal.data = [];
+                    for (let i = 0; i < arrayData.length - 1; i++) {
+                        objVal.data.push(JSON.parse(arrayData[i]))
 
-                var objVal = new Object();
-                objVal.data = [];
-                for (let i = 0; i < arrayData.length - 1; i++) {
-                    objVal.data.push(JSON.parse(arrayData[i]))
-
-                }
-                objVal.data.forEach(function (d) {
-                    if (d.status === 0) {
+                    }
+                    objVal.data.forEach(function (d) {
+                        if (d.status === 0) {
+                            ChatContainerIframe.setAttribute('src', "./chatOffline.php")
+                            btnMaximizeChat.setAttribute('href', "./chatOffline.php")
+                        } else {
+                            ChatContainerIframe.setAttribute('src', "./chat.php")
+                            btnMaximizeChat.setAttribute('href', "./chat.php")
+                        }
+                    })
+                } else {
+                    var objSupport = JSON.parse(this.responseText)
+                    if (objSupport !== undefined) {
+                        if (objSupport.status === 0) {
+                            ChatContainerIframe.setAttribute('src', "./chatOffline.php")
+                            btnMaximizeChat.setAttribute('href', "./chatOffline.php")
+                        } else {
+                            ChatContainerIframe.setAttribute('src', "./chat.php")
+                            btnMaximizeChat.setAttribute('href', "./chat.php")
+                        }
+                    } else {
                         ChatContainerIframe.setAttribute('src', "./chatOffline.php")
                         btnMaximizeChat.setAttribute('href', "./chatOffline.php")
-                    } else {
-                        ChatContainerIframe.setAttribute('src', "./chat.php")
-                        btnMaximizeChat.setAttribute('href', "./chat.php")
                     }
-                })
-            } else {
-                var objSupport = JSON.parse(this.responseText)
-                if (objSupport.status === 0) {
-                    ChatContainerIframe.setAttribute('src', "./chatOffline.php")
-                    btnMaximizeChat.setAttribute('href', "./chatOffline.php")
-                } else {
-                    ChatContainerIframe.setAttribute('src', "./chat.php")
-                    btnMaximizeChat.setAttribute('href', "./chat.php")
-                }
 
+                }
+            } else {
+                ChatContainerIframe.setAttribute('src', "./chatOffline.php")
+                btnMaximizeChat.setAttribute('href', "./chatOffline.php")
             }
 
         } else {
@@ -120,44 +129,44 @@
 }()
 
 !function HandleFormsRequestEmail(btn) {
-    let inputFile = document.querySelector("input[type='file']"); 
-    if(inputFile !== null){
-       inputFile.addEventListener('change', function(){
-           //3145728 Bytes   3mg
-        try {
-            if(this.files[0].size > Number(3145728)){
-                alert("O arquivo não deve exceder 3mb de tamanho")
+    let inputFile = document.querySelector("input[type='file']");
+    if (inputFile !== null) {
+        inputFile.addEventListener('change', function () {
+            //3145728 Bytes   3mg
+            try {
+                if (this.files[0].size > Number(3145728)) {
+                    alert("O arquivo não deve exceder 3mb de tamanho")
+                }
+            } catch (e) {
+
             }
-        } catch (e) {
-            
-        }   
-        try {
-            if(this.files[0].name !== undefined){
-                let fileName = this.files[0].name;
-                let result = fileName.includes(".pdf")
-                if(result){
-                    let lenghtResult = (fileName.length - fileName.indexOf(".pdf"))
-                    if(lenghtResult === 4){
-                        
-                    }else{
-                       
+            try {
+                if (this.files[0].name !== undefined) {
+                    let fileName = this.files[0].name;
+                    let result = fileName.includes(".pdf")
+                    if (result) {
+                        let lenghtResult = (fileName.length - fileName.indexOf(".pdf"))
+                        if (lenghtResult === 4) {
+
+                        } else {
+
+                            alert("Somente aceito arquivos no formato .pdf")
+                            inputFile.value = "";
+
+                        }
+                    } else {
                         alert("Somente aceito arquivos no formato .pdf")
                         inputFile.value = "";
-                        
                     }
-                }else{
-                    alert("Somente aceito arquivos no formato .pdf")
-                    inputFile.value = "";
                 }
+            } catch (e) {
+                console.error("File format", e.message)
             }
-        } catch (e) {
-            console.error("File format", e.message)
-        }   
-        
-           
-           
-       })
+
+
+
+        })
     }
 
-   
+
 }()
