@@ -12,13 +12,13 @@ use \DateTime;
 use \DateTimeZone;
 use Exception;
 
-class DataBase
+class DataBase2
 {
     # @var, Db param
     private $hostname = 'localhost';
-    private $user = 'credmilla';
-    private $password = '8m5@sM';
-    private $dbname = 'credmillacom';
+    private $user = 'credmilla2';
+    private $password = 'Hbg_37';
+    private $dbname = 'credmillacomchat';
 
 
 

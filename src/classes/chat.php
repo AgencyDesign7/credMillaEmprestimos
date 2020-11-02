@@ -6,9 +6,10 @@ if (!isset($_SESSION)) {
 
 include_once('./Classes.php');
 
-use chatC\{Person, Client, Controller, DataBase, Support};
+use chatC\{Person, Client, Controller, DataBase, DataBase2, Support};
 
 $db = new DataBase();
+$db2 = new DataBase2();
 $Controller = new Controller();
 
 if (isset($_POST['checkStart'])) {
@@ -28,11 +29,11 @@ if (isset($_POST['request'])) {
         if($_SESSION['mode'] === 1){
 
             $datas = $db->FetchAllData('SELECT * FROM supportlogin WHERE login=?', [$_SESSION['login']]);
-            $datas = $db->FetchAllData('SELECT * FROM credmilla_chat_db.'. $datas[0]->currentRoom, []);
+            $datas = $db2->FetchAllData('SELECT * FROM '. $datas[0]->currentRoom, []);
         }else{
             
             $datas = array((object) array( "currentRoom" => $_SESSION['ChatRoom']));
-            $datas = $db->FetchAllData('SELECT * FROM credmilla_chat_db.'. $datas[0]->currentRoom, []);
+            $datas = $db2->FetchAllData('SELECT * FROM '. $datas[0]->currentRoom, []);
             
         }
         
@@ -51,7 +52,7 @@ if (isset($_POST['request'])) {
             $password = $_POST['password'];
             $status = $_POST['status'];
             $_SESSION['status'] = $_POST['status'];
-            $posts = $db->FetchAllData('SELECT * FROM `supportlogin` WHERE `login`= ?', [$_POST['login']]);
+            $posts = $db->FetchAllData('SELECT * FROM `supportlogin` WHERE `name`= ?', [$_POST['login']]);
             if ($posts) {
                 foreach ($posts as $post) {
                     $ResultLogin = strcmp($_SESSION['login'], $post->login);
@@ -134,7 +135,7 @@ if (isset($_POST['request'])) {
         $dateTime = new DateTime();
         $dateTime->setTimezone($timeZone);
         $infosUser = array('name' => $_SESSION['name'], 'email' => $_SESSION['email'], 'message' => $_POST['Message'], 'dateTime' => $dateTime->format('H:i:s'), 'definedAuth' => $_SESSION['mode']);
-        $db->insertData('INSERT INTO credmilla_chat_db.'.$data[0]->currentRoom. ' (name, email, message, last_time, definedAuth) VALUE (?,?,?,?,?)', [$_SESSION['name'], $_SESSION['email'], $_POST['Message'], $dateTime->format('H:i:s'), $_SESSION['mode']]);
+        $db2->insertData('INSERT INTO '.$data[0]->currentRoom. ' (name, email, message, last_time, definedAuth) VALUE (?,?,?,?,?)', [$_SESSION['name'], $_SESSION['email'], $_POST['Message'], $dateTime->format('H:i:s'), $_SESSION['mode']]);
         try {
 
             echo json_encode($infosUser, JSON_FORCE_OBJECT);
@@ -228,7 +229,7 @@ if (isset($_POST['request'])) {
             if($queryResult === 1){//sucess
                 
                 //Message warning after support has been connected
-                $resultConectSupportMsg = $db->insertData('INSERT INTO credmilla_chat_db.' . $Controller->getDataTime('Y'). '_'.$clientsQueue[0]->session.' (`name`, `email`, `message`, `last_time`, `definedAuth`) VALUES (?,?,?,?,?)', ['System', 'suporte@suport', 'Atendente '. $_SESSION['name']  . ' conectado...', $Controller->getDataTime('H:i:s'), 2]);
+                $resultConectSupportMsg = $db2->insertData('INSERT INTO ' . $Controller->getDataTime('Y'). '_'.$clientsQueue[0]->session.' (`name`, `email`, `message`, `last_time`, `definedAuth`) VALUES (?,?,?,?,?)', ['System', 'suporte@suport', 'Atendente '. $_SESSION['name']  . ' conectado...', $Controller->getDataTime('H:i:s'), 2]);
                 
                 $db->deleteData("DELETE FROM queue_users WHERE session=?", [$clientsQueue[0]->session]); 
             }else{
@@ -248,7 +249,7 @@ if (isset($_POST['request'])) {
                 echo json_encode(array('EndChat' => "Você não está conectado a nenhum chat"), JSON_FORCE_OBJECT);
                 exit();
             }
-           $db->insertData("INSERT INTO credmilla_chat_db.".$resultSupport[0]->currentRoom." (name, email, message, last_time, definedAuth) VALUES (?,?,?,?,?)", ["System", "suport@suport.com.br", $MessageFinishChat, $Controller->getDataTime('H:i:s'), 2]);
+           $db2->insertData("INSERT INTO ".$resultSupport[0]->currentRoom." (name, email, message, last_time, definedAuth) VALUES (?,?,?,?,?)", ["System", "suport@suport.com.br", $MessageFinishChat, $Controller->getDataTime('H:i:s'), 2]);
         }
         
         $db->insertData("UPDATE supportlogin SET currentRoom=? WHERE login=?", ["", $_SESSION['login']]);
@@ -294,6 +295,47 @@ if (isset($_POST['request'])) {
         }
 
         echo json_encode($arrayVisitors, JSON_FORCE_OBJECT);
+    }
+
+    if($_POST["request"] === "addUser"){
+        $pVisitor = $_POST['pVisitors'] === 'true' ? true : false;
+        $pUsers = $_POST['pUsers'] === 'true' ? true : false;
+        $pChat = $_POST['pChat'] === 'true' ? true : false;
+        
+        $hashPassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        try{
+
+            $db->insertData('INSERT INTO supportlogin (name, email, login, password, online, permissionsVisitors, permissionsUsers, permissionsChat) VALUES(?,?,?,?,?,?,?,?)', [$_POST['name'],$_POST['email'],$_POST['login'],$hashPassword, 0,$pVisitor,$pUsers,$pChat]);
+        }catch(Exception $e){
+            echo json_encode(array("Error" => $e->getMessage()), JSON_FORCE_OBJECT);
+            exit();
+        }
+
+        echo json_encode(array("Sucess" => "Usuário adicionado com sucesso"), JSON_FORCE_OBJECT);
+        
+        
+    }
+    if($_POST["request"] === "deleteUser"){
+        $checkExist = $db->FetchAllData('SELECT name FROM supportlogin WHERE name=?', [$_POST['name']]);
+        if((count($checkExist)) === 0){
+            echo json_encode(array("Error" => 'Usuário não existe'), JSON_FORCE_OBJECT);
+            exit();
+        }
+        try{
+
+            $db->deleteData('DELETE FROM supportlogin WHERE name=?', [$_POST['name']]);
+        }catch(Exception $e){
+            echo json_encode(array("Error" => $e->getMessage()), JSON_FORCE_OBJECT);
+            exit();
+        }
+        $resultData = $db->FetchAllData('SELECT name FROM supportlogin WHERE name=?', [$_POST['name']]);
+        if((count($resultData)) === 0){
+            echo json_encode(array("Sucess" => 'Usuário deletado com suscesso!'), JSON_FORCE_OBJECT);
+        }
+        
+        
+        
+        
     }
 
 }

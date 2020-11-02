@@ -40,11 +40,6 @@
               </a>
             </li>
             <li class="treeview">
-              <a href="editUser.php">
-                <i class="fa fa-user"></i> <span>Editar</span>
-              </a>
-            </li>
-            <li class="treeview">
               <a href="deleteUser.php">
                 <i class="fa fa-user-times"></i> <span>Excluir</span>
               </a>

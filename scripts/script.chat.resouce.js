@@ -43,7 +43,7 @@ if (document.location.pathname === "/chat.php") {
 function UpdateChat(booleanUpdate) {
     if (booleanUpdate) {
         var updateMessage = setInterval(function () {
-            console.log('update')
+        
             var auxRequest = false;
             var messagesBlock = document.querySelectorAll('.message-block > span');;
             var messagesSend = document.querySelectorAll('.message-block > :nth-child(2)');
@@ -74,9 +74,10 @@ function UpdateChat(booleanUpdate) {
                             SendMessageChat(objVal)
                         }
                     }
-                } else {
-                    alert("Erro banco de dados: Contate o administrador")
-                }
+                } 
+                // else {
+                //     alert("Erro banco de dados: Contate o administrador")
+                // }
                 UpdateMsgQueueInformationClient();
                 UpdateVisitors();
                 SupportConnectedWith()
@@ -233,10 +234,11 @@ if (submit) {
 
             if (textChatName.value && textChatEmail.value) {
                 var hrx = new XMLHttpRequest();
+                console.log(this.responseText)
                 hrx.open('POST', '../src/classes/Chat.php', true);
                 hrx.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 hrx.onload = function () {
-                    console.log(this.responseText)
+                 
                     try {
                         var verifySupportOnline = JSON.parse(this.responseText)
                     } catch (e) {
@@ -257,9 +259,10 @@ if (submit) {
                         } else {
                             window.location.href = "../chatOffline.php"
                         }
-                    } else {
-                        alert("Erro data Support: Contate o administrador")
-                    }
+                    } 
+                    //else {
+                    //     alert("Erro data Support: Contate o administrador")
+                    // }
 
 
                 }
@@ -437,7 +440,7 @@ if (SuportInitChat !== null && SupportFinishChat !== null) {
         hrxS.open('POST', '../src/classes/Chat.php', true);
         hrxS.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         hrxS.onload = function () {
-            console.log(this.responseText)
+        
             containerMsg.innerHTML = "";
             try {
 

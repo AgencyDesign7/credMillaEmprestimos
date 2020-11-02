@@ -38,7 +38,7 @@ if(!isset($_SESSION)){
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="adminPage.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>PN</span>
       <!-- logo for regular state and mobile devices -->
@@ -143,7 +143,7 @@ if(!isset($_SESSION)){
       <div class="container-user">
         <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="box-title">Digite o nome do usuário para ser deletado</h3>
+            <h3 class="box-title">Preencha os campos para adicionar um novo usuário</h3>
           </div>
           <!-- /.box-header -->
           <!-- form start -->
@@ -151,32 +151,39 @@ if(!isset($_SESSION)){
           <div class="box-body">
         
         <div class="form-group">
-          <label for="inputEmail3" class="col-sm-2 control-label">Nome</label>
+          <label for="inputNomel3" class="col-sm-2 control-label">Nome</label>
 
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputEmail3" placeholder="Nome">
+            <input name="Nome" type="text" class="form-control" id="inputNamel3" placeholder="Nome">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputloginl3" class="col-sm-2 control-label">Login</label>
+
+          <div class="col-sm-10">
+            <input name="Login" type="text" class="form-control" id="inputLoginl3" placeholder="Login">
           </div>
         </div>
 
         <div class="form-group">
-          <label for="inputPassword3" class="col-sm-2 control-label">Email</label>
+          <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
 
           <div class="col-sm-10">
-            <input type="email" class="form-control" id="inputPassword3" placeholder="Email">
+            <input name="Email"  type="email" class="form-control" id="inputEmaild3" placeholder="Email">
           </div>
         </div>
         <div class="form-group">
-          <label for="inputPassword3" class="col-sm-2 control-label">Senha</label>
+          <label for="Senha" class="col-sm-2 control-label">Senha</label>
 
           <div class="col-sm-10">
-            <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+            <input name="Senha" type="password" class="form-control" id="inputPasswordd3" placeholder="Password">
           </div>
         </div>
         <div class="form-group">
-          <label for="inputPassword3" class="col-sm-2 control-label">Repetir senha </label>
+          <label for="Repetir senha" class="col-sm-2 control-label">Repetir senha </label>
 
           <div class="col-sm-10">
-            <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+            <input name="Repetir senha" type="password" class="form-control" id="inputRpassword3" placeholder="Password">
           </div>
         </div>
 
@@ -188,17 +195,17 @@ if(!isset($_SESSION)){
           <div class="col-sm-offset-2 col-sm-10">
             <div class="checkbox">
               <label>
-                <input type="checkbox"> Visitantes
+                <input name="c-visitors" type="checkbox"> Visitantes
               </label>
             </div>
             <div class="checkbox">
               <label>
-                <input type="checkbox"> Adicionar, Excluir e Editar Usuários
+                <input name="c-permissionsUsers" type="checkbox"> Adicionar, Excluir e Editar Usuários
               </label>
             </div>
             <div class="checkbox">
               <label>
-                <input type="checkbox"> Chat
+                <input name="c-chat" type="checkbox"> Chat
               </label>
             </div>
           </div>
@@ -206,8 +213,8 @@ if(!isset($_SESSION)){
       </div>
       <!-- /.box-body -->
       <div class="box-footer">
-        <button type="submit" class="btn btn-default">Cancel</button>
-        <button type="submit" class="btn btn-success pull-right">Salvar</button>
+        <button data-btn-cancel="" type="submit" class="btn btn-default">Cancel</button>
+        <button data-btn-submit="" type="submit" class="btn btn-success pull-right">Salvar</button>
       </div>
       
 
@@ -306,6 +313,7 @@ if(!isset($_SESSION)){
   <!-- AdminLTE for demo purposes -->
   <script src="dist/js/demo.js"></script>
   <script src="./scripts/script.chat.resouce.js"></script>
+  <script src="./scripts/script.admin.controller.js"></script>
 </body>
 
 </html>

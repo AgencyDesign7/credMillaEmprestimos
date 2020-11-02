@@ -9,12 +9,14 @@ use \DateTime;
 class Controller
 {
     private $db = null;
+    private $db2 = null;
     private $queueChats = array();
     private $currentConnected;
 
     function __construct()
     {
         $this->db = new DataBase();
+        $this->db2 = new DataBase2();
     }
 
     function __destruct()
@@ -45,7 +47,7 @@ class Controller
     }
 
     function Connect_client_with_support($clientSession){
-        $roomName = 'credmilla_chat_db.'.($this->getDataTime('Y'). '_'.$clientSession);
+        $roomName = ($this->getDataTime('Y'). '_'.$clientSession);
         $this->db->insertData('CREATE TABLE ' . $roomName .' (id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT, name varchar(100) NOT NULL, email varchar(100) NOT NULL, message text NOT NULL, last_time TIME NOT NULL, definedAuth int(11) NOT NULL)', []);
         return $roomName;
     }
@@ -55,7 +57,7 @@ class Controller
     }
 
     function SelectRoom($nameRoom){
-        return  $this->db->FetchAllData('SELECT * FROM ' .$nameRoom, []);
+        return  $this->db2->FetchAllData('SELECT * FROM ' .$nameRoom, []);
     }
 
     function UpdateChat($sessionClient){

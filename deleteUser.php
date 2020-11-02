@@ -38,7 +38,7 @@ if(!isset($_SESSION)){
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="adminPage.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>PN</span>
       <!-- logo for regular state and mobile devices -->
@@ -155,13 +155,13 @@ if(!isset($_SESSION)){
               <label for="inputEmail3" class="col-sm-1 control-label">Nome</label>
 
               <div class="col-sm-4">
-                <input type="text" class="form-control" id="inputEmail3" placeholder="Nome">
+                <input name="deleteUser" type="text" class="form-control" id="inputEmail3" placeholder="Nome">
               </div>
             </div>
 
             <!-- /.box-body -->
             <div class="box-footer">
-              <button type="submit" class="btn btn-danger pull-left">Deletar</button>
+              <button data-btn-delete="" type="submit" class="btn btn-danger pull-left">Deletar</button>
             </div>
             <!-- /.box-footer -->
 
@@ -260,6 +260,7 @@ if(!isset($_SESSION)){
   <!-- AdminLTE for demo purposes -->
   <script src="dist/js/demo.js"></script>
   <script src="./scripts/script.chat.resouce.js"></script>
+  <script src="./scripts/script.admin.controller.js"></script>
 </body>
 
 </html>
